@@ -21,7 +21,6 @@
             padding: 20px;
             color: #1a1a1a;
             min-height: 100vh;
-            /* REMOVED STATIC IMAGE BACKGROUND */
         }
 
         /* VIDEO BACKGROUND CONTAINER */
@@ -31,7 +30,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1; /* Ensures it stays behind everything else */
+            z-index: -1;
             overflow: hidden;
         }
 
@@ -44,7 +43,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            object-fit: cover; /* Ensures video covers entire screen */
+            object-fit: cover;
         }
 
         .container { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
@@ -206,7 +205,6 @@
 <div class="video-background">
     <video autoplay muted loop playsinline>
         <source src="https://raw.githubusercontent.com/usageuk/silver-trading/94c06252a843a63a2187c79d2cc4927fe26966c0/image/Silver_Bullion_Rotating_Video_Generation.mp4" type="video/mp4">
-        Your browser does not support the video tag.
     </video>
 </div>
 
@@ -351,7 +349,7 @@
                     "width": "100%",
                     "isTransparent": true,
                     "height": "100%",
-                    "symbol": "FX:XAGUSD",
+                    "symbol": "OANDA:XAGUSD",
                     "showIntervalTabs": false,
                     "displayMode": "single",
                     "locale": "en",
