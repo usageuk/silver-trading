@@ -195,33 +195,39 @@
         weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
     });
 
-    // 2. Define Indicators (RSI + Moving Average)
-    // We use the 'studies' parameter to add them.
+    // 2. Define Indicators
     const commonConfig = {
         "autosize": true,
-        "interval": "D",           // Daily candles
+        "interval": "D",
         "timezone": "Etc/UTC",
         "theme": "light",
-        "style": "1",              // Candle style
+        "style": "1",
         "locale": "en",
         "enable_publishing": false,
         "allow_symbol_change": false,
         "hide_side_toolbar": true,
         "studies": [
-            "RSI@tv-basicstudies",    // Relative Strength Index
-            "MASimple@tv-basicstudies" // Simple Moving Average (defaults usually to 9, user can adjust in UI)
+            "RSI@tv-basicstudies",     // RSI
+            "MASimple@tv-basicstudies" // Moving Average
         ],
-        // Note: To force 50MA specifically via code on the free widget is limited, 
-        // but 'MASimple' adds the tool which users can tweak, or it defaults to standard lengths.
+        // Attempt to force MA to 50 (If this doesn't work, user must edit manually)
+        "studies_overrides": {
+            "MASimple.length": 50
+        }
     };
 
     // 3. Render Charts
-    new TradingView.widget({ ...commonConfig, "symbol": "LSE:SSLN", "container_id": "chart-ssln" });
+    
+    // FIX 1: Use 'AMEX:SLV' (US version) because 'LSE:SSLN' is blocked on free widgets.
+    // It tracks the exact same silver price, so the chart shape is identical.
+    new TradingView.widget({ ...commonConfig, "symbol": "AMEX:SLV", "container_id": "chart-ssln" });
+
     new TradingView.widget({ ...commonConfig, "symbol": "NYSE:WPM", "container_id": "chart-wpm" });
     new TradingView.widget({ ...commonConfig, "symbol": "NYSE:AG", "container_id": "chart-ag" });
     new TradingView.widget({ ...commonConfig, "symbol": "OANDA:XAGUSD", "container_id": "chart-spot" });
 
 </script>
 
+    
 </body>
 </html>
