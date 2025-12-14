@@ -14,6 +14,7 @@
             --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
             --risk-low: #34c759; --risk-med: #007aff; --risk-high: #ff9500; --risk-bad: #ff3b30;
             --t212-blue: #007aff;
+            --modal-overlay: rgba(0, 0, 0, 0.6);
         }
 
         body {
@@ -39,44 +40,28 @@
             border: var(--glass-border); box-shadow: var(--glass-shadow);
             padding: 20px; border-radius: 16px; margin-bottom: 30px;
             display: flex; flex-direction: column; align-items: center; gap: 10px;
-            position: relative; /* For Help Button positioning */
+            position: relative; 
         }
         h1 { margin: 0; font-size: 2rem; color: #2c3e50; text-shadow: 0 1px 1px rgba(255,255,255,0.8); }
 
         /* HELP BUTTON */
         .help-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 32px;
-            height: 32px;
+            position: absolute; top: 20px; right: 20px;
+            width: 32px; height: 32px;
             background: rgba(255, 255, 255, 0.5);
-            border: 1px solid rgba(0,0,0,0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            color: #555;
-            font-weight: bold;
-            font-size: 1.1rem;
-            transition: all 0.2s;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border: 1px solid rgba(0,0,0,0.1); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; color: #555; font-weight: bold; font-size: 1.1rem;
+            transition: all 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            user-select: none;
         }
-        .help-btn:hover {
-            background: #fff;
-            transform: scale(1.1);
-            color: var(--t212-blue);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-        }
+        .help-btn:hover { background: #fff; transform: scale(1.1); color: var(--t212-blue); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
 
         .status-container { display: flex; flex-direction: column; align-items: center; gap: 5px; }
         .status-bar { display: flex; gap: 15px; align-items: center; font-size: 0.9rem; flex-wrap: wrap; justify-content: center; }
-        
         .status-badge { padding: 6px 12px; border-radius: 20px; font-weight: 700; display: flex; align-items: center; gap: 6px; border: 1px solid rgba(0,0,0,0.1); }
         .market-open { background-color: #e8f5e9; color: #2e7d32; }
         .market-closed { background-color: #ffebee; color: #c62828; }
-        
         .countdown { font-size: 0.85rem; color: #666; font-weight: 600; background: #f0f0f5; padding: 4px 12px; border-radius: 12px; }
 
         /* CARDS */
@@ -102,27 +87,56 @@
         .action-group { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
         .badge { padding: 4px 8px; border-radius: 6px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; background: rgba(255,255,255,0.8); }
 
-        /* BULLION BUTTON */
         .buy-btn-bullion {
-            display: flex; justify-content: center; align-items: center;
-            width: 110px; height: 40px;
+            display: flex; justify-content: center; align-items: center; width: 110px; height: 40px;
             background-image: url('https://raw.githubusercontent.com/usageuk/silver-trading/7418b5e4f1db4ae13bc7d17571f7689231786bad/image/silver_bar_vertical.jpeg');
-            background-size: cover; background-position: center;
-            border-radius: 6px; box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-            text-decoration: none; border: 1px solid #999;
-            transition: transform 0.2s, filter 0.2s;
-            color: #333; font-weight: 800; font-size: 0.75rem;
-            text-shadow: 0 1px 0 rgba(255,255,255,0.6);
-            text-transform: uppercase; letter-spacing: 0.5px;
+            background-size: cover; background-position: center; border-radius: 6px; box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            text-decoration: none; border: 1px solid #999; transition: transform 0.2s, filter 0.2s;
+            color: #333; font-weight: 800; font-size: 0.75rem; text-shadow: 0 1px 0 rgba(255,255,255,0.6); text-transform: uppercase;
         }
         .buy-btn-bullion:hover { transform: translateY(-2px) scale(1.05); filter: brightness(1.1); }
         .buy-btn-bullion span { background: rgba(255,255,255,0.4); padding: 2px 5px; border-radius: 4px; backdrop-filter: blur(2px); }
 
-        /* WIDGETS */
         .algo-box { background: rgba(255,255,255,0.5); border-radius: 8px; margin-bottom: 15px; border: 1px solid rgba(0,0,0,0.1); overflow: hidden; height: 300px; position: relative; }
         .algo-title { position: absolute; top: 5px; left: 10px; font-size: 0.75rem; font-weight: 700; color: #555; z-index: 5; background: rgba(255,255,255,0.8); padding: 2px 6px; border-radius: 4px; }
         .chart-container { height: 320px; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden; background: #fff; }
         footer { text-align: center; margin-top: 40px; color: #fff; font-size: 0.85rem; text-shadow: 0 1px 3px rgba(0,0,0,0.8); font-weight: 500; }
+
+        /* --- MODAL STYLES --- */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%;
+            background-color: var(--modal-overlay);
+            backdrop-filter: blur(5px);
+            align-items: center; justify-content: center;
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        .modal.show { display: flex; opacity: 1; }
+        
+        .modal-content {
+            background: rgba(255, 255, 255, 0.95);
+            width: 90%; max-width: 600px; max-height: 80vh; overflow-y: auto;
+            border-radius: 16px; padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            position: relative;
+            transform: translateY(20px); transition: transform 0.3s ease;
+            color: #333;
+        }
+        .modal.show .modal-content { transform: translateY(0); }
+
+        .close-btn {
+            position: absolute; top: 15px; right: 20px; font-size: 1.5rem; font-weight: bold;
+            color: #666; cursor: pointer; transition: color 0.2s;
+        }
+        .close-btn:hover { color: var(--risk-bad); }
+
+        /* Modal Text Styles */
+        .modal h2 { margin-top: 0; color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .modal h3 { color: var(--t212-blue); margin-top: 20px; margin-bottom: 10px; }
+        .modal p { line-height: 1.6; margin-bottom: 10px; font-size: 0.95rem; }
+        .modal ul { margin: 10px 0; padding-left: 20px; }
+        .modal li { margin-bottom: 8px; font-size: 0.95rem; }
+        .modal-footer { margin-top: 30px; font-size: 0.8rem; color: #777; border-top: 1px solid #eee; padding-top: 15px; text-align: center; }
     </style>
 </head>
 <body>
@@ -133,9 +147,41 @@
     </video>
 </div>
 
+<div id="helpModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="toggleHelp()">&times;</span>
+        <h2>Silver Tracker Guide</h2>
+        
+        <p>Welcome to the <strong>Silver Investment Tracker</strong>. This dashboard categorizes silver assets by risk level and provides real-time "Buy/Sell" signals based on technical algorithms.</p>
+
+        <h3>🚦 Risk Categories</h3>
+        <ul>
+            <li>🟢 <strong>#1 Safer (SSLN):</strong> Physical Silver ETF. Tracks the real metal price. Lower risk, wealth preservation.</li>
+            <li>🔵 <strong>#2 Growth (WPM):</strong> Streaming company. Safer than miners, pays dividends.</li>
+            <li>🟠 <strong>#3 Aggressive (AG):</strong> First Majestic Miner. High volatility. Moves 2x faster than spot silver.</li>
+            <li>🔴 <strong>CFD (Spot):</strong> Day trading only. High fees if held overnight. Use for short-term hedging.</li>
+        </ul>
+
+        <h3>⚙️ How the "Auto-Strategy" Works</h3>
+        <p>We use live <strong>TradingView Technical Analysis</strong> gauges instead of static advice.</p>
+        <ul>
+            <li><strong>Strong Buy / Buy:</strong> Momentum is positive (MA & RSI alignment).</li>
+            <li><strong>Neutral:</strong> Market is undecided. Wait.</li>
+            <li><strong>Sell:</strong> Downward trend detected.</li>
+        </ul>
+
+        <h3>🕒 Market Timer</h3>
+        <p>The status bar at the top automatically detects if the <strong>US Market (NYSE)</strong> is open or closed and provides a countdown based on your local time.</p>
+
+        <div class="modal-footer">
+            Note: This tool is for informational purposes only. Not financial advice. Capital at risk.
+        </div>
+    </div>
+</div>
+
 <div class="container">
     <header>
-        <a href="https://github.com/usageuk/silver-trading/blob/acc165d5c4d12a8c51aceb98612c5feedce489df/Help.md" target="_blank" class="help-btn" title="View Help Guide">?</a>
+        <div class="help-btn" onclick="toggleHelp()" title="Open Help Guide">?</div>
 
         <h1>Silver Investment Tracker</h1>
         
@@ -156,9 +202,7 @@
                 <div class="asset-info"><h2 class="asset-name">iShares Physical</h2><span class="ticker">T212: <strong>SSLN</strong></span></div>
                 <div class="action-group">
                     <span class="badge" style="color:var(--risk-low)">#1 Safer</span>
-                    <a href="https://www.trading212.com/trading-instruments/invest/SSLN.GB" target="_blank" class="buy-btn-bullion">
-                        <span>Buy T212</span>
-                    </a>
+                    <a href="https://www.trading212.com/trading-instruments/invest/SSLN.GB" target="_blank" class="buy-btn-bullion"><span>Buy T212</span></a>
                 </div>
             </div>
             <div class="algo-box">
@@ -178,9 +222,7 @@
                 <div class="asset-info"><h2 class="asset-name">Wheaton Precious</h2><span class="ticker">T212: <strong>WPM</strong></span></div>
                 <div class="action-group">
                     <span class="badge" style="color:var(--risk-med)">#2 Growth</span>
-                    <a href="https://www.trading212.com/trading-instruments/invest/WPM.US" target="_blank" class="buy-btn-bullion">
-                        <span>Buy T212</span>
-                    </a>
+                    <a href="https://www.trading212.com/trading-instruments/invest/WPM.US" target="_blank" class="buy-btn-bullion"><span>Buy T212</span></a>
                 </div>
             </div>
             <div class="algo-box">
@@ -200,9 +242,7 @@
                 <div class="asset-info"><h2 class="asset-name">First Majestic</h2><span class="ticker">T212: <strong>AG</strong></span></div>
                 <div class="action-group">
                     <span class="badge" style="color:var(--risk-high)">#3 Aggressive</span>
-                    <a href="https://www.trading212.com/trading-instruments/invest/AG.US" target="_blank" class="buy-btn-bullion">
-                        <span>Buy T212</span>
-                    </a>
+                    <a href="https://www.trading212.com/trading-instruments/invest/AG.US" target="_blank" class="buy-btn-bullion"><span>Buy T212</span></a>
                 </div>
             </div>
             <div class="algo-box">
@@ -222,9 +262,7 @@
                 <div class="asset-info"><h2 class="asset-name">Spot Silver CFD</h2><span class="ticker">T212: <strong>Silver</strong></span></div>
                 <div class="action-group">
                     <span class="badge" style="color:var(--risk-bad)">Day Trade Only</span>
-                    <a href="https://www.trading212.com/trading-instruments/cfd/XAGUSD" target="_blank" class="buy-btn-bullion">
-                        <span>Buy T212</span>
-                    </a>
+                    <a href="https://www.trading212.com/trading-instruments/cfd/XAGUSD" target="_blank" class="buy-btn-bullion"><span>Buy T212</span></a>
                 </div>
             </div>
             <div class="algo-box">
@@ -245,19 +283,33 @@
 
 <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
 <script>
+    // --- MODAL LOGIC ---
+    const modal = document.getElementById('helpModal');
+    function toggleHelp() {
+        if (modal.classList.contains('show')) {
+            modal.classList.remove('show');
+            setTimeout(() => { modal.style.display = 'none'; }, 300); // Wait for transition
+        } else {
+            modal.style.display = 'flex';
+            setTimeout(() => { modal.classList.add('show'); }, 10); // Small delay for CSS opacity transition
+        }
+    }
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+        if (event.target == modal) toggleHelp();
+    }
+
+    // --- MARKET TIMER LOGIC ---
     function updateMarketLogic() {
         const now = new Date();
-        const day = now.getUTCDay(); // 0=Sun, 6=Sat
+        const day = now.getUTCDay(); // 0=Sun
         const hour = now.getUTCHours();
         const min = now.getUTCMinutes();
+        const openHour = 14; const openMin = 30; // 14:30 UTC
+        const closeHour = 21; const closeMin = 0; // 21:00 UTC
 
-        // US Market Open (14:30 - 21:00 UTC)
-        const openHour = 14; const openMin = 30;
-        const closeHour = 21; const closeMin = 0;
-
-        // Check if Open
         let isOpen = false;
-        if (day >= 1 && day <= 5) { // Mon-Fri
+        if (day >= 1 && day <= 5) {
             if (hour > openHour || (hour === openHour && min >= openMin)) {
                 if (hour < closeHour || (hour === closeHour && min < closeMin)) {
                     isOpen = true;
@@ -265,7 +317,6 @@
             }
         }
 
-        // DOM Elements
         const statusBadge = document.getElementById('marketStatus');
         const statusText = document.getElementById('statusText');
         const statusIcon = document.getElementById('statusIcon');
@@ -275,36 +326,38 @@
             statusBadge.className = "status-badge market-open";
             statusText.innerText = "US Market Open";
             statusIcon.innerText = "🟢";
-            
-            // Count down to Close
-            const closeTime = new Date(now);
-            closeTime.setUTCHours(closeHour, closeMin, 0, 0);
-            const diff = closeTime - now;
-            countdownEl.innerText = "Closes in " + formatDiff(diff);
-            
+            const closeTime = new Date(now); closeTime.setUTCHours(closeHour, closeMin, 0, 0);
+            countdownEl.innerText = "Closes in " + formatDiff(closeTime - now);
         } else {
             statusBadge.className = "status-badge market-closed";
             statusText.innerText = "Market Closed";
             statusIcon.innerText = "🔴";
-
-            // Calculate next Open
-            let nextOpen = new Date(now);
-            nextOpen.setUTCHours(openHour, openMin, 0, 0);
-            
-            // If it's already past today's open, or it's weekend, find next valid day
+            let nextOpen = new Date(now); nextOpen.setUTCHours(openHour, openMin, 0, 0);
             if (now > nextOpen || day === 0 || day === 6) {
-                // If today is Friday afternoon/Sat/Sun, move to Monday
                 if (day === 5 && now > nextOpen) nextOpen.setUTCDate(now.getUTCDate() + 3);
                 else if (day === 6) nextOpen.setUTCDate(now.getUTCDate() + 2);
                 else if (day === 0) nextOpen.setUTCDate(now.getUTCDate() + 1);
-                else nextOpen.setUTCDate(now.getUTCDate() + 1); // Tue-Fri morning logic
+                else nextOpen.setUTCDate(now.getUTCDate() + 1);
             }
-            
-            const diff = nextOpen - now;
-            countdownEl.innerText = "Opens in " + formatDiff(diff);
+            countdownEl.innerText = "Opens in " + formatDiff(nextOpen - now);
         }
     }
 
     function formatDiff(ms) {
         if (ms < 0) return "00m 00s";
-        const h = Math.floor(ms /
+        const h = Math.floor(ms / 3600000);
+        const m = Math.floor((ms % 3600000) / 60000);
+        const s = Math.floor((ms % 60000) / 1000);
+        return `${h}h ${m}m ${s}s`;
+    }
+    setInterval(updateMarketLogic, 1000); updateMarketLogic();
+
+    // --- CHART CONFIG ---
+    const commonConfig = { "autosize": true, "interval": "D", "timezone": "Etc/UTC", "theme": "light", "style": "1", "locale": "en", "enable_publishing": false, "allow_symbol_change": false, "hide_side_toolbar": true, "studies": [ "RSI@tv-basicstudies", "MASimple@tv-basicstudies" ], "studies_overrides": { "MASimple.length": 50 } };
+    new TradingView.widget({ ...commonConfig, "symbol": "AMEX:SLV", "container_id": "chart-ssln" });
+    new TradingView.widget({ ...commonConfig, "symbol": "NYSE:WPM", "container_id": "chart-wpm" });
+    new TradingView.widget({ ...commonConfig, "symbol": "NYSE:AG", "container_id": "chart-ag" });
+    new TradingView.widget({ ...commonConfig, "symbol": "TVC:SILVER", "container_id": "chart-spot" });
+</script>
+</body>
+</html>
