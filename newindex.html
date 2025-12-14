@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silver Investment Tracker - Trading 212</title>
+    <style>
+        :root {
+            --bg-color: #f0f2f5;
+            --card-bg: #ffffff;
+            --text-dark: #1a1a1a;
+            --text-gray: #65676b;
+            --t212-blue: #007aff;
+            
+            /* Risk Colors */
+            --risk-low: #34c759;    /* Green */
+            --risk-med: #007aff;    /* Blue */
+            --risk-high: #ff9500;   /* Orange */
+            --risk-bad: #ff3b30;    /* Red */
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.5;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        header {
+            text-align: center;
+            background: var(--card-bg);
+            padding: 40px 20px;
+            border-radius: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            margin-bottom: 40px;
+        }
+
+        h1 { margin: 0; font-size: 2.2rem; }
+        .subtitle { color: var(--text-gray); margin-top: 10px; }
+        .live-badge { 
+            display: inline-block; 
+            background: #e3f2fd; color: #007aff; 
+            padding: 5px 15px; border-radius: 20px; 
+            font-size: 0.85rem; font-weight: 700; margin-top: 15px; 
+        }
+
+        /* Tech Legend */
+        .tech-legend {
+            background: #fff;
+            padding: 15px;
+            border-radius: 12px;
+            margin: 20px auto;
+            max-width: 800px;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            border: 1px solid #ddd;
+        }
+        .tech-item { display: flex; align-items: center; gap: 8px; }
+        .tech-color-box { width: 15px; height: 4px; border-radius: 2px; }
+
+        .grid-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-top: 5px solid #ccc;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card.risk-low { border-top-color: var(--risk-low); }
+        .card.risk-med { border-top-color: var(--risk-med); }
+        .card.risk-high { border-top-color: var(--risk-high); }
+        .card.risk-bad { border-top-color: var(--risk-bad); }
+
+        .card-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: flex-start; 
+            margin-bottom: 15px; 
+        }
+        
+        .asset-info { flex-grow: 1; }
+        .asset-name { font-size: 1.3rem; font-weight: 700; margin: 0; line-height: 1.2; }
+        .ticker { color: var(--text-gray); font-size: 0.9rem; font-weight: 600; margin-top: 4px; display: block;}
+        
+        .action-group {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+        }
+
+        .badge { 
+            padding: 4px 10px; 
+            border-radius: 6px; 
+            font-size: 0.75rem; 
+            font-weight: 800; 
+            text-transform: uppercase; 
+        }
+
+        /* The Buy Button */
+        .buy-btn {
+            background-color: var(--t212-blue);
+            color: white;
+            text-decoration: none;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: background 0.2s;
+            display: inline-flex;
+            align-items: center;
+        }
+        .buy-btn:hover { background-color: #005bb5; }
+        .buy-btn::after { content: " ↗"; margin-left: 4px; font-size: 1rem; }
+
+        .analysis-box {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+            border-left: 4px solid #ddd;
+        }
+        .analysis-row { margin-bottom: 6px; }
+        .analysis-label { font-weight: 700; color: var(--text-dark); margin-right: 5px; }
+
+        .chart-container {
+            height: 350px; 
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        footer { text-align: center; margin-top: 50px; color: var(--text-gray); font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Silver Investment Tracker</h1>
+        <p class="subtitle">Live Technical Analysis • Trading 212 Assets</p>
+        <span class="live-badge" id="dateTag">Loading Date...</span>
+
+        <div class="tech-legend">
+            <div class="tech-item">
+                <span class="tech-color-box" style="background:#2962FF"></span> 
+                <strong>50-Day MA:</strong> Bullish if Price is ABOVE this line.
+            </div>
+            <div class="tech-item">
+                <span class="tech-color-box" style="background:#7E57C2"></span> 
+                <strong>RSI (14):</strong> Buy zone < 30. Sell zone > 70.
+            </div>
+        </div>
+    </header>
+
+    <div class="grid-section">
+
+        <div class="card risk-low">
+            <div class="card-header">
+                <div class="asset-info">
+                    <h2 class="asset-name">iShares Physical Silver</h2>
+                    <span class="ticker">Search T212: <strong>SSLN</strong></span>
+                </div>
+                <div class="action-group">
+                    <span class="badge" style="background:#e8f5e9; color:var(--risk-low)">#1 Safer</span>
+                    <a href="https://www.trading212.com/login" target="_blank" class="buy-btn">Trade on T212</a>
+                </div>
+            </div>
+            <div class="analysis-box" style="border-left-color: var(--risk-low);">
+                <div class="analysis-row"><span class="analysis-label">Strategy:</span>Core Hold (Wealth Preservation).</div>
+                <div class="analysis-row"><span class="analysis-label">Signal:</span>Accumulate when RSI dips below 40.</div>
+                <div class="analysis-row" style="color: #666; font-size: 0.8rem;">*Chart shows US equivalent (SLV) for data access.*</div>
+            </div>
+            <div class="chart-container" id="chart-ssln"></div>
+        </div>
+
+        <div class="card risk-med">
+            <div class="card-header">
+                <div class="asset-info">
+                    <h2 class="asset-name">Wheaton Precious Metals</h2>
+                    <span class="ticker">Search T212: <strong>WPM</strong></span>
+                </div>
+                <div class="action-group">
+                    <span class="badge" style="background:#e3f2fd; color:var(--risk-med)">#2 Growth</span>
+                    <a href="https://www.trading212.com/login" target="_blank" class="buy-btn">Trade on T212</a>
+                </div>
+            </div>
+            <div class="analysis-box" style="border-left-color: var(--risk-med);">
+                <div class="analysis-row"><span class="analysis-label">Strategy:</span>Dividend Growth & Safety.</div>
+                <div class="analysis-row"><span class="analysis-label">Signal:</span>Strong buy if price touches the blue 50-MA line.</div>
+            </div>
+            <div class="chart-container" id="chart-wpm"></div>
+        </div>
+
+        <div class="card risk-high">
+            <div class="card-header">
+                <div class="asset-info">
+                    <h2 class="asset-name">First Majestic Silver</h2>
+                    <span class="ticker">Search T212: <strong>AG</strong></span>
+                </div>
+                <div class="action-group">
+                    <span class="badge" style="background:#fff3e0; color:var(--risk-high)">#3 Aggressive</span>
+                    <a href="https://www.trading212.com/login" target="_blank" class="buy-btn">Trade on T212</a>
+                </div>
+            </div>
+            <div class="analysis-box" style="border-left-color: var(--risk-high);">
+                <div class="analysis-row"><span class="analysis-label">Strategy:</span>High Beta (Moves 2x faster than spot).</div>
+                <div class="analysis-row"><span class="analysis-label">Warning:</span>Take profits immediately if RSI > 75.</div>
+            </div>
+            <div class="chart-container" id="chart-ag"></div>
+        </div>
+
+        <div class="card risk-bad">
+            <div class="card-header">
+                <div class="asset-info">
+                    <h2 class="asset-name">Spot Silver CFD</h2>
+                    <span class="ticker">Search T212: <strong>Silver</strong></span>
+                </div>
+                <div class="action-group">
+                    <span class="badge" style="background:#ffebee; color:var(--risk-bad)">Day Trade Only</span>
+                    <a href="https://www.trading212.com/login" target="_blank" class="buy-btn">Trade on T212</a>
+                </div>
+            </div>
+            <div class="analysis-box" style="border-left-color: var(--risk-bad);">
+                <div class="analysis-row"><span class="analysis-label">Strategy:</span>Short-term hedging only.</div>
+                <div class="analysis-row"><span class="analysis-label">Fee Alert:</span>Do not hold > 24hrs (Swap fees apply).</div>
+            </div>
+            <div class="chart-container" id="chart-spot"></div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>Charts powered by TradingView • Not Financial Advice • <strong>Invest at your own risk.</strong></p>
+    </footer>
+</div>
+
+<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+<script>
+    // 1. Set Date
+    document.getElementById('dateTag').innerText = "Live Data: " + new Date().toLocaleDateString("en-GB", { 
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
+    });
+
+    // 2. Define Indicators
+    const commonConfig = {
+        "autosize": true,
+        "interval": "D",
+        "timezone": "Etc/UTC",
+        "theme": "light",
+        "style": "1",
+        "locale": "en",
+        "enable_publishing": false,
+        "allow_symbol_change": false,
+        "hide_side_toolbar": true,
+        "studies": [
+            "RSI@tv-basicstudies",     // RSI
+            "MASimple@tv-basicstudies" // Moving Average
+        ],
+        // Attempt to force MA length to 50
+        "studies_overrides": {
+            "MASimple.length": 50
+        }
+    };
+
+    // 3. Render Charts
+    
+    // CHART 1: Using AMEX:SLV (US) as proxy for LSE:SSLN (UK) to ensure data loads freely.
+    new TradingView.widget({ ...commonConfig, "symbol": "AMEX:SLV", "container_id": "chart-ssln" });
+
+    new TradingView.widget({ ...commonConfig, "symbol": "NYSE:WPM", "container_id": "chart-wpm" });
+    new TradingView.widget({ ...commonConfig, "symbol": "NYSE:AG", "container_id": "chart-ag" });
+    new TradingView.widget({ ...commonConfig, "symbol": "OANDA:XAGUSD", "container_id": "chart-spot" });
+
+</script>
+
+</body>
+</html>
