@@ -59,6 +59,21 @@
             pointer-events: none;
         }
 
+        .title-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .bullion-img {
+            height: 60px;
+            width: auto;
+            vertical-align: middle;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+
         h1 { margin: 0; font-size: 2.4rem; text-shadow: 1px 1px 0 #fff; }
         .subtitle { color: var(--text-gray); margin-top: 10px; font-weight: 500; }
         .live-badge { 
@@ -161,7 +176,10 @@
 
 <div class="container">
     <header>
-        <h1>Silver Investment Tracker</h1>
+        <div class="title-container">
+            <img src="image_6.png" alt="Silver Bullion Bar" class="bullion-img">
+            <h1>Silver Investment Tracker</h1>
+        </div>
         <p class="subtitle">Live Technical Analysis • Trading 212 Assets</p>
         <span class="live-badge" id="dateTag">Loading Date...</span>
 
