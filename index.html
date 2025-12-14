@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Silver Investment Tracker - Premium</title>
+    <title>Silver Investment Tracker - Auto Strategy</title>
     <style>
         :root {
             --glass-bg: rgba(255, 255, 255, 0.90);
@@ -86,19 +86,7 @@
             font-variant-numeric: tabular-nums;
         }
 
-        /* LEGEND */
-        .tech-legend {
-            display: flex;
-            gap: 20px;
-            font-size: 0.85rem;
-            background: rgba(255,255,255,0.5);
-            padding: 8px 20px;
-            border-radius: 20px;
-            border: 1px solid rgba(0,0,0,0.05);
-        }
-        .tech-item { display: flex; align-items: center; gap: 6px; }
-        .tech-color-box { width: 12px; height: 12px; border-radius: 50%; }
-
+        /* GRID */
         .grid-section {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -117,9 +105,9 @@
             border-top: 6px solid #ccc;
             display: flex;
             flex-direction: column;
-            opacity: 0;
-            transform: translateY(30px);
             animation: slideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            opacity: 0;
+            transform: translateY(20px);
         }
 
         .card:nth-child(1) { animation-delay: 0.1s; }
@@ -134,7 +122,7 @@
         .card.risk-high { border-top-color: var(--risk-high); }
         .card.risk-bad { border-top-color: var(--risk-bad); }
 
-        .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
+        .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
         .asset-name { font-size: 1.3rem; font-weight: 800; margin: 0; color: #2c3e50; }
         .ticker { color: #555; font-size: 0.9rem; font-weight: 600; margin-top: 4px; display: block;}
         
@@ -159,13 +147,27 @@
             filter: brightness(1.1);
         }
 
-        .analysis-box {
-            background: rgba(245, 245, 247, 0.6);
-            border-radius: 8px; padding: 12px; margin-bottom: 15px; font-size: 0.85rem;
-            border-left: 4px solid #ddd;
+        /* AUTO STRATEGY BOX */
+        .algo-box {
+            background: rgba(255,255,255,0.5);
+            border-radius: 8px; 
+            margin-bottom: 15px;
+            border: 1px solid rgba(0,0,0,0.1);
+            overflow: hidden;
+            height: 120px; /* Fixed height for the Gauge */
+            position: relative;
         }
-        .analysis-row { margin-bottom: 6px; line-height: 1.4; }
-        .analysis-label { font-weight: 700; color: #333; margin-right: 5px; }
+        .algo-title {
+            position: absolute;
+            top: 5px; left: 10px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #555;
+            z-index: 5;
+            background: rgba(255,255,255,0.8);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
 
         .chart-container {
             height: 320px; 
@@ -194,11 +196,6 @@
             </div>
             <div class="time-badge" id="lastUpdate">Loading Time...</div>
         </div>
-
-        <div class="tech-legend">
-            <div class="tech-item"><span class="tech-color-box" style="background:#2962FF"></span> <strong>50-MA</strong> (Trend)</div>
-            <div class="tech-item"><span class="tech-color-box" style="background:#7E57C2"></span> <strong>RSI</strong> (Momentum)</div>
-        </div>
     </header>
 
     <div class="grid-section">
@@ -214,11 +211,27 @@
                     <a href="https://www.trading212.com/trading-instruments/invest/SSLN.GB" target="_blank" class="buy-btn-bullion" title="Trade SSLN"></a>
                 </div>
             </div>
-            <div class="analysis-box" style="border-left-color: var(--risk-low);">
-                <div class="analysis-row"><span class="analysis-label">Strategy:</span>Core Wealth Preservation.</div>
-                <div class="analysis-row"><span class="analysis-label">Daily Rule:</span>If RSI < 40, consider Adding. If RSI > 70, Hold.</div>
-                <div style="font-size:0.75rem; color:#666; margin-top:4px;">*Chart uses SLV (US) for live data.</div>
+            
+            <div class="algo-box">
+                <div class="algo-title">LIVE SIGNAL (1 Day)</div>
+                <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
+                    {
+                    "interval": "1D",
+                    "width": "100%",
+                    "isTransparent": true,
+                    "height": "100%",
+                    "symbol": "AMEX:SLV",
+                    "showIntervalTabs": false,
+                    "displayMode": "single",
+                    "locale": "en",
+                    "colorTheme": "light"
+                    }
+                    </script>
+                </div>
             </div>
+
             <div class="chart-container" id="chart-ssln"></div>
         </div>
 
@@ -233,10 +246,27 @@
                     <a href="https://www.trading212.com/trading-instruments/invest/WPM.US" target="_blank" class="buy-btn-bullion" title="Trade WPM"></a>
                 </div>
             </div>
-            <div class="analysis-box" style="border-left-color: var(--risk-med);">
-                <div class="analysis-row"><span class="analysis-label">Strategy:</span>Dividend Growth.</div>
-                <div class="analysis-row"><span class="analysis-label">Daily Rule:</span>Buy limit orders at the Blue 50-MA Line.</div>
+
+            <div class="algo-box">
+                <div class="algo-title">LIVE SIGNAL (1 Day)</div>
+                <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
+                    {
+                    "interval": "1D",
+                    "width": "100%",
+                    "isTransparent": true,
+                    "height": "100%",
+                    "symbol": "NYSE:WPM",
+                    "showIntervalTabs": false,
+                    "displayMode": "single",
+                    "locale": "en",
+                    "colorTheme": "light"
+                    }
+                    </script>
+                </div>
             </div>
+
             <div class="chart-container" id="chart-wpm"></div>
         </div>
 
@@ -251,10 +281,27 @@
                     <a href="https://www.trading212.com/trading-instruments/invest/AG.US" target="_blank" class="buy-btn-bullion" title="Trade AG"></a>
                 </div>
             </div>
-            <div class="analysis-box" style="border-left-color: var(--risk-high);">
-                <div class="analysis-row"><span class="analysis-label">Strategy:</span>High Volatility (2x Leverage).</div>
-                <div class="analysis-row"><span class="analysis-label">Daily Rule:</span>Sell/Trim if RSI hits 75. Do not hold in crashes.</div>
+
+            <div class="algo-box">
+                <div class="algo-title">LIVE SIGNAL (1 Day)</div>
+                <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
+                    {
+                    "interval": "1D",
+                    "width": "100%",
+                    "isTransparent": true,
+                    "height": "100%",
+                    "symbol": "NYSE:AG",
+                    "showIntervalTabs": false,
+                    "displayMode": "single",
+                    "locale": "en",
+                    "colorTheme": "light"
+                    }
+                    </script>
+                </div>
             </div>
+
             <div class="chart-container" id="chart-ag"></div>
         </div>
 
@@ -269,10 +316,27 @@
                     <a href="https://www.trading212.com/trading-instruments/cfd/XAGUSD" target="_blank" class="buy-btn-bullion" title="Trade CFD"></a>
                 </div>
             </div>
-            <div class="analysis-box" style="border-left-color: var(--risk-bad);">
-                <div class="analysis-row"><span class="analysis-label">Strategy:</span>Short-term Hedging.</div>
-                <div class="analysis-row"><span class="analysis-label">Daily Rule:</span>Close all positions before 22:00 GMT to avoid fees.</div>
+
+            <div class="algo-box">
+                <div class="algo-title">LIVE SIGNAL (15 Min)</div>
+                <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
+                    {
+                    "interval": "15m",
+                    "width": "100%",
+                    "isTransparent": true,
+                    "height": "100%",
+                    "symbol": "OANDA:XAGUSD",
+                    "showIntervalTabs": false,
+                    "displayMode": "single",
+                    "locale": "en",
+                    "colorTheme": "light"
+                    }
+                    </script>
+                </div>
             </div>
+
             <div class="chart-container" id="chart-spot"></div>
         </div>
 
@@ -288,18 +352,16 @@
     // --- 1. MARKET STATUS & TIME LOGIC ---
     function updateMarketStatus() {
         const now = new Date();
-        const dateString = now.toLocaleDateString("en-GB", { weekday: 'short', day: 'numeric', month: 'short' });
-        const timeString = now.toLocaleTimeString("en-GB", { hour: '2-digit', minute: '2-digit' });
+        const timeString = now.toLocaleTimeString("en-GB", { hour: '2-digit', minute: '2-digit', second: '2-digit' });
         
         // Display Timestamp
-        document.getElementById('lastUpdate').innerText = `Last Update: ${timeString}`;
+        document.getElementById('lastUpdate').innerText = `Live: ${timeString}`;
 
-        // Market Hours (Simple Check: Mon-Fri, 14:30 - 21:00 GMT approx for US Market)
+        // Market Hours (Mon-Fri, 14:30 - 21:00 GMT approx for US Market)
         const day = now.getUTCDay(); // 0=Sun, 6=Sat
         const hour = now.getUTCHours();
         const min = now.getUTCMinutes();
         
-        // Convert to rough ET open hours (14:30 UTC to 21:00 UTC)
         const isOpenDay = (day >= 1 && day <= 5);
         const isOpenTime = (hour > 14 || (hour === 14 && min >= 30)) && (hour < 21);
 
@@ -318,9 +380,9 @@
         }
     }
 
-    // Run immediately and then every minute
+    // Run immediately and then every second for the clock
     updateMarketStatus();
-    setInterval(updateMarketStatus, 60000);
+    setInterval(updateMarketStatus, 1000);
 
     // --- 2. CHART CONFIGURATION ---
     const commonConfig = {
