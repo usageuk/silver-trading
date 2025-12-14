@@ -13,6 +13,7 @@
             --glass-border: 1px solid rgba(255, 255, 255, 0.6);
             --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
             --risk-low: #34c759; --risk-med: #007aff; --risk-high: #ff9500; --risk-bad: #ff3b30;
+            --t212-blue: #007aff;
         }
 
         body {
@@ -38,8 +39,36 @@
             border: var(--glass-border); box-shadow: var(--glass-shadow);
             padding: 20px; border-radius: 16px; margin-bottom: 30px;
             display: flex; flex-direction: column; align-items: center; gap: 10px;
+            position: relative; /* For Help Button positioning */
         }
         h1 { margin: 0; font-size: 2rem; color: #2c3e50; text-shadow: 0 1px 1px rgba(255,255,255,0.8); }
+
+        /* HELP BUTTON */
+        .help-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 32px;
+            height: 32px;
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #555;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .help-btn:hover {
+            background: #fff;
+            transform: scale(1.1);
+            color: var(--t212-blue);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
 
         .status-container { display: flex; flex-direction: column; align-items: center; gap: 5px; }
         .status-bar { display: flex; gap: 15px; align-items: center; font-size: 0.9rem; flex-wrap: wrap; justify-content: center; }
@@ -73,18 +102,15 @@
         .action-group { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
         .badge { padding: 4px 8px; border-radius: 6px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; background: rgba(255,255,255,0.8); }
 
-        /* --- BULLION BUTTON WITH TEXT OVERLAY --- */
+        /* BULLION BUTTON */
         .buy-btn-bullion {
             display: flex; justify-content: center; align-items: center;
             width: 110px; height: 40px;
-            /* Bullion Image Background */
             background-image: url('https://raw.githubusercontent.com/usageuk/silver-trading/7418b5e4f1db4ae13bc7d17571f7689231786bad/image/silver_bar_vertical.jpeg');
             background-size: cover; background-position: center;
             border-radius: 6px; box-shadow: 0 4px 6px rgba(0,0,0,0.3);
             text-decoration: none; border: 1px solid #999;
             transition: transform 0.2s, filter 0.2s;
-            
-            /* Text Styling */
             color: #333; font-weight: 800; font-size: 0.75rem;
             text-shadow: 0 1px 0 rgba(255,255,255,0.6);
             text-transform: uppercase; letter-spacing: 0.5px;
@@ -109,6 +135,8 @@
 
 <div class="container">
     <header>
+        <a href="https://github.com/usageuk/silver-trading/blob/acc165d5c4d12a8c51aceb98612c5feedce489df/Help.md" target="_blank" class="help-btn" title="View Help Guide">?</a>
+
         <h1>Silver Investment Tracker</h1>
         
         <div class="status-container">
@@ -279,19 +307,4 @@
 
     function formatDiff(ms) {
         if (ms < 0) return "00m 00s";
-        const h = Math.floor(ms / 3600000);
-        const m = Math.floor((ms % 3600000) / 60000);
-        const s = Math.floor((ms % 60000) / 1000);
-        return `${h}h ${m}m ${s}s`;
-    }
-
-    setInterval(updateMarketLogic, 1000); updateMarketLogic();
-
-    const commonConfig = { "autosize": true, "interval": "D", "timezone": "Etc/UTC", "theme": "light", "style": "1", "locale": "en", "enable_publishing": false, "allow_symbol_change": false, "hide_side_toolbar": true, "studies": [ "RSI@tv-basicstudies", "MASimple@tv-basicstudies" ], "studies_overrides": { "MASimple.length": 50 } };
-    new TradingView.widget({ ...commonConfig, "symbol": "AMEX:SLV", "container_id": "chart-ssln" });
-    new TradingView.widget({ ...commonConfig, "symbol": "NYSE:WPM", "container_id": "chart-wpm" });
-    new TradingView.widget({ ...commonConfig, "symbol": "NYSE:AG", "container_id": "chart-ag" });
-    new TradingView.widget({ ...commonConfig, "symbol": "TVC:SILVER", "container_id": "chart-spot" });
-</script>
-</body>
-</html>
+        const h = Math.floor(ms /
