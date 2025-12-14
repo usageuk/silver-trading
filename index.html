@@ -12,31 +12,21 @@
             --glass-bg: rgba(255, 255, 255, 0.90);
             --glass-border: 1px solid rgba(255, 255, 255, 0.6);
             --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
-            --risk-low: #34c759;
-            --risk-med: #007aff;
-            --risk-high: #ff9500;
-            --risk-bad: #ff3b30;
-            --t212-blue: #007aff; /* Trading 212 Blue Color */
+            --risk-low: #34c759; --risk-med: #007aff; --risk-high: #ff9500; --risk-bad: #ff3b30;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            color: #1a1a1a;
-            min-height: 100vh;
+            margin: 0; padding: 20px; color: #1a1a1a; min-height: 100vh;
         }
 
-        /* VIDEO BACKGROUND CONTAINER */
+        /* VIDEO BACKGROUND */
         .video-background {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; overflow: hidden;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden;
         }
         .video-background video {
             min-width: 100%; min-height: 100%; width: auto; height: auto;
-            position: absolute; top: 50%; left: 50%;
-            transform: translate(-50%, -50%); object-fit: cover;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); object-fit: cover;
         }
 
         .container { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
@@ -44,21 +34,23 @@
         /* HEADER */
         header {
             text-align: center;
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            background: var(--glass-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             border: var(--glass-border); box-shadow: var(--glass-shadow);
             padding: 20px; border-radius: 16px; margin-bottom: 30px;
-            display: flex; flex-direction: column; align-items: center; gap: 15px;
+            display: flex; flex-direction: column; align-items: center; gap: 10px;
         }
         h1 { margin: 0; font-size: 2rem; color: #2c3e50; text-shadow: 0 1px 1px rgba(255,255,255,0.8); }
 
+        .status-container { display: flex; flex-direction: column; align-items: center; gap: 5px; }
         .status-bar { display: flex; gap: 15px; align-items: center; font-size: 0.9rem; flex-wrap: wrap; justify-content: center; }
+        
         .status-badge { padding: 6px 12px; border-radius: 20px; font-weight: 700; display: flex; align-items: center; gap: 6px; border: 1px solid rgba(0,0,0,0.1); }
         .market-open { background-color: #e8f5e9; color: #2e7d32; }
         .market-closed { background-color: #ffebee; color: #c62828; }
-        .time-badge { background-color: #f5f5f7; color: #555; padding: 6px 12px; border-radius: 20px; font-weight: 600; font-variant-numeric: tabular-nums; }
+        
+        .countdown { font-size: 0.85rem; color: #666; font-weight: 600; background: #f0f0f5; padding: 4px 12px; border-radius: 12px; }
 
-        /* GRID & CARDS */
+        /* CARDS */
         .grid-section { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; }
         .card {
             background: var(--glass-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
@@ -76,44 +68,34 @@
         .card.risk-high { border-top-color: var(--risk-high); } .card.risk-bad { border-top-color: var(--risk-bad); }
 
         .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
-        .asset-name { font-size: 1.3rem; font-weight: 800; margin: 0; color: #2c3e50; }
-        .ticker { color: #555; font-size: 0.9rem; font-weight: 600; margin-top: 4px; display: block;}
+        .asset-info h2 { font-size: 1.3rem; font-weight: 800; margin: 0; color: #2c3e50; }
+        .ticker { color: #555; font-size: 0.9rem; font-weight: 600; display: block; margin-top: 4px; }
         .action-group { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
         .badge { padding: 4px 8px; border-radius: 6px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; background: rgba(255,255,255,0.8); }
 
-        /* --- UPDATED BUY BUTTON (T212 Style) --- */
-        .buy-btn-t212 {
-            display: flex; align-items: center; justify-content: center;
-            background-color: var(--t212-blue); color: white;
-            text-decoration: none; font-weight: 700; font-size: 0.9rem;
-            padding: 8px 16px; border-radius: 20px;
-            box-shadow: 0 4px 6px rgba(0, 122, 255, 0.3);
-            transition: all 0.2s ease; border: 1px solid #005bb5;
+        /* --- BULLION BUTTON WITH TEXT OVERLAY --- */
+        .buy-btn-bullion {
+            display: flex; justify-content: center; align-items: center;
+            width: 110px; height: 40px;
+            /* Bullion Image Background */
+            background-image: url('https://raw.githubusercontent.com/usageuk/silver-trading/7418b5e4f1db4ae13bc7d17571f7689231786bad/image/silver_bar_vertical.jpeg');
+            background-size: cover; background-position: center;
+            border-radius: 6px; box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            text-decoration: none; border: 1px solid #999;
+            transition: transform 0.2s, filter 0.2s;
+            
+            /* Text Styling */
+            color: #333; font-weight: 800; font-size: 0.75rem;
+            text-shadow: 0 1px 0 rgba(255,255,255,0.6);
+            text-transform: uppercase; letter-spacing: 0.5px;
         }
-        .buy-btn-t212:hover {
-            background-color: #005bb5; transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0, 122, 255, 0.4);
-        }
-        .buy-btn-t212::before {
-            content: "⚡"; margin-right: 6px; font-size: 1rem;
-        }
-        .buy-btn-t212::after {
-            content: "T212"; font-size: 0.75rem; margin-left: 6px; opacity: 0.8;
-        }
-        /* --------------------------------------- */
+        .buy-btn-bullion:hover { transform: translateY(-2px) scale(1.05); filter: brightness(1.1); }
+        .buy-btn-bullion span { background: rgba(255,255,255,0.4); padding: 2px 5px; border-radius: 4px; backdrop-filter: blur(2px); }
 
-        /* ALGO BOX & CHART */
-        .algo-box {
-            background: rgba(255,255,255,0.5); border-radius: 8px; margin-bottom: 15px;
-            border: 1px solid rgba(0,0,0,0.1); overflow: hidden; height: 300px; position: relative;
-        }
-        .algo-title {
-            position: absolute; top: 5px; left: 10px; font-size: 0.75rem; font-weight: 700;
-            color: #555; z-index: 5; background: rgba(255,255,255,0.8); padding: 2px 6px; border-radius: 4px;
-        }
-        .chart-container {
-            height: 320px; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden; background: #fff;
-        }
+        /* WIDGETS */
+        .algo-box { background: rgba(255,255,255,0.5); border-radius: 8px; margin-bottom: 15px; border: 1px solid rgba(0,0,0,0.1); overflow: hidden; height: 300px; position: relative; }
+        .algo-title { position: absolute; top: 5px; left: 10px; font-size: 0.75rem; font-weight: 700; color: #555; z-index: 5; background: rgba(255,255,255,0.8); padding: 2px 6px; border-radius: 4px; }
+        .chart-container { height: 320px; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden; background: #fff; }
         footer { text-align: center; margin-top: 40px; color: #fff; font-size: 0.85rem; text-shadow: 0 1px 3px rgba(0,0,0,0.8); font-weight: 500; }
     </style>
 </head>
@@ -128,9 +110,14 @@
 <div class="container">
     <header>
         <h1>Silver Investment Tracker</h1>
-        <div class="status-bar">
-            <div id="marketStatus" class="status-badge market-closed"><span id="statusIcon">🔴</span> <span id="statusText">Checking Market...</span></div>
-            <div class="time-badge" id="lastUpdate">Loading Time...</div>
+        
+        <div class="status-container">
+            <div class="status-bar">
+                <div id="marketStatus" class="status-badge market-closed">
+                    <span id="statusIcon">🔴</span> <span id="statusText">Checking...</span>
+                </div>
+                <div id="marketCountdown" class="countdown">Calculating...</div>
+            </div>
         </div>
     </header>
 
@@ -141,7 +128,9 @@
                 <div class="asset-info"><h2 class="asset-name">iShares Physical</h2><span class="ticker">T212: <strong>SSLN</strong></span></div>
                 <div class="action-group">
                     <span class="badge" style="color:var(--risk-low)">#1 Safer</span>
-                    <a href="https://www.trading212.com/trading-instruments/invest/SSLN.GB" target="_blank" class="buy-btn-t212">Buy on</a>
+                    <a href="https://www.trading212.com/trading-instruments/invest/SSLN.GB" target="_blank" class="buy-btn-bullion">
+                        <span>Buy T212</span>
+                    </a>
                 </div>
             </div>
             <div class="algo-box">
@@ -161,7 +150,9 @@
                 <div class="asset-info"><h2 class="asset-name">Wheaton Precious</h2><span class="ticker">T212: <strong>WPM</strong></span></div>
                 <div class="action-group">
                     <span class="badge" style="color:var(--risk-med)">#2 Growth</span>
-                    <a href="https://www.trading212.com/trading-instruments/invest/WPM.US" target="_blank" class="buy-btn-t212">Buy on</a>
+                    <a href="https://www.trading212.com/trading-instruments/invest/WPM.US" target="_blank" class="buy-btn-bullion">
+                        <span>Buy T212</span>
+                    </a>
                 </div>
             </div>
             <div class="algo-box">
@@ -181,7 +172,9 @@
                 <div class="asset-info"><h2 class="asset-name">First Majestic</h2><span class="ticker">T212: <strong>AG</strong></span></div>
                 <div class="action-group">
                     <span class="badge" style="color:var(--risk-high)">#3 Aggressive</span>
-                    <a href="https://www.trading212.com/trading-instruments/invest/AG.US" target="_blank" class="buy-btn-t212">Buy on</a>
+                    <a href="https://www.trading212.com/trading-instruments/invest/AG.US" target="_blank" class="buy-btn-bullion">
+                        <span>Buy T212</span>
+                    </a>
                 </div>
             </div>
             <div class="algo-box">
@@ -201,7 +194,9 @@
                 <div class="asset-info"><h2 class="asset-name">Spot Silver CFD</h2><span class="ticker">T212: <strong>Silver</strong></span></div>
                 <div class="action-group">
                     <span class="badge" style="color:var(--risk-bad)">Day Trade Only</span>
-                    <a href="https://www.trading212.com/trading-instruments/cfd/XAGUSD" target="_blank" class="buy-btn-t212">Buy on</a>
+                    <a href="https://www.trading212.com/trading-instruments/cfd/XAGUSD" target="_blank" class="buy-btn-bullion">
+                        <span>Buy T212</span>
+                    </a>
                 </div>
             </div>
             <div class="algo-box">
@@ -222,20 +217,75 @@
 
 <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
 <script>
-    function updateMarketStatus() {
+    function updateMarketLogic() {
         const now = new Date();
-        const timeString = now.toLocaleTimeString("en-GB", { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-        document.getElementById('lastUpdate').innerText = `Live: ${timeString}`;
-        const day = now.getUTCDay(); const hour = now.getUTCHours(); const min = now.getUTCMinutes();
-        const isOpenDay = (day >= 1 && day <= 5);
-        const isOpenTime = (hour > 14 || (hour === 14 && min >= 30)) && (hour < 21);
+        const day = now.getUTCDay(); // 0=Sun, 6=Sat
+        const hour = now.getUTCHours();
+        const min = now.getUTCMinutes();
+
+        // US Market Open (14:30 - 21:00 UTC)
+        const openHour = 14; const openMin = 30;
+        const closeHour = 21; const closeMin = 0;
+
+        // Check if Open
+        let isOpen = false;
+        if (day >= 1 && day <= 5) { // Mon-Fri
+            if (hour > openHour || (hour === openHour && min >= openMin)) {
+                if (hour < closeHour || (hour === closeHour && min < closeMin)) {
+                    isOpen = true;
+                }
+            }
+        }
+
+        // DOM Elements
         const statusBadge = document.getElementById('marketStatus');
         const statusText = document.getElementById('statusText');
         const statusIcon = document.getElementById('statusIcon');
-        if (isOpenDay && isOpenTime) { statusBadge.className = "status-badge market-open"; statusText.innerText = "US Market Open"; statusIcon.innerText = "🟢"; } 
-        else { statusBadge.className = "status-badge market-closed"; statusText.innerText = "Market Closed"; statusIcon.innerText = "🔴"; }
+        const countdownEl = document.getElementById('marketCountdown');
+
+        if (isOpen) {
+            statusBadge.className = "status-badge market-open";
+            statusText.innerText = "US Market Open";
+            statusIcon.innerText = "🟢";
+            
+            // Count down to Close
+            const closeTime = new Date(now);
+            closeTime.setUTCHours(closeHour, closeMin, 0, 0);
+            const diff = closeTime - now;
+            countdownEl.innerText = "Closes in " + formatDiff(diff);
+            
+        } else {
+            statusBadge.className = "status-badge market-closed";
+            statusText.innerText = "Market Closed";
+            statusIcon.innerText = "🔴";
+
+            // Calculate next Open
+            let nextOpen = new Date(now);
+            nextOpen.setUTCHours(openHour, openMin, 0, 0);
+            
+            // If it's already past today's open, or it's weekend, find next valid day
+            if (now > nextOpen || day === 0 || day === 6) {
+                // If today is Friday afternoon/Sat/Sun, move to Monday
+                if (day === 5 && now > nextOpen) nextOpen.setUTCDate(now.getUTCDate() + 3);
+                else if (day === 6) nextOpen.setUTCDate(now.getUTCDate() + 2);
+                else if (day === 0) nextOpen.setUTCDate(now.getUTCDate() + 1);
+                else nextOpen.setUTCDate(now.getUTCDate() + 1); // Tue-Fri morning logic
+            }
+            
+            const diff = nextOpen - now;
+            countdownEl.innerText = "Opens in " + formatDiff(diff);
+        }
     }
-    updateMarketStatus(); setInterval(updateMarketStatus, 1000);
+
+    function formatDiff(ms) {
+        if (ms < 0) return "00m 00s";
+        const h = Math.floor(ms / 3600000);
+        const m = Math.floor((ms % 3600000) / 60000);
+        const s = Math.floor((ms % 60000) / 1000);
+        return `${h}h ${m}m ${s}s`;
+    }
+
+    setInterval(updateMarketLogic, 1000); updateMarketLogic();
 
     const commonConfig = { "autosize": true, "interval": "D", "timezone": "Etc/UTC", "theme": "light", "style": "1", "locale": "en", "enable_publishing": false, "allow_symbol_change": false, "hide_side_toolbar": true, "studies": [ "RSI@tv-basicstudies", "MASimple@tv-basicstudies" ], "studies_overrides": { "MASimple.length": 50 } };
     new TradingView.widget({ ...commonConfig, "symbol": "AMEX:SLV", "container_id": "chart-ssln" });
