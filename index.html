@@ -6,7 +6,7 @@
     <title>Silver Investment Tracker - Premium</title>
     <style>
         :root {
-            --t212-blue: #007aff;
+            /* Glassmorphism variables */
             --glass-bg: rgba(255, 255, 255, 0.85);
             --glass-border: 1px solid rgba(255, 255, 255, 0.5);
             --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
@@ -23,15 +23,16 @@
             margin: 0;
             padding: 20px;
             color: #1a1a1a;
-            
-            /* YOUR SILVER BULLION BACKGROUND */
-            /* Using the raw version of your GitHub image so it loads directly */
-            background-image: url('https://raw.githubusercontent.com/usageuk/silver-trading/0a62654d3548c821866100e2974b0ad09a20a7a2/image/1-kilo-silver-cast-bar-onedge.webp');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed; /* This makes it "stationary" */
-            background-repeat: no-repeat;
             min-height: 100vh;
+            
+            /* ---- BACKGROUND FIX ---- */
+            /* Using your silver bar image as a fixed, full-screen background */
+            background-image: url('https://raw.githubusercontent.com/usageuk/silver-trading/0a62654d3548c821866100e2974b0ad09a20a7a2/image/1-kilo-silver-cast-bar-onedge.webp');
+            background-size: cover;           /* Scales image to cover entire screen */
+            background-position: center top;  /* Centers horizontally, aligns to top */
+            background-attachment: fixed;     /* Keeps background stationary while scrolling */
+            background-repeat: no-repeat;
+            /* ------------------------ */
         }
 
         .container { max-width: 1200px; margin: 0 auto; }
@@ -44,7 +45,7 @@
             -webkit-backdrop-filter: blur(8px);
             border: var(--glass-border);
             box-shadow: var(--glass-shadow);
-            padding: 15px 20px; /* Reduced padding */
+            padding: 15px 20px;
             border-radius: 12px;
             margin-bottom: 30px;
             display: flex;
@@ -64,7 +65,7 @@
 
         h1 { 
             margin: 0; 
-            font-size: 1.8rem; /* Smaller font */
+            font-size: 1.8rem;
             text-shadow: 0 1px 0 rgba(255,255,255,0.5); 
             color: #2c3e50;
         }
@@ -75,7 +76,6 @@
             font-size: 0.8rem; font-weight: 700;
         }
 
-        /* Slim Tech Legend */
         .tech-legend {
             display: flex;
             gap: 20px;
@@ -135,15 +135,32 @@
         .action-group { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
         .badge { padding: 4px 8px; border-radius: 6px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; background: rgba(255,255,255,0.8); }
 
-        .buy-btn {
-            background: linear-gradient(135deg, var(--t212-blue), #005bb5);
-            color: white; text-decoration: none; padding: 6px 14px; border-radius: 20px;
-            font-size: 0.8rem; font-weight: 600; transition: all 0.2s;
-            display: inline-flex; align-items: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        /* ---- BULLION BUTTON STYLE ---- */
+        .buy-btn-bullion {
+            display: inline-block;
+            width: 100px;  /* Adjust width as needed */
+            height: 40px; /* Adjust height as needed */
+            /* Using your bullion image as the button background */
+            background-image: url('https://raw.githubusercontent.com/usageuk/silver-trading/34f8a633c89b06c3b28e06deff322b6088cde333/image/silver%20bullion.webp');
+            background-size: cover;
+            background-position: center;
+            border-radius: 8px; /* Rounded corners like a bar */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #aaa; /* Subtle metallic border */
+            
+            /* Centering text if you want to add "TRADE" text over the image later */
+            display: flex; justify-content: center; align-items: center;
+            color: transparent; /* Hide text, show only image */
+            font-weight: bold; text-shadow: 0 1px 1px rgba(255,255,255,0.5);
         }
-        .buy-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.3); }
-        .buy-btn::after { content: " ↗"; margin-left: 4px; }
+
+        .buy-btn-bullion:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+            filter: brightness(1.1); /* Make it shine on hover */
+        }
+        /* ------------------------------ */
 
         .analysis-box {
             background: rgba(255,255,255,0.5);
@@ -201,7 +218,7 @@
                 </div>
                 <div class="action-group">
                     <span class="badge" style="color:var(--risk-low)">#1 Safer</span>
-                    <a href="https://www.trading212.com/trading-instruments/invest/SSLN.GB" target="_blank" class="buy-btn">Trade</a>
+                    <a href="https://www.trading212.com/trading-instruments/invest/SSLN.GB" target="_blank" class="buy-btn-bullion" title="Trade SSLN">Trade</a>
                 </div>
             </div>
             <div class="analysis-box" style="border-left-color: var(--risk-low);">
@@ -220,7 +237,7 @@
                 </div>
                 <div class="action-group">
                     <span class="badge" style="color:var(--risk-med)">#2 Growth</span>
-                    <a href="https://www.trading212.com/trading-instruments/invest/WPM.US" target="_blank" class="buy-btn">Trade</a>
+                    <a href="https://www.trading212.com/trading-instruments/invest/WPM.US" target="_blank" class="buy-btn-bullion" title="Trade WPM">Trade</a>
                 </div>
             </div>
             <div class="analysis-box" style="border-left-color: var(--risk-med);">
@@ -238,7 +255,7 @@
                 </div>
                 <div class="action-group">
                     <span class="badge" style="color:var(--risk-high)">#3 Aggressive</span>
-                    <a href="https://www.trading212.com/trading-instruments/invest/AG.US" target="_blank" class="buy-btn">Trade</a>
+                    <a href="https://www.trading212.com/trading-instruments/invest/AG.US" target="_blank" class="buy-btn-bullion" title="Trade AG">Trade</a>
                 </div>
             </div>
             <div class="analysis-box" style="border-left-color: var(--risk-high);">
@@ -256,7 +273,7 @@
                 </div>
                 <div class="action-group">
                     <span class="badge" style="color:var(--risk-bad)">Day Trade Only</span>
-                    <a href="https://www.trading212.com/trading-instruments/cfd/XAGUSD" target="_blank" class="buy-btn">Trade</a>
+                    <a href="https://www.trading212.com/trading-instruments/cfd/XAGUSD" target="_blank" class="buy-btn-bullion" title="Trade CFD">Trade</a>
                 </div>
             </div>
             <div class="analysis-box" style="border-left-color: var(--risk-bad);">
