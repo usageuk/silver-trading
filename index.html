@@ -21,16 +21,33 @@
             padding: 20px;
             color: #1a1a1a;
             min-height: 100vh;
-            
-            /* BACKGROUND: Full Screen Silver Bullion */
-            background-image: url('https://raw.githubusercontent.com/usageuk/silver-trading/0a62654d3548c821866100e2974b0ad09a20a7a2/image/1-kilo-silver-cast-bar-onedge.webp');
-            background-size: cover;
-            background-position: center top;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
+            /* REMOVED STATIC IMAGE BACKGROUND */
         }
 
-        .container { max-width: 1200px; margin: 0 auto; }
+        /* VIDEO BACKGROUND CONTAINER */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Ensures it stays behind everything else */
+            overflow: hidden;
+        }
+
+        .video-background video {
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: cover; /* Ensures video covers entire screen */
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
 
         /* HEADER */
         header {
@@ -154,7 +171,7 @@
             margin-bottom: 15px;
             border: 1px solid rgba(0,0,0,0.1);
             overflow: hidden;
-            height: 300px; /* INCREASED HEIGHT to see full gauge */
+            height: 300px;
             position: relative;
         }
         .algo-title {
@@ -185,6 +202,13 @@
     </style>
 </head>
 <body>
+
+<div class="video-background">
+    <video autoplay muted loop playsinline>
+        <source src="https://raw.githubusercontent.com/usageuk/silver-trading/94c06252a843a63a2187c79d2cc4927fe26966c0/image/Silver_Bullion_Rotating_Video_Generation.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>
 
 <div class="container">
     <header>
