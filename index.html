@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Silver Investment Tracker - Auto Strategy</title>
+    <title>Silver Investment Tracker - Risk Monitor</title>
     
     <link rel="icon" type="image/jpeg" href="https://raw.githubusercontent.com/usageuk/silver-trading/34f8a633c89b06c3b28e06deff322b6088cde333/image/silver%20bullion.webp">
 
@@ -64,7 +64,7 @@
         .market-closed { background-color: #ffebee; color: #c62828; }
         .countdown { font-size: 0.85rem; color: #666; font-weight: 600; background: #f0f0f5; padding: 4px 12px; border-radius: 12px; }
 
-        /* CARDS */
+        /* GRID */
         .grid-section { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; }
         .card {
             background: var(--glass-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
@@ -76,6 +76,13 @@
         }
         .card:nth-child(1) { animation-delay: 0.1s; } .card:nth-child(2) { animation-delay: 0.2s; }
         .card:nth-child(3) { animation-delay: 0.3s; } .card:nth-child(4) { animation-delay: 0.4s; }
+        /* Shortage Monitor Card Animation */
+        .card-monitor {
+             grid-column: 1 / -1; /* Span full width */
+             border-top: 6px solid #666;
+             animation-delay: 0.5s;
+        }
+
         @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
 
         .card.risk-low { border-top-color: var(--risk-low); } .card.risk-med { border-top-color: var(--risk-med); }
@@ -102,41 +109,26 @@
         .chart-container { height: 320px; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden; background: #fff; }
         footer { text-align: center; margin-top: 40px; color: #fff; font-size: 0.85rem; text-shadow: 0 1px 3px rgba(0,0,0,0.8); font-weight: 500; }
 
-        /* --- MODAL STYLES --- */
+        /* MODAL */
         .modal {
-            display: none; /* Hidden by default */
-            position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%;
-            background-color: var(--modal-overlay);
-            backdrop-filter: blur(5px);
-            align-items: center; justify-content: center;
-            opacity: 0; transition: opacity 0.3s ease;
+            display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%;
+            background-color: var(--modal-overlay); backdrop-filter: blur(5px);
+            align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease;
         }
         .modal.show { display: flex; opacity: 1; }
-        
         .modal-content {
-            background: rgba(255, 255, 255, 0.95);
-            width: 90%; max-width: 600px; max-height: 80vh; overflow-y: auto;
-            border-radius: 16px; padding: 30px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
-            position: relative;
-            transform: translateY(20px); transition: transform 0.3s ease;
-            color: #333;
+            background: rgba(255, 255, 255, 0.95); width: 90%; max-width: 600px; max-height: 80vh; overflow-y: auto;
+            border-radius: 16px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            position: relative; transform: translateY(20px); transition: transform 0.3s ease; color: #333;
         }
         .modal.show .modal-content { transform: translateY(0); }
-
-        .close-btn {
-            position: absolute; top: 15px; right: 20px; font-size: 1.5rem; font-weight: bold;
-            color: #666; cursor: pointer; transition: color 0.2s;
-        }
+        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; font-weight: bold; color: #666; cursor: pointer; }
         .close-btn:hover { color: var(--risk-bad); }
 
-        /* Modal Text Styles */
         .modal h2 { margin-top: 0; color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 10px; }
         .modal h3 { color: var(--t212-blue); margin-top: 20px; margin-bottom: 10px; }
         .modal p { line-height: 1.6; margin-bottom: 10px; font-size: 0.95rem; }
-        .modal ul { margin: 10px 0; padding-left: 20px; }
         .modal li { margin-bottom: 8px; font-size: 0.95rem; }
-        .modal-footer { margin-top: 30px; font-size: 0.8rem; color: #777; border-top: 1px solid #eee; padding-top: 15px; text-align: center; }
     </style>
 </head>
 <body>
@@ -151,45 +143,31 @@
     <div class="modal-content">
         <span class="close-btn" onclick="toggleHelp()">&times;</span>
         <h2>Silver Tracker Guide</h2>
+        <p><strong>Protect Your Capital:</strong> Never invest more than you can afford to lose. This dashboard helps you make data-driven decisions.</p>
         
-        <p>Welcome to the <strong>Silver Investment Tracker</strong>. This dashboard categorizes silver assets by risk level and provides real-time "Buy/Sell" signals based on technical algorithms.</p>
-
-        <h3>🚦 Risk Categories</h3>
+        <h3>⚠️ New: Shortage Monitor</h3>
+        <p>Check the "Decoupling Monitor" at the bottom of the page.</p>
         <ul>
-            <li>🟢 <strong>#1 Safer (SSLN):</strong> Physical Silver ETF. Tracks the real metal price. Lower risk, wealth preservation.</li>
-            <li>🔵 <strong>#2 Growth (WPM):</strong> Streaming company. Safer than miners, pays dividends.</li>
-            <li>🟠 <strong>#3 Aggressive (AG):</strong> First Majestic Miner. High volatility. Moves 2x faster than spot silver.</li>
-            <li>🔴 <strong>CFD (Spot):</strong> Day trading only. High fees if held overnight. Use for short-term hedging.</li>
+            <li><strong>Flat Line:</strong> Normal. The ETF (SSLN) is tracking Silver correctly.</li>
+            <li><strong>Spike UP 📈:</strong> DANGER. The ETF is trading at a "Premium" (Too Expensive). Do not buy.</li>
+            <li><strong>Crash DOWN 📉:</strong> Discount. The ETF is cheaper than real silver (Good Buy).</li>
         </ul>
 
-        <h3>⚙️ How the "Auto-Strategy" Works</h3>
-        <p>We use live <strong>TradingView Technical Analysis</strong> gauges instead of static advice.</p>
+        <h3>🚦 Asset Risk</h3>
         <ul>
-            <li><strong>Strong Buy / Buy:</strong> Momentum is positive (MA & RSI alignment).</li>
-            <li><strong>Neutral:</strong> Market is undecided. Wait.</li>
-            <li><strong>Sell:</strong> Downward trend detected.</li>
+            <li>🟢 <strong>#1 Safer (SSLN):</strong> Physical Silver ETF. Lower risk.</li>
+            <li>🔴 <strong>CFD (Spot):</strong> High Risk. Fees apply daily. Don't hold long term.</li>
         </ul>
-
-        <h3>🕒 Market Timer</h3>
-        <p>The status bar at the top automatically detects if the <strong>US Market (NYSE)</strong> is open or closed and provides a countdown based on your local time.</p>
-
-        <div class="modal-footer">
-            Note: This tool is for informational purposes only. Not financial advice. Capital at risk.
-        </div>
     </div>
 </div>
 
 <div class="container">
     <header>
         <div class="help-btn" onclick="toggleHelp()" title="Open Help Guide">?</div>
-
         <h1>Silver Investment Tracker</h1>
-        
         <div class="status-container">
             <div class="status-bar">
-                <div id="marketStatus" class="status-badge market-closed">
-                    <span id="statusIcon">🔴</span> <span id="statusText">Checking...</span>
-                </div>
+                <div id="marketStatus" class="status-badge market-closed"><span id="statusIcon">🔴</span> <span id="statusText">Checking...</span></div>
                 <div id="marketCountdown" class="countdown">Calculating...</div>
             </div>
         </div>
@@ -277,6 +255,24 @@
             <div class="chart-container" id="chart-spot"></div>
         </div>
 
+        <div class="card card-monitor">
+            <div class="card-header">
+                <div class="asset-info">
+                    <h2 class="asset-name">⚠️ Shortage Decoupling Monitor</h2>
+                    <span class="ticker">ETF Price vs Spot Price Ratio</span>
+                </div>
+                <div class="action-group">
+                    <span class="badge" style="background:#333; color:#fff">System Risk</span>
+                </div>
+            </div>
+            <div style="background:#fff; padding:15px; border-radius:8px; margin-bottom:15px; border-left:4px solid #333; font-size:0.9rem;">
+                <strong>How to read:</strong> This line tracks the "Premium". 
+                <br>• If line is <strong>FLAT</strong>: Safe. The ETF is tracking perfectly.
+                <br>• If line <strong>SPIKES UP</strong>: <strong>DANGER</strong>. The ETF is overpriced (Shortage Panic). <strong>Do not buy.</strong>
+            </div>
+            <div class="chart-container" id="chart-ratio"></div>
+        </div>
+
     </div>
     <footer><p>Charts powered by TradingView • Not Financial Advice • <strong>Invest at your own risk.</strong></p></footer>
 </div>
@@ -288,50 +284,35 @@
     function toggleHelp() {
         if (modal.classList.contains('show')) {
             modal.classList.remove('show');
-            setTimeout(() => { modal.style.display = 'none'; }, 300); // Wait for transition
+            setTimeout(() => { modal.style.display = 'none'; }, 300);
         } else {
             modal.style.display = 'flex';
-            setTimeout(() => { modal.classList.add('show'); }, 10); // Small delay for CSS opacity transition
+            setTimeout(() => { modal.classList.add('show'); }, 10);
         }
     }
-    // Close modal when clicking outside
-    window.onclick = function(event) {
-        if (event.target == modal) toggleHelp();
-    }
+    window.onclick = function(event) { if (event.target == modal) toggleHelp(); }
 
     // --- MARKET TIMER LOGIC ---
     function updateMarketLogic() {
         const now = new Date();
-        const day = now.getUTCDay(); // 0=Sun
-        const hour = now.getUTCHours();
-        const min = now.getUTCMinutes();
-        const openHour = 14; const openMin = 30; // 14:30 UTC
-        const closeHour = 21; const closeMin = 0; // 21:00 UTC
-
+        const day = now.getUTCDay(); const hour = now.getUTCHours(); const min = now.getUTCMinutes();
+        const openHour = 14; const openMin = 30; const closeHour = 21; const closeMin = 0;
         let isOpen = false;
         if (day >= 1 && day <= 5) {
             if (hour > openHour || (hour === openHour && min >= openMin)) {
-                if (hour < closeHour || (hour === closeHour && min < closeMin)) {
-                    isOpen = true;
-                }
+                if (hour < closeHour || (hour === closeHour && min < closeMin)) isOpen = true;
             }
         }
-
         const statusBadge = document.getElementById('marketStatus');
         const statusText = document.getElementById('statusText');
         const statusIcon = document.getElementById('statusIcon');
         const countdownEl = document.getElementById('marketCountdown');
-
         if (isOpen) {
-            statusBadge.className = "status-badge market-open";
-            statusText.innerText = "US Market Open";
-            statusIcon.innerText = "🟢";
+            statusBadge.className = "status-badge market-open"; statusText.innerText = "US Market Open"; statusIcon.innerText = "🟢";
             const closeTime = new Date(now); closeTime.setUTCHours(closeHour, closeMin, 0, 0);
             countdownEl.innerText = "Closes in " + formatDiff(closeTime - now);
         } else {
-            statusBadge.className = "status-badge market-closed";
-            statusText.innerText = "Market Closed";
-            statusIcon.innerText = "🔴";
+            statusBadge.className = "status-badge market-closed"; statusText.innerText = "Market Closed"; statusIcon.innerText = "🔴";
             let nextOpen = new Date(now); nextOpen.setUTCHours(openHour, openMin, 0, 0);
             if (now > nextOpen || day === 0 || day === 6) {
                 if (day === 5 && now > nextOpen) nextOpen.setUTCDate(now.getUTCDate() + 3);
@@ -342,22 +323,31 @@
             countdownEl.innerText = "Opens in " + formatDiff(nextOpen - now);
         }
     }
-
     function formatDiff(ms) {
         if (ms < 0) return "00m 00s";
-        const h = Math.floor(ms / 3600000);
-        const m = Math.floor((ms % 3600000) / 60000);
-        const s = Math.floor((ms % 60000) / 1000);
+        const h = Math.floor(ms / 3600000); const m = Math.floor((ms % 3600000) / 60000); const s = Math.floor((ms % 60000) / 1000);
         return `${h}h ${m}m ${s}s`;
     }
     setInterval(updateMarketLogic, 1000); updateMarketLogic();
 
     // --- CHART CONFIG ---
     const commonConfig = { "autosize": true, "interval": "D", "timezone": "Etc/UTC", "theme": "light", "style": "1", "locale": "en", "enable_publishing": false, "allow_symbol_change": false, "hide_side_toolbar": true, "studies": [ "RSI@tv-basicstudies", "MASimple@tv-basicstudies" ], "studies_overrides": { "MASimple.length": 50 } };
+    
     new TradingView.widget({ ...commonConfig, "symbol": "AMEX:SLV", "container_id": "chart-ssln" });
     new TradingView.widget({ ...commonConfig, "symbol": "NYSE:WPM", "container_id": "chart-wpm" });
     new TradingView.widget({ ...commonConfig, "symbol": "NYSE:AG", "container_id": "chart-ag" });
     new TradingView.widget({ ...commonConfig, "symbol": "TVC:SILVER", "container_id": "chart-spot" });
+
+    // --- RATIO CHART (ETF vs SPOT) ---
+    // This chart divides SLV price by Spot Silver price to show the ratio.
+    new TradingView.widget({ 
+        ...commonConfig, 
+        "symbol": "AMEX:SLV/TVC:SILVER", 
+        "container_id": "chart-ratio",
+        "studies": [], // Remove indicators for this one to keep it clean
+        "style": "2"   // Line Chart style
+    });
+
 </script>
 </body>
 </html>
