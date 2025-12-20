@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Silver Investment Tracker - Risk Monitor</title>
+    <title>Silver Investment Tracker - Physical vs Paper</title>
     
     <link rel="icon" type="image/jpeg" href="https://raw.githubusercontent.com/usageuk/silver-trading/34f8a633c89b06c3b28e06deff322b6088cde333/image/silver%20bullion.webp">
 
     <style>
         :root {
-            --glass-bg: rgba(255, 255, 255, 0.90);
+            --glass-bg: rgba(255, 255, 255, 0.95);
             --glass-border: 1px solid rgba(255, 255, 255, 0.6);
             --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
-            --risk-low: #34c759; --risk-med: #007aff; --risk-high: #ff9500; --risk-bad: #ff3b30;
-            --t212-blue: #007aff;
-            --modal-overlay: rgba(0, 0, 0, 0.6);
+            /* Updated Risk Colors */
+            --risk-safe: #00c853;   /* Real Metal */
+            --risk-stock: #2962ff;  /* Companies */
+            --risk-paper: #d50000;  /* Fake Paper */
         }
 
         body {
@@ -38,68 +39,68 @@
             text-align: center;
             background: var(--glass-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             border: var(--glass-border); box-shadow: var(--glass-shadow);
-            padding: 20px; border-radius: 16px; margin-bottom: 30px;
-            display: flex; flex-direction: column; align-items: center; gap: 10px;
+            padding: 25px; border-radius: 16px; margin-bottom: 30px;
+            display: flex; flex-direction: column; align-items: center; gap: 15px;
             position: relative; 
         }
-        h1 { margin: 0; font-size: 2rem; color: #2c3e50; text-shadow: 0 1px 1px rgba(255,255,255,0.8); }
+        h1 { margin: 0; font-size: 2.2rem; color: #2c3e50; text-shadow: 0 1px 1px rgba(255,255,255,0.8); }
+
+        /* REALITY CHECK LEGEND */
+        .reality-legend {
+            display: flex; gap: 15px; flex-wrap: wrap; justify-content: center;
+            background: rgba(0,0,0,0.05); padding: 10px 20px; border-radius: 20px;
+        }
+        .reality-item { display: flex; align-items: center; gap: 6px; font-size: 0.85rem; font-weight: 600; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
 
         /* HELP BUTTON */
         .help-btn {
             position: absolute; top: 20px; right: 20px;
-            width: 32px; height: 32px;
-            background: rgba(255, 255, 255, 0.5);
-            border: 1px solid rgba(0,0,0,0.1); border-radius: 50%;
+            width: 36px; height: 36px;
+            background: #fff; border: 1px solid #ccc; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            cursor: pointer; color: #555; font-weight: bold; font-size: 1.1rem;
-            transition: all 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            user-select: none;
+            cursor: pointer; color: #333; font-weight: bold; font-size: 1.2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-        .help-btn:hover { background: #fff; transform: scale(1.1); color: var(--t212-blue); box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        .help-btn:hover { transform: scale(1.1); color: var(--risk-stock); }
 
-        .status-container { display: flex; flex-direction: column; align-items: center; gap: 5px; }
-        .status-bar { display: flex; gap: 15px; align-items: center; font-size: 0.9rem; flex-wrap: wrap; justify-content: center; }
-        .status-badge { padding: 6px 12px; border-radius: 20px; font-weight: 700; display: flex; align-items: center; gap: 6px; border: 1px solid rgba(0,0,0,0.1); }
-        .market-open { background-color: #e8f5e9; color: #2e7d32; }
-        .market-closed { background-color: #ffebee; color: #c62828; }
-        .countdown { font-size: 0.85rem; color: #666; font-weight: 600; background: #f0f0f5; padding: 4px 12px; border-radius: 12px; }
-
-        /* GRID */
+        /* CARDS */
         .grid-section { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; }
         .card {
-            background: var(--glass-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            border: var(--glass-border); border-radius: 16px; padding: 20px;
-            box-shadow: var(--glass-shadow); border-top: 6px solid #ccc;
+            background: var(--glass-bg); backdrop-filter: blur(12px);
+            border: var(--glass-border); border-radius: 16px; padding: 25px;
+            box-shadow: var(--glass-shadow); border-top: 8px solid #ccc;
             display: flex; flex-direction: column;
             animation: slideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
             opacity: 0; transform: translateY(20px);
         }
         .card:nth-child(1) { animation-delay: 0.1s; } .card:nth-child(2) { animation-delay: 0.2s; }
         .card:nth-child(3) { animation-delay: 0.3s; } .card:nth-child(4) { animation-delay: 0.4s; }
-        /* Shortage Monitor Card Animation */
-        .card-monitor {
-             grid-column: 1 / -1; /* Span full width */
-             border-top: 6px solid #666;
-             animation-delay: 0.5s;
-        }
+        
+        /* New Risk Colors */
+        .card.risk-safe { border-top-color: var(--risk-safe); }
+        .card.risk-stock { border-top-color: var(--risk-stock); }
+        .card.risk-paper { border-top-color: var(--risk-paper); }
 
         @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
 
-        .card.risk-low { border-top-color: var(--risk-low); } .card.risk-med { border-top-color: var(--risk-med); }
-        .card.risk-high { border-top-color: var(--risk-high); } .card.risk-bad { border-top-color: var(--risk-bad); }
-
-        .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
-        .asset-info h2 { font-size: 1.3rem; font-weight: 800; margin: 0; color: #2c3e50; }
+        .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
+        .asset-info h2 { font-size: 1.4rem; font-weight: 800; margin: 0; color: #2c3e50; }
         .ticker { color: #555; font-size: 0.9rem; font-weight: 600; display: block; margin-top: 4px; }
         .action-group { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
-        .badge { padding: 4px 8px; border-radius: 6px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; background: rgba(255,255,255,0.8); }
+        
+        /* TYPE BADGES */
+        .type-badge { 
+            padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; 
+            letter-spacing: 0.5px; color: #fff; text-align: center;
+        }
 
         .buy-btn-bullion {
-            display: flex; justify-content: center; align-items: center; width: 110px; height: 40px;
+            display: flex; justify-content: center; align-items: center; width: 120px; height: 40px;
             background-image: url('https://raw.githubusercontent.com/usageuk/silver-trading/7418b5e4f1db4ae13bc7d17571f7689231786bad/image/silver_bar_vertical.jpeg');
             background-size: cover; background-position: center; border-radius: 6px; box-shadow: 0 4px 6px rgba(0,0,0,0.3);
             text-decoration: none; border: 1px solid #999; transition: transform 0.2s, filter 0.2s;
-            color: #333; font-weight: 800; font-size: 0.75rem; text-shadow: 0 1px 0 rgba(255,255,255,0.6); text-transform: uppercase;
+            color: #333; font-weight: 800; font-size: 0.8rem; text-shadow: 0 1px 0 rgba(255,255,255,0.6); text-transform: uppercase;
         }
         .buy-btn-bullion:hover { transform: translateY(-2px) scale(1.05); filter: brightness(1.1); }
         .buy-btn-bullion span { background: rgba(255,255,255,0.4); padding: 2px 5px; border-radius: 4px; backdrop-filter: blur(2px); }
@@ -107,28 +108,29 @@
         .algo-box { background: rgba(255,255,255,0.5); border-radius: 8px; margin-bottom: 15px; border: 1px solid rgba(0,0,0,0.1); overflow: hidden; height: 300px; position: relative; }
         .algo-title { position: absolute; top: 5px; left: 10px; font-size: 0.75rem; font-weight: 700; color: #555; z-index: 5; background: rgba(255,255,255,0.8); padding: 2px 6px; border-radius: 4px; }
         .chart-container { height: 320px; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden; background: #fff; }
-        footer { text-align: center; margin-top: 40px; color: #fff; font-size: 0.85rem; text-shadow: 0 1px 3px rgba(0,0,0,0.8); font-weight: 500; }
+        
+        .monitor-alert { 
+            background: #ffebee; border-left: 5px solid #d50000; padding: 15px; font-size: 0.9rem; margin-bottom: 15px; border-radius: 4px; color: #c62828; 
+        }
 
         /* MODAL */
         .modal {
             display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%;
-            background-color: var(--modal-overlay); backdrop-filter: blur(5px);
+            background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px);
             align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease;
         }
         .modal.show { display: flex; opacity: 1; }
         .modal-content {
-            background: rgba(255, 255, 255, 0.95); width: 90%; max-width: 600px; max-height: 80vh; overflow-y: auto;
-            border-radius: 16px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            background: #fff; width: 90%; max-width: 650px; max-height: 85vh; overflow-y: auto;
+            border-radius: 16px; padding: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
             position: relative; transform: translateY(20px); transition: transform 0.3s ease; color: #333;
         }
         .modal.show .modal-content { transform: translateY(0); }
-        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; font-weight: bold; color: #666; cursor: pointer; }
-        .close-btn:hover { color: var(--risk-bad); }
-
-        .modal h2 { margin-top: 0; color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 10px; }
-        .modal h3 { color: var(--t212-blue); margin-top: 20px; margin-bottom: 10px; }
-        .modal p { line-height: 1.6; margin-bottom: 10px; font-size: 0.95rem; }
-        .modal li { margin-bottom: 8px; font-size: 0.95rem; }
+        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 2rem; color: #999; cursor: pointer; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.9rem; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background: #f4f4f4; }
     </style>
 </head>
 <body>
@@ -142,44 +144,70 @@
 <div id="helpModal" class="modal">
     <div class="modal-content">
         <span class="close-btn" onclick="toggleHelp()">&times;</span>
-        <h2>Silver Tracker Guide</h2>
-        <p><strong>Protect Your Capital:</strong> Never invest more than you can afford to lose. This dashboard helps you make data-driven decisions.</p>
+        <h2>Silver Reality Check</h2>
+        <p>In a shortage, the "Paper Price" (Spot) may crash while Real Silver soars. Know what you own so you don't go broke.</p>
         
-        <h3>⚠️ New: Shortage Monitor</h3>
-        <p>Check the "Decoupling Monitor" at the bottom of the page.</p>
-        <ul>
-            <li><strong>Flat Line:</strong> Normal. The ETF (SSLN) is tracking Silver correctly.</li>
-            <li><strong>Spike UP 📈:</strong> DANGER. The ETF is trading at a "Premium" (Too Expensive). Do not buy.</li>
-            <li><strong>Crash DOWN 📉:</strong> Discount. The ETF is cheaper than real silver (Good Buy).</li>
-        </ul>
-
-        <h3>🚦 Asset Risk</h3>
-        <ul>
-            <li>🟢 <strong>#1 Safer (SSLN):</strong> Physical Silver ETF. Lower risk.</li>
-            <li>🔴 <strong>CFD (Spot):</strong> High Risk. Fees apply daily. Don't hold long term.</li>
-        </ul>
+        <table>
+            <thead>
+                <tr>
+                    <th>Asset</th>
+                    <th>Type</th>
+                    <th>Do you own Silver?</th>
+                    <th>Safety Verdict</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>SSLN</strong></td>
+                    <td>ETC</td>
+                    <td><strong>YES (Allocated).</strong> Bars are in JPMorgan vaults.</td>
+                    <td style="color:var(--risk-safe); font-weight:bold;">✅ SAFE</td>
+                </tr>
+                <tr>
+                    <td><strong>WPM</strong></td>
+                    <td>Stock</td>
+                    <td><strong>NO.</strong> You own a company that buys silver cheap.</td>
+                    <td style="color:var(--risk-stock); font-weight:bold;">✅ GOOD</td>
+                </tr>
+                <tr>
+                    <td><strong>AG</strong></td>
+                    <td>Miner</td>
+                    <td><strong>NO.</strong> You own a mine. (High Volatility).</td>
+                    <td style="color:var(--risk-stock); font-weight:bold;">✅ GOOD</td>
+                </tr>
+                <tr>
+                    <td><strong>CFD</strong></td>
+                    <td>Bet</td>
+                    <td><strong>NEVER.</strong> It's a paper bet. Cash settlement only.</td>
+                    <td style="color:var(--risk-paper); font-weight:bold;">❌ DANGER</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
 <div class="container">
     <header>
-        <div class="help-btn" onclick="toggleHelp()" title="Open Help Guide">?</div>
+        <div class="help-btn" onclick="toggleHelp()" title="What do I actually own?">?</div>
         <h1>Silver Investment Tracker</h1>
-        <div class="status-container">
-            <div class="status-bar">
-                <div id="marketStatus" class="status-badge market-closed"><span id="statusIcon">🔴</span> <span id="statusText">Checking...</span></div>
-                <div id="marketCountdown" class="countdown">Calculating...</div>
-            </div>
+        
+        <div class="reality-legend">
+            <div class="reality-item"><span class="dot" style="background:var(--risk-safe)"></span>Allocated Physical</div>
+            <div class="reality-item"><span class="dot" style="background:var(--risk-stock)"></span>Equity/Stock</div>
+            <div class="reality-item"><span class="dot" style="background:var(--risk-paper)"></span>Paper Derivative</div>
         </div>
     </header>
 
     <div class="grid-section">
 
-        <div class="card risk-low">
+        <div class="card risk-safe">
             <div class="card-header">
-                <div class="asset-info"><h2 class="asset-name">iShares Physical</h2><span class="ticker">T212: <strong>SSLN</strong></span></div>
+                <div class="asset-info">
+                    <h2 class="asset-name">iShares Physical</h2>
+                    <span class="ticker">T212: <strong>SSLN</strong></span>
+                </div>
                 <div class="action-group">
-                    <span class="badge" style="color:var(--risk-low)">#1 Safer</span>
+                    <div class="type-badge" style="background:var(--risk-safe)">Physical Backed</div>
                     <a href="https://www.trading212.com/trading-instruments/invest/SSLN.GB" target="_blank" class="buy-btn-bullion"><span>Buy T212</span></a>
                 </div>
             </div>
@@ -195,11 +223,14 @@
             <div class="chart-container" id="chart-ssln"></div>
         </div>
 
-        <div class="card risk-med">
+        <div class="card risk-stock">
             <div class="card-header">
-                <div class="asset-info"><h2 class="asset-name">Wheaton Precious</h2><span class="ticker">T212: <strong>WPM</strong></span></div>
+                <div class="asset-info">
+                    <h2 class="asset-name">Wheaton Precious</h2>
+                    <span class="ticker">T212: <strong>WPM</strong></span>
+                </div>
                 <div class="action-group">
-                    <span class="badge" style="color:var(--risk-med)">#2 Growth</span>
+                    <div class="type-badge" style="background:var(--risk-stock)">Equity / Stock</div>
                     <a href="https://www.trading212.com/trading-instruments/invest/WPM.US" target="_blank" class="buy-btn-bullion"><span>Buy T212</span></a>
                 </div>
             </div>
@@ -215,11 +246,14 @@
             <div class="chart-container" id="chart-wpm"></div>
         </div>
 
-        <div class="card risk-high">
+        <div class="card risk-stock">
             <div class="card-header">
-                <div class="asset-info"><h2 class="asset-name">First Majestic</h2><span class="ticker">T212: <strong>AG</strong></span></div>
+                <div class="asset-info">
+                    <h2 class="asset-name">First Majestic</h2>
+                    <span class="ticker">T212: <strong>AG</strong></span>
+                </div>
                 <div class="action-group">
-                    <span class="badge" style="color:var(--risk-high)">#3 Aggressive</span>
+                    <div class="type-badge" style="background:var(--risk-stock)">Equity / Stock</div>
                     <a href="https://www.trading212.com/trading-instruments/invest/AG.US" target="_blank" class="buy-btn-bullion"><span>Buy T212</span></a>
                 </div>
             </div>
@@ -235,40 +269,33 @@
             <div class="chart-container" id="chart-ag"></div>
         </div>
 
-        <div class="card risk-bad">
+        <div class="card risk-paper">
             <div class="card-header">
-                <div class="asset-info"><h2 class="asset-name">Spot Silver CFD</h2><span class="ticker">T212: <strong>Silver</strong></span></div>
+                <div class="asset-info">
+                    <h2 class="asset-name">Spot Silver CFD</h2>
+                    <span class="ticker">T212: <strong>Silver</strong></span>
+                </div>
                 <div class="action-group">
-                    <span class="badge" style="color:var(--risk-bad)">Day Trade Only</span>
-                    <a href="https://www.trading212.com/trading-instruments/cfd/XAGUSD" target="_blank" class="buy-btn-bullion"><span>Buy T212</span></a>
+                    <div class="type-badge" style="background:var(--risk-paper)">PAPER BETS</div>
+                    <a href="https://www.trading212.com/trading-instruments/cfd/XAGUSD" target="_blank" class="buy-btn-bullion" onclick="return confirm('WARNING: This is a Paper Contract (CFD). You do not own any silver. In a shortage, this pays CASH, not METAL. Proceed?')">
+                        <span>Buy T212</span>
+                    </a>
                 </div>
             </div>
-            <div class="algo-box">
-                <div class="algo-title">LIVE SIGNAL (15 Min)</div>
-                <div class="tradingview-widget-container">
-                    <div class="tradingview-widget-container__widget"></div>
-                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
-                    { "interval": "15m", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "TVC:SILVER", "showIntervalTabs": false, "displayMode": "single", "locale": "en", "colorTheme": "light" }
-                    </script>
-                </div>
+            <div style="padding:10px; background:#ffebee; border-radius:6px; color:#d50000; font-size:0.8rem; margin-bottom:10px; font-weight:600;">
+                ⚠️ WARNING: This price is "Paper". It may crash even if real silver skyrockets.
             </div>
             <div class="chart-container" id="chart-spot"></div>
         </div>
 
-        <div class="card card-monitor">
+        <div class="card" style="grid-column: 1 / -1; border-top: 6px solid #333;">
             <div class="card-header">
-                <div class="asset-info">
-                    <h2 class="asset-name">⚠️ Shortage Decoupling Monitor</h2>
-                    <span class="ticker">ETF Price vs Spot Price Ratio</span>
-                </div>
-                <div class="action-group">
-                    <span class="badge" style="background:#333; color:#fff">System Risk</span>
-                </div>
+                <div class="asset-info"><h2 class="asset-name">⚠️ Reality Check Monitor</h2><span class="ticker">Is the "Paper Price" Fake?</span></div>
             </div>
-            <div style="background:#fff; padding:15px; border-radius:8px; margin-bottom:15px; border-left:4px solid #333; font-size:0.9rem;">
-                <strong>How to read:</strong> This line tracks the "Premium". 
-                <br>• If line is <strong>FLAT</strong>: Safe. The ETF is tracking perfectly.
-                <br>• If line <strong>SPIKES UP</strong>: <strong>DANGER</strong>. The ETF is overpriced (Shortage Panic). <strong>Do not buy.</strong>
+            <div class="monitor-alert">
+                <strong>How to read:</strong> This compares the ETF Price (SLV) vs Spot Price.
+                <br>• <strong>Flat Line:</strong> Normal.
+                <br>• <strong>Spike UP:</strong> SHORTAGE PANIC. Paper price is crashing, but Real Silver (ETF) is holding value. <strong>Hold Physical. Ignore Spot.</strong>
             </div>
             <div class="chart-container" id="chart-ratio"></div>
         </div>
@@ -279,7 +306,6 @@
 
 <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
 <script>
-    // --- MODAL LOGIC ---
     const modal = document.getElementById('helpModal');
     function toggleHelp() {
         if (modal.classList.contains('show')) {
@@ -292,62 +318,20 @@
     }
     window.onclick = function(event) { if (event.target == modal) toggleHelp(); }
 
-    // --- MARKET TIMER LOGIC ---
-    function updateMarketLogic() {
-        const now = new Date();
-        const day = now.getUTCDay(); const hour = now.getUTCHours(); const min = now.getUTCMinutes();
-        const openHour = 14; const openMin = 30; const closeHour = 21; const closeMin = 0;
-        let isOpen = false;
-        if (day >= 1 && day <= 5) {
-            if (hour > openHour || (hour === openHour && min >= openMin)) {
-                if (hour < closeHour || (hour === closeHour && min < closeMin)) isOpen = true;
-            }
-        }
-        const statusBadge = document.getElementById('marketStatus');
-        const statusText = document.getElementById('statusText');
-        const statusIcon = document.getElementById('statusIcon');
-        const countdownEl = document.getElementById('marketCountdown');
-        if (isOpen) {
-            statusBadge.className = "status-badge market-open"; statusText.innerText = "US Market Open"; statusIcon.innerText = "🟢";
-            const closeTime = new Date(now); closeTime.setUTCHours(closeHour, closeMin, 0, 0);
-            countdownEl.innerText = "Closes in " + formatDiff(closeTime - now);
-        } else {
-            statusBadge.className = "status-badge market-closed"; statusText.innerText = "Market Closed"; statusIcon.innerText = "🔴";
-            let nextOpen = new Date(now); nextOpen.setUTCHours(openHour, openMin, 0, 0);
-            if (now > nextOpen || day === 0 || day === 6) {
-                if (day === 5 && now > nextOpen) nextOpen.setUTCDate(now.getUTCDate() + 3);
-                else if (day === 6) nextOpen.setUTCDate(now.getUTCDate() + 2);
-                else if (day === 0) nextOpen.setUTCDate(now.getUTCDate() + 1);
-                else nextOpen.setUTCDate(now.getUTCDate() + 1);
-            }
-            countdownEl.innerText = "Opens in " + formatDiff(nextOpen - now);
-        }
-    }
-    function formatDiff(ms) {
-        if (ms < 0) return "00m 00s";
-        const h = Math.floor(ms / 3600000); const m = Math.floor((ms % 3600000) / 60000); const s = Math.floor((ms % 60000) / 1000);
-        return `${h}h ${m}m ${s}s`;
-    }
-    setInterval(updateMarketLogic, 1000); updateMarketLogic();
-
-    // --- CHART CONFIG ---
     const commonConfig = { "autosize": true, "interval": "D", "timezone": "Etc/UTC", "theme": "light", "style": "1", "locale": "en", "enable_publishing": false, "allow_symbol_change": false, "hide_side_toolbar": true, "studies": [ "RSI@tv-basicstudies", "MASimple@tv-basicstudies" ], "studies_overrides": { "MASimple.length": 50 } };
     
     new TradingView.widget({ ...commonConfig, "symbol": "AMEX:SLV", "container_id": "chart-ssln" });
     new TradingView.widget({ ...commonConfig, "symbol": "NYSE:WPM", "container_id": "chart-wpm" });
     new TradingView.widget({ ...commonConfig, "symbol": "NYSE:AG", "container_id": "chart-ag" });
     new TradingView.widget({ ...commonConfig, "symbol": "TVC:SILVER", "container_id": "chart-spot" });
-
-    // --- RATIO CHART (ETF vs SPOT) ---
-    // This chart divides SLV price by Spot Silver price to show the ratio.
+    
+    // RATIO CHART: SLV (Physical ETF) divided by TVC:SILVER (Paper Spot)
     new TradingView.widget({ 
         ...commonConfig, 
         "symbol": "AMEX:SLV/TVC:SILVER", 
         "container_id": "chart-ratio",
-        "studies": [], // Remove indicators for this one to keep it clean
-        "style": "2"   // Line Chart style
+        "studies": [], "style": "2" 
     });
-
 </script>
 </body>
 </html>
