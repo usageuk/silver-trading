@@ -21,11 +21,13 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0; padding: 20px; color: #1a1a1a; min-height: 100vh;
+            background-color: #f0f0f5; /* Fallback color */
         }
 
         /* VIDEO BACKGROUND */
         .video-background {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden;
+            background: #e0e0e0; /* Fallback while loading */
         }
         .video-background video {
             min-width: 100%; min-height: 100%; width: auto; height: auto;
@@ -36,9 +38,10 @@
 
         /* ALERT BANNER */
         .crisis-banner {
-            background: var(--alert-bg); color: white; text-align: center; padding: 10px;
-            border-radius: 8px; margin-bottom: 20px; font-weight: bold; font-size: 0.9rem;
+            background: var(--alert-bg); color: white; text-align: center; padding: 12px;
+            border-radius: 8px; margin-bottom: 25px; font-weight: bold; font-size: 0.95rem;
             box-shadow: 0 4px 10px rgba(213, 0, 0, 0.4); animation: pulse 2s infinite;
+            border: 1px solid #ff1744;
         }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.85; } 100% { opacity: 1; } }
 
@@ -113,6 +116,10 @@
         .algo-title { position: absolute; top: 5px; left: 10px; font-size: 0.75rem; font-weight: 700; color: #555; z-index: 5; background: rgba(255,255,255,0.8); padding: 2px 6px; border-radius: 4px; }
         .chart-container { height: 320px; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden; background: #fff; }
         
+        .monitor-alert { 
+            background: #fff; border-left: 4px solid #333; color: #333; padding: 15px; border-radius: 4px; margin-bottom: 15px; font-size: 0.9rem;
+        }
+
         /* MODAL */
         .modal {
             display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%;
@@ -293,11 +300,11 @@
 
         <div class="card" style="grid-column: 1 / -1; border-top: 6px solid #333;">
             <div class="card-header">
-                <div class="asset-info"><h2 class="asset-name">⚠️ Decoupling Monitor</h2><span class="ticker">PSLV (Physical) vs Spot Price</span></div>
+                <div class="asset-info"><h2 class="asset-name">⚠️ Decoupling Monitor</h2><span class="ticker">Safe Trust (PSLV) vs Risky ETF (SLV)</span></div>
             </div>
-            <div class="monitor-alert" style="background:#fff; border-left:4px solid #333; color:#333;">
-                <strong>Tracking the Shortage:</strong>
-                <br>• If this line <strong>SPIKES UP</strong>: PSLV is holding value while Paper Silver crashes. <strong>Buy PSLV.</strong>
+            <div class="monitor-alert">
+                <strong>Tracking the "Trust Premium":</strong>
+                <br>• If this line <strong>SPIKES UP</strong>: PSLV (Safe) is worth more than SLV (Risky). <strong>Panic Buying of PSLV detected.</strong>
                 <br>• If this line <strong>FLATLINES</strong>: Normal market conditions.
             </div>
             <div class="chart-container" id="chart-ratio"></div>
@@ -309,69 +316,84 @@
 
 <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
 <script>
-    const modal = document.getElementById('helpModal');
-    function toggleHelp() {
-        if (modal.classList.contains('show')) {
-            modal.classList.remove('show');
-            setTimeout(() => { modal.style.display = 'none'; }, 300);
-        } else {
-            modal.style.display = 'flex';
-            setTimeout(() => { modal.classList.add('show'); }, 10);
-        }
-    }
-    window.onclick = function(event) { if (event.target == modal) toggleHelp(); }
+    // Ensure Script runs AFTER DOM is ready
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        // --- MODAL LOGIC ---
+        const modal = document.getElementById('helpModal');
+        const helpBtn = document.querySelector('.help-btn');
+        const closeBtn = document.querySelector('.close-btn');
 
-    function updateMarketLogic() {
-        const now = new Date();
-        const day = now.getUTCDay(); const hour = now.getUTCHours(); const min = now.getUTCMinutes();
-        const openHour = 14; const openMin = 30; const closeHour = 21; const closeMin = 0;
-        let isOpen = false;
-        if (day >= 1 && day <= 5) {
-            if (hour > openHour || (hour === openHour && min >= openMin)) {
-                if (hour < closeHour || (hour === closeHour && min < closeMin)) isOpen = true;
+        function toggleHelp() {
+            if (modal.classList.contains('show')) {
+                modal.classList.remove('show');
+                setTimeout(() => { modal.style.display = 'none'; }, 300);
+            } else {
+                modal.style.display = 'flex';
+                setTimeout(() => { modal.classList.add('show'); }, 10);
             }
         }
-        const statusBadge = document.getElementById('marketStatus');
-        const statusText = document.getElementById('statusText');
-        const statusIcon = document.getElementById('statusIcon');
-        const countdownEl = document.getElementById('marketCountdown');
-        if (isOpen) {
-            statusBadge.className = "status-badge market-open"; statusText.innerText = "US Market Open"; statusIcon.innerText = "🟢";
-            const closeTime = new Date(now); closeTime.setUTCHours(closeHour, closeMin, 0, 0);
-            countdownEl.innerText = "Closes in " + formatDiff(closeTime - now);
-        } else {
-            statusBadge.className = "status-badge market-closed"; statusText.innerText = "Market Closed"; statusIcon.innerText = "🔴";
-            let nextOpen = new Date(now); nextOpen.setUTCHours(openHour, openMin, 0, 0);
-            if (now > nextOpen || day === 0 || day === 6) {
-                if (day === 5 && now > nextOpen) nextOpen.setUTCDate(now.getUTCDate() + 3);
-                else if (day === 6) nextOpen.setUTCDate(now.getUTCDate() + 2);
-                else if (day === 0) nextOpen.setUTCDate(now.getUTCDate() + 1);
-                else nextOpen.setUTCDate(now.getUTCDate() + 1);
-            }
-            countdownEl.innerText = "Opens in " + formatDiff(nextOpen - now);
-        }
-    }
-    function formatDiff(ms) {
-        if (ms < 0) return "00m 00s";
-        const h = Math.floor(ms / 3600000); const m = Math.floor((ms % 3600000) / 60000); const s = Math.floor((ms % 60000) / 1000);
-        return `${h}h ${m}m ${s}s`;
-    }
-    setInterval(updateMarketLogic, 1000); updateMarketLogic();
+        
+        helpBtn.onclick = toggleHelp;
+        closeBtn.onclick = toggleHelp;
+        window.onclick = function(event) { if (event.target == modal) toggleHelp(); }
 
-    const commonConfig = { "autosize": true, "interval": "D", "timezone": "Etc/UTC", "theme": "light", "style": "1", "locale": "en", "enable_publishing": false, "allow_symbol_change": false, "hide_side_toolbar": true, "studies": [ "RSI@tv-basicstudies", "MASimple@tv-basicstudies" ], "studies_overrides": { "MASimple.length": 50 } };
-    
-    // UPDATED: Using PSLV for safer asset
-    new TradingView.widget({ ...commonConfig, "symbol": "NYSE:PSLV", "container_id": "chart-pslv" });
-    new TradingView.widget({ ...commonConfig, "symbol": "NYSE:WPM", "container_id": "chart-wpm" });
-    new TradingView.widget({ ...commonConfig, "symbol": "NYSE:AG", "container_id": "chart-ag" });
-    new TradingView.widget({ ...commonConfig, "symbol": "TVC:SILVER", "container_id": "chart-spot" });
-    
-    // UPDATED RATIO: PSLV vs Spot (To track the real "Physical Premium")
-    new TradingView.widget({ 
-        ...commonConfig, 
-        "symbol": "NYSE:PSLV/TVC:SILVER", 
-        "container_id": "chart-ratio",
-        "studies": [], "style": "2" 
+        // --- MARKET TIMER LOGIC ---
+        function updateMarketLogic() {
+            const now = new Date();
+            const day = now.getUTCDay(); const hour = now.getUTCHours(); const min = now.getUTCMinutes();
+            const openHour = 14; const openMin = 30; const closeHour = 21; const closeMin = 0;
+            let isOpen = false;
+            if (day >= 1 && day <= 5) {
+                if (hour > openHour || (hour === openHour && min >= openMin)) {
+                    if (hour < closeHour || (hour === closeHour && min < closeMin)) isOpen = true;
+                }
+            }
+            const statusBadge = document.getElementById('marketStatus');
+            const statusText = document.getElementById('statusText');
+            const statusIcon = document.getElementById('statusIcon');
+            const countdownEl = document.getElementById('marketCountdown');
+            if (isOpen) {
+                statusBadge.className = "status-badge market-open"; statusText.innerText = "US Market Open"; statusIcon.innerText = "🟢";
+                const closeTime = new Date(now); closeTime.setUTCHours(closeHour, closeMin, 0, 0);
+                countdownEl.innerText = "Closes in " + formatDiff(closeTime - now);
+            } else {
+                statusBadge.className = "status-badge market-closed"; statusText.innerText = "Market Closed"; statusIcon.innerText = "🔴";
+                let nextOpen = new Date(now); nextOpen.setUTCHours(openHour, openMin, 0, 0);
+                if (now > nextOpen || day === 0 || day === 6) {
+                    if (day === 5 && now > nextOpen) nextOpen.setUTCDate(now.getUTCDate() + 3);
+                    else if (day === 6) nextOpen.setUTCDate(now.getUTCDate() + 2);
+                    else if (day === 0) nextOpen.setUTCDate(now.getUTCDate() + 1);
+                    else nextOpen.setUTCDate(now.getUTCDate() + 1);
+                }
+                countdownEl.innerText = "Opens in " + formatDiff(nextOpen - now);
+            }
+        }
+        function formatDiff(ms) {
+            if (ms < 0) return "00m 00s";
+            const h = Math.floor(ms / 3600000); const m = Math.floor((ms % 3600000) / 60000); const s = Math.floor((ms % 60000) / 1000);
+            return `${h}h ${m}m ${s}s`;
+        }
+        setInterval(updateMarketLogic, 1000); updateMarketLogic();
+
+        // --- CHART CONFIG ---
+        const commonConfig = { "autosize": true, "interval": "D", "timezone": "Etc/UTC", "theme": "light", "style": "1", "locale": "en", "enable_publishing": false, "allow_symbol_change": false, "hide_side_toolbar": true, "studies": [ "RSI@tv-basicstudies", "MASimple@tv-basicstudies" ], "studies_overrides": { "MASimple.length": 50 } };
+        
+        // Using PSLV for safer asset
+        new TradingView.widget({ ...commonConfig, "symbol": "NYSE:PSLV", "container_id": "chart-pslv" });
+        new TradingView.widget({ ...commonConfig, "symbol": "NYSE:WPM", "container_id": "chart-wpm" });
+        new TradingView.widget({ ...commonConfig, "symbol": "NYSE:AG", "container_id": "chart-ag" });
+        new TradingView.widget({ ...commonConfig, "symbol": "TVC:SILVER", "container_id": "chart-spot" });
+        
+        // FIXED RATIO: PSLV (Trust) vs SLV (ETF). 
+        // If this chart goes UP, PSLV is winning (Premium).
+        new TradingView.widget({ 
+            ...commonConfig, 
+            "symbol": "NYSE:PSLV/AMEX:SLV", 
+            "container_id": "chart-ratio",
+            "studies": [], "style": "2" 
+        });
+
     });
 </script>
 </body>
