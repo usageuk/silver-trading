@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Silver Investment Tracker - Black Monday Confirmed</title>
+    <title>Silver Tracker - Sprott Squeeze Edition</title>
     
     <link rel="icon" type="image/jpeg" href="https://raw.githubusercontent.com/usageuk/silver-trading/34f8a633c89b06c3b28e06deff322b6088cde333/image/silver%20bullion.webp">
 
@@ -14,8 +14,9 @@
             --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
             --risk-safe: #00c853;   /* Real Metal */
             --risk-stock: #2962ff;  /* Companies */
+            --risk-high: #ff9100;   /* Junior Miners */
             --risk-paper: #d50000;  /* Fake Paper */
-            --alert-bg: #d50000;    /* Dark Red for Confirmed Crisis */
+            --alert-bg: #d50000;
         }
 
         body {
@@ -88,6 +89,7 @@
         
         .card.risk-safe { border-top-color: var(--risk-safe); }
         .card.risk-stock { border-top-color: var(--risk-stock); }
+        .card.risk-high { border-top-color: var(--risk-high); }
         .card.risk-paper { border-top-color: var(--risk-paper); }
 
         @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
@@ -151,42 +153,37 @@
 <div id="helpModal" class="modal">
     <div class="modal-content">
         <span class="close-btn" onclick="toggleHelp()">&times;</span>
-        <h2>Fact Check: Black Monday (Dec 22, 2025)</h2>
-        <p><strong>STATUS: CONFIRMED.</strong> Spot price passed $69. JM Bullion 1kg bars are Out of Stock. Force Majeure declared by miners.</p>
+        <h2>Fact Check: "Sprott Squeeze" (Dec 23, 2025)</h2>
+        <p><strong>STATUS: VERIFIED.</strong> Eric Sprott is heavily buying Hycroft (HYMC). Samsung batteries (1kg silver/pack) are creating a new demand shock.</p>
         
         <table>
             <thead>
                 <tr>
-                    <th>Asset</th>
-                    <th>Type</th>
-                    <th>Status Today</th>
-                    <th>Verdict</th>
+                    <th>Factor</th>
+                    <th>Detail</th>
+                    <th>Impact</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
+                    <td><strong>Samsung Battery</strong></td>
+                    <td>Uses 1kg Silver per 100kWh.</td>
+                    <td style="color:var(--risk-paper); font-weight:bold;">supply Black Hole</td>
+                </tr>
+                <tr>
+                    <td><strong>China Ban</strong></td>
+                    <td>Exports Halt Jan 1st.</td>
+                    <td style="color:#f57c00; font-weight:bold;">Shortage</td>
+                </tr>
+                <tr>
+                    <td><strong>Hycroft (HYMC)</strong></td>
+                    <td>Eric Sprott owns ~33%.</td>
+                    <td style="color:var(--risk-stock); font-weight:bold;">Squeeze Play</td>
+                </tr>
+                <tr>
                     <td><strong>PSLV</strong></td>
-                    <td>Sprott Trust</td>
-                    <td><strong>ALLOCATED.</strong> Safe from COMEX "Limit Up" freezes.</td>
-                    <td style="color:var(--risk-safe); font-weight:bold;">✅ SAFEST</td>
-                </tr>
-                <tr>
-                    <td><strong>SSLN/SLV</strong></td>
-                    <td>Standard ETF</td>
-                    <td><strong>RISK.</strong> Tracking paper price which may be fake/frozen.</td>
-                    <td style="color:#f57c00; font-weight:bold;">⚠️ CAUTION</td>
-                </tr>
-                <tr>
-                    <td><strong>WPM</strong></td>
-                    <td>Stock</td>
-                    <td><strong>STRONG.</strong> Benefiting from $69+ silver.</td>
-                    <td style="color:var(--risk-stock); font-weight:bold;">✅ BUY</td>
-                </tr>
-                <tr>
-                    <td><strong>CFD</strong></td>
-                    <td>Derivative</td>
-                    <td><strong>FROZEN?</strong> Risk of cash settlement if Limit Up.</td>
-                    <td style="color:var(--risk-paper); font-weight:bold;">❌ TOXIC</td>
+                    <td>Fully Allocated.</td>
+                    <td style="color:var(--risk-safe); font-weight:bold;">Safe Haven</td>
                 </tr>
             </tbody>
         </table>
@@ -195,7 +192,7 @@
 
 <div class="container">
     <div class="crisis-banner">
-        ⚠️ CONFIRMED: Spot $69. Retail Inventory FAILED. JM Bullion Out of Stock.
+        ⏳ COUNTDOWN: China Export Ban Starts Jan 1st (9 Days). Retail Inventory Critical.
     </div>
 
     <header>
@@ -256,15 +253,15 @@
             <div class="chart-container" id="chart-wpm"></div>
         </div>
 
-        <div class="card risk-stock">
+        <div class="card risk-high">
             <div class="card-header">
                 <div class="asset-info">
-                    <h2 class="asset-name">First Majestic</h2>
-                    <span class="ticker">T212: <strong>AG</strong></span>
+                    <h2 class="asset-name">Hycroft Mining</h2>
+                    <span class="ticker">T212: <strong>HYMC</strong></span>
                 </div>
                 <div class="action-group">
-                    <div class="type-badge" style="background:var(--risk-stock)">Equity / Stock</div>
-                    <a href="https://www.trading212.com/trading-instruments/invest/AG.US" target="_blank" class="buy-btn-bullion"><span>Buy T212</span></a>
+                    <div class="type-badge" style="background:var(--risk-high)">Sprott's #1 Pick</div>
+                    <a href="https://www.trading212.com/trading-instruments/invest/HYMC.US" target="_blank" class="buy-btn-bullion"><span>Buy T212</span></a>
                 </div>
             </div>
             <div class="algo-box">
@@ -272,11 +269,11 @@
                 <div class="tradingview-widget-container">
                     <div class="tradingview-widget-container__widget"></div>
                     <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
-                    { "interval": "1D", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "NYSE:AG", "showIntervalTabs": false, "displayMode": "single", "locale": "en", "colorTheme": "light" }
+                    { "interval": "1D", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "NASDAQ:HYMC", "showIntervalTabs": false, "displayMode": "single", "locale": "en", "colorTheme": "light" }
                     </script>
                 </div>
             </div>
-            <div class="chart-container" id="chart-ag"></div>
+            <div class="chart-container" id="chart-hymc"></div>
         </div>
 
         <div class="card risk-paper">
@@ -321,7 +318,7 @@
                         <strong>🚀 Line Spiking UP</strong><br>
                         <span style="font-size:0.85rem; color:#c62828;">
                         **Status: ARBITRAGE PANIC!**<br>
-                        Investors are fleeing to PSLV to catch the $71 Shanghai price. Paper market is breaking.
+                        Investors are fleeing to PSLV. Trust in paper silver is breaking.
                         </span>
                     </div>
                 </div>
@@ -394,9 +391,15 @@
         
         new TradingView.widget({ ...commonConfig, "symbol": "AMEX:PSLV", "container_id": "chart-pslv" });
         new TradingView.widget({ ...commonConfig, "symbol": "NYSE:WPM", "container_id": "chart-wpm" });
-        new TradingView.widget({ ...commonConfig, "symbol": "NYSE:AG", "container_id": "chart-ag" });
+        new TradingView.widget({ ...commonConfig, "symbol": "NASDAQ:HYMC", "container_id": "chart-hymc" });
         new TradingView.widget({ ...commonConfig, "symbol": "TVC:SILVER", "container_id": "chart-spot" });
-        new TradingView.widget({ ...commonConfig, "symbol": "AMEX:PSLV/AMEX:SLV", "container_id": "chart-ratio", "studies": [], "style": "2" });
+        
+        new TradingView.widget({ 
+            ...commonConfig, 
+            "symbol": "AMEX:PSLV/AMEX:SLV", 
+            "container_id": "chart-ratio", 
+            "studies": [], "style": "2" 
+        });
     });
 </script>
 </body>
