@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Silver Investment Tracker - Black Monday Mode</title>
+    <title>Silver Investment Tracker - Black Monday Confirmed</title>
     
     <link rel="icon" type="image/jpeg" href="https://raw.githubusercontent.com/usageuk/silver-trading/34f8a633c89b06c3b28e06deff322b6088cde333/image/silver%20bullion.webp">
 
@@ -15,7 +15,7 @@
             --risk-safe: #00c853;   /* Real Metal */
             --risk-stock: #2962ff;  /* Companies */
             --risk-paper: #d50000;  /* Fake Paper */
-            --alert-bg: #d50000;    /* Darker Red for Crisis */
+            --alert-bg: #d50000;    /* Dark Red for Confirmed Crisis */
         }
 
         body {
@@ -151,15 +151,15 @@
 <div id="helpModal" class="modal">
     <div class="modal-content">
         <span class="close-btn" onclick="toggleHelp()">&times;</span>
-        <h2>Silver Reality Check (Black Monday Update)</h2>
-        <p><strong>INTEL ALERT:</strong> "Force Majeure" reported by miners. Shanghai price trading $3 above New York. Paper market may "Limit Up" (Freeze).</p>
+        <h2>Fact Check: Black Monday (Dec 22, 2025)</h2>
+        <p><strong>STATUS: CONFIRMED.</strong> Spot price passed $69. JM Bullion 1kg bars are Out of Stock. Force Majeure declared by miners.</p>
         
         <table>
             <thead>
                 <tr>
                     <th>Asset</th>
                     <th>Type</th>
-                    <th>Physical Security?</th>
+                    <th>Status Today</th>
                     <th>Verdict</th>
                 </tr>
             </thead>
@@ -167,25 +167,25 @@
                 <tr>
                     <td><strong>PSLV</strong></td>
                     <td>Sprott Trust</td>
-                    <td><strong>YES.</strong> Fully allocated. Safe from "Force Majeure".</td>
+                    <td><strong>ALLOCATED.</strong> Safe from COMEX "Limit Up" freezes.</td>
                     <td style="color:var(--risk-safe); font-weight:bold;">✅ SAFEST</td>
                 </tr>
                 <tr>
                     <td><strong>SSLN/SLV</strong></td>
                     <td>Standard ETF</td>
-                    <td><strong>NO.</strong> Warning: May settle in cash if market freezes.</td>
-                    <td style="color:#f57c00; font-weight:bold;">⚠️ DEATH TRAP</td>
+                    <td><strong>RISK.</strong> Tracking paper price which may be fake/frozen.</td>
+                    <td style="color:#f57c00; font-weight:bold;">⚠️ CAUTION</td>
                 </tr>
                 <tr>
                     <td><strong>WPM</strong></td>
                     <td>Stock</td>
-                    <td><strong>N/A.</strong> Company stock. Good growth.</td>
-                    <td style="color:var(--risk-stock); font-weight:bold;">✅ GOOD</td>
+                    <td><strong>STRONG.</strong> Benefiting from $69+ silver.</td>
+                    <td style="color:var(--risk-stock); font-weight:bold;">✅ BUY</td>
                 </tr>
                 <tr>
                     <td><strong>CFD</strong></td>
                     <td>Derivative</td>
-                    <td><strong>NEVER.</strong> Cash settlement guaranteed in freeze.</td>
+                    <td><strong>FROZEN?</strong> Risk of cash settlement if Limit Up.</td>
                     <td style="color:var(--risk-paper); font-weight:bold;">❌ TOXIC</td>
                 </tr>
             </tbody>
@@ -195,11 +195,11 @@
 
 <div class="container">
     <div class="crisis-banner">
-        ⚠️ MARKET ALERT: Shanghai Premium hitting $71. COMEX Risk "Limit Up".
+        ⚠️ CONFIRMED: Spot $69. Retail Inventory FAILED. JM Bullion Out of Stock.
     </div>
 
     <header>
-        <div class="help-btn" onclick="toggleHelp()" title="What do I actually own?">?</div>
+        <div class="help-btn" onclick="toggleHelp()" title="Read Fact Check">?</div>
         <h1>Silver Investment Tracker</h1>
         
         <div class="status-bar">
@@ -225,4 +225,179 @@
                 <div class="algo-title">LIVE SIGNAL (1 Day)</div>
                 <div class="tradingview-widget-container">
                     <div class="tradingview-widget-container__widget"></div>
-                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
+                    { "interval": "1D", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "AMEX:PSLV", "showIntervalTabs": false, "displayMode": "single", "locale": "en", "colorTheme": "light" }
+                    </script>
+                </div>
+            </div>
+            <div class="chart-container" id="chart-pslv"></div>
+        </div>
+
+        <div class="card risk-stock">
+            <div class="card-header">
+                <div class="asset-info">
+                    <h2 class="asset-name">Wheaton Precious</h2>
+                    <span class="ticker">T212: <strong>WPM</strong></span>
+                </div>
+                <div class="action-group">
+                    <div class="type-badge" style="background:var(--risk-stock)">Equity / Stock</div>
+                    <a href="https://www.trading212.com/trading-instruments/invest/WPM.US" target="_blank" class="buy-btn-bullion"><span>Buy T212</span></a>
+                </div>
+            </div>
+            <div class="algo-box">
+                <div class="algo-title">LIVE SIGNAL (1 Day)</div>
+                <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
+                    { "interval": "1D", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "NYSE:WPM", "showIntervalTabs": false, "displayMode": "single", "locale": "en", "colorTheme": "light" }
+                    </script>
+                </div>
+            </div>
+            <div class="chart-container" id="chart-wpm"></div>
+        </div>
+
+        <div class="card risk-stock">
+            <div class="card-header">
+                <div class="asset-info">
+                    <h2 class="asset-name">First Majestic</h2>
+                    <span class="ticker">T212: <strong>AG</strong></span>
+                </div>
+                <div class="action-group">
+                    <div class="type-badge" style="background:var(--risk-stock)">Equity / Stock</div>
+                    <a href="https://www.trading212.com/trading-instruments/invest/AG.US" target="_blank" class="buy-btn-bullion"><span>Buy T212</span></a>
+                </div>
+            </div>
+            <div class="algo-box">
+                <div class="algo-title">LIVE SIGNAL (1 Day)</div>
+                <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
+                    { "interval": "1D", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "NYSE:AG", "showIntervalTabs": false, "displayMode": "single", "locale": "en", "colorTheme": "light" }
+                    </script>
+                </div>
+            </div>
+            <div class="chart-container" id="chart-ag"></div>
+        </div>
+
+        <div class="card risk-paper">
+            <div class="card-header">
+                <div class="asset-info">
+                    <h2 class="asset-name">Spot Silver CFD</h2>
+                    <span class="ticker">T212: <strong>Silver</strong></span>
+                </div>
+                <div class="action-group">
+                    <div class="type-badge" style="background:var(--risk-paper)">PAPER BETS</div>
+                    <a href="https://www.trading212.com/trading-instruments/cfd/XAGUSD" target="_blank" class="buy-btn-bullion" onclick="return confirm('WARNING: COMEX Limit Up Risk. This trade may be force-closed for cash. Proceed?')">
+                        <span>Buy T212</span>
+                    </a>
+                </div>
+            </div>
+            <div style="padding:10px; background:#ffebee; border-radius:6px; color:#d50000; font-size:0.8rem; margin-bottom:10px; font-weight:600;">
+                ⚠️ WARNING: High Risk of Cash Settlement.
+            </div>
+            <div class="chart-container" id="chart-spot"></div>
+        </div>
+
+        <div class="card" style="grid-column: 1 / -1; border-top: 6px solid #333;">
+            <div class="card-header">
+                <div class="asset-info">
+                    <h2 class="asset-name">⚠️ Crisis Decoupling Monitor</h2>
+                    <span class="ticker">Panic Gauge: PSLV (Safe) ÷ SLV (Risky)</span>
+                </div>
+            </div>
+            <div class="monitor-alert" style="background:#f8f9fa; border-left:4px solid #333; color:#333; padding:20px;">
+                <strong>What is this telling me?</strong><br>
+                This chart tracks if "Smart Money" is fleeing standard ETFs (SLV) to buy the safer Trust (PSLV).
+                
+                <div style="margin-top:15px; display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
+                    <div style="background:#e8f5e9; padding:10px; border-radius:6px; border:1px solid #c8e6c9;">
+                        <strong>📉 Line Going DOWN/FLAT</strong><br>
+                        <span style="font-size:0.85rem; color:#2e7d32;">
+                        **Status: CALM.**<br>
+                        Investors trust the standard "Paper" market. SLV is trading normally.
+                        </span>
+                    </div>
+                    <div style="background:#ffebee; padding:10px; border-radius:6px; border:1px solid #ffcdd2;">
+                        <strong>🚀 Line Spiking UP</strong><br>
+                        <span style="font-size:0.85rem; color:#c62828;">
+                        **Status: ARBITRAGE PANIC!**<br>
+                        Investors are fleeing to PSLV to catch the $71 Shanghai price. Paper market is breaking.
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="chart-container" id="chart-ratio"></div>
+        </div>
+
+    </div>
+    <footer><p>Charts powered by TradingView • Not Financial Advice • <strong>Invest at your own risk.</strong></p></footer>
+</div>
+
+<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- MODAL LOGIC ---
+        const modal = document.getElementById('helpModal');
+        const helpBtn = document.querySelector('.help-btn');
+        const closeBtn = document.querySelector('.close-btn');
+
+        function toggleHelp() {
+            if (modal.classList.contains('show')) {
+                modal.classList.remove('show'); setTimeout(() => { modal.style.display = 'none'; }, 300);
+            } else {
+                modal.style.display = 'flex'; setTimeout(() => { modal.classList.add('show'); }, 10);
+            }
+        }
+        helpBtn.onclick = toggleHelp; closeBtn.onclick = toggleHelp;
+        window.onclick = function(event) { if (event.target == modal) toggleHelp(); }
+
+        // --- TIMER LOGIC ---
+        function updateMarketLogic() {
+            const now = new Date();
+            const day = now.getUTCDay(); const hour = now.getUTCHours(); const min = now.getUTCMinutes();
+            const openHour = 14; const openMin = 30; const closeHour = 21; const closeMin = 0;
+            let isOpen = false;
+            if (day >= 1 && day <= 5) {
+                if (hour > openHour || (hour === openHour && min >= openMin)) {
+                    if (hour < closeHour || (hour === closeHour && min < closeMin)) isOpen = true;
+                }
+            }
+            const statusBadge = document.getElementById('marketStatus');
+            const statusText = document.getElementById('statusText');
+            const statusIcon = document.getElementById('statusIcon');
+            const countdownEl = document.getElementById('marketCountdown');
+            if (isOpen) {
+                statusBadge.className = "status-badge market-open"; statusText.innerText = "US Market Open"; statusIcon.innerText = "🟢";
+                const closeTime = new Date(now); closeTime.setUTCHours(closeHour, closeMin, 0, 0);
+                countdownEl.innerText = "Closes in " + formatDiff(closeTime - now);
+            } else {
+                statusBadge.className = "status-badge market-closed"; statusText.innerText = "Market Closed"; statusIcon.innerText = "🔴";
+                let nextOpen = new Date(now); nextOpen.setUTCHours(openHour, openMin, 0, 0);
+                if (now > nextOpen || day === 0 || day === 6) {
+                    if (day === 5 && now > nextOpen) nextOpen.setUTCDate(now.getUTCDate() + 3);
+                    else if (day === 6) nextOpen.setUTCDate(now.getUTCDate() + 2);
+                    else if (day === 0) nextOpen.setUTCDate(now.getUTCDate() + 1);
+                    else nextOpen.setUTCDate(now.getUTCDate() + 1);
+                }
+                countdownEl.innerText = "Opens in " + formatDiff(nextOpen - now);
+            }
+        }
+        function formatDiff(ms) {
+            if (ms < 0) return "00m 00s";
+            const h = Math.floor(ms / 3600000); const m = Math.floor((ms % 3600000) / 60000); const s = Math.floor((ms % 60000) / 1000);
+            return `${h}h ${m}m ${s}s`;
+        }
+        setInterval(updateMarketLogic, 1000); updateMarketLogic();
+
+        // --- CHARTS ---
+        const commonConfig = { "autosize": true, "interval": "D", "timezone": "Etc/UTC", "theme": "light", "style": "1", "locale": "en", "enable_publishing": false, "allow_symbol_change": false, "hide_side_toolbar": true, "studies": [ "RSI@tv-basicstudies", "MASimple@tv-basicstudies" ], "studies_overrides": { "MASimple.length": 50 } };
+        
+        new TradingView.widget({ ...commonConfig, "symbol": "AMEX:PSLV", "container_id": "chart-pslv" });
+        new TradingView.widget({ ...commonConfig, "symbol": "NYSE:WPM", "container_id": "chart-wpm" });
+        new TradingView.widget({ ...commonConfig, "symbol": "NYSE:AG", "container_id": "chart-ag" });
+        new TradingView.widget({ ...commonConfig, "symbol": "TVC:SILVER", "container_id": "chart-spot" });
+        new TradingView.widget({ ...commonConfig, "symbol": "AMEX:PSLV/AMEX:SLV", "container_id": "chart-ratio", "studies": [], "style": "2" });
+    });
+</script>
+</body>
+</html>
