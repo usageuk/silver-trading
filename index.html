@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Silver Tracker - Tesla 48V Shock</title>
+    <title>Silver Tracker - $69.65 Breakout</title>
     
     <link rel="icon" type="image/jpeg" href="https://raw.githubusercontent.com/usageuk/silver-trading/34f8a633c89b06c3b28e06deff322b6088cde333/image/silver%20bullion.webp">
 
@@ -14,8 +14,8 @@
             --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
             --risk-safe: #00c853;   /* Real Metal */
             --risk-stock: #2962ff;  /* Companies */
-            --risk-high: #ff9100;   /* Junior Miners */
-            --risk-paper: #d50000;  /* Fake Paper */
+            --risk-high: #ff9100;   /* Speculative */
+            --risk-paper: #d50000;  /* Toxic */
             --alert-bg: #d50000;
         }
 
@@ -41,7 +41,7 @@
         .crisis-banner {
             background: var(--alert-bg); color: white; text-align: center; padding: 12px;
             border-radius: 8px; margin-bottom: 25px; font-weight: bold; font-size: 0.95rem;
-            box-shadow: 0 4px 15px rgba(213, 0, 0, 0.6); animation: pulse 1.0s infinite;
+            box-shadow: 0 4px 15px rgba(213, 0, 0, 0.6); animation: pulse 1.5s infinite;
             border: 2px solid #ff1744; text-transform: uppercase; letter-spacing: 0.5px;
         }
         @keyframes pulse { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.9; transform: scale(1.01); } 100% { opacity: 1; transform: scale(1); } }
@@ -153,37 +153,37 @@
 <div id="helpModal" class="modal">
     <div class="modal-content">
         <span class="close-btn" onclick="toggleHelp()">&times;</span>
-        <h2>Fact Check: "Tesla Silver Bomb"</h2>
-        <p><strong>STATUS: CONFIRMED.</strong> Tesla's shift to 48-Volt architecture requires silver contacts to prevent arcing. This adds massive structural demand.</p>
+        <h2>Fact Check: Dec 23, 2025</h2>
+        <p><strong>ALERT:</strong> AI-generated spam videos are parroting real data. Don't fall for "Clickbait" — stick to the verified numbers.</p>
         
         <table>
             <thead>
                 <tr>
-                    <th>Factor</th>
-                    <th>Detail</th>
-                    <th>Impact</th>
+                    <th>Claim</th>
+                    <th>Fact Check</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td><strong>Tesla 48V</strong></td>
-                    <td>New Standard</td>
-                    <td style="color:var(--risk-safe); font-weight:bold;">+2oz Silver/Car</td>
+                    <td>"Silver at $70!"</td>
+                    <td><strong>TRUE ($69.65).</strong> Futures hit $70 briefly.</td>
+                    <td style="color:var(--risk-safe); font-weight:bold;">✅ VERIFIED</td>
                 </tr>
                 <tr>
-                    <td><strong>China Ban</strong></td>
-                    <td>Jan 1st Deadline</td>
-                    <td style="color:#f57c00; font-weight:bold;">Supply Shock</td>
+                    <td>"China Ban"</td>
+                    <td><strong>TRUE.</strong> Export licenses required Jan 1st.</td>
+                    <td style="color:var(--risk-safe); font-weight:bold;">✅ VERIFIED</td>
                 </tr>
                 <tr>
-                    <td><strong>Hecla (HL)</strong></td>
-                    <td>US Strategic Miner</td>
-                    <td style="color:var(--risk-stock); font-weight:bold;">Safe Jurisdiction</td>
+                    <td>"Banks Collapsing"</td>
+                    <td><strong>EXAGGERATED.</strong> Banks are squeezed, not dead.</td>
+                    <td style="color:var(--risk-paper); font-weight:bold;">⚠️ AI HYPE</td>
                 </tr>
                 <tr>
-                    <td><strong>Hycroft (HYMC)</strong></td>
-                    <td>Sprott's 10x Pick</td>
-                    <td style="color:var(--risk-high); font-weight:bold;">Squeeze Play</td>
+                    <td>"Tesla Secret Deal"</td>
+                    <td><strong>RUMOR.</strong> 48V tech is real, "secret deal" is unproven.</td>
+                    <td style="color:var(--risk-high); font-weight:bold;">❓ UNVERIFIED</td>
                 </tr>
             </tbody>
         </table>
@@ -192,7 +192,7 @@
 
 <div class="container">
     <div class="crisis-banner">
-        ⚠️ ALERT: Tesla 48V Shift = 100M oz New Demand. China Ban Starts Jan 1.
+        ⚠️ MARKET STATUS: Spot $69.65 (Verified). China Ban Jan 1. Ignore AI Spam.
     </div>
 
     <header>
@@ -237,7 +237,7 @@
                     <span class="ticker">T212: <strong>HL</strong></span>
                 </div>
                 <div class="action-group">
-                    <div class="type-badge" style="background:var(--risk-stock)">US Strategic</div>
+                    <div class="type-badge" style="background:var(--risk-stock)">Strategic (USA)</div>
                     <a href="https://www.trading212.com/trading-instruments/invest/HL.US" target="_blank" class="buy-btn-bullion"><span>Buy T212</span></a>
                 </div>
             </div>
@@ -260,132 +260,3 @@
                     <span class="ticker">T212: <strong>HYMC</strong></span>
                 </div>
                 <div class="action-group">
-                    <div class="type-badge" style="background:var(--risk-high)">Whale Buying</div>
-                    <a href="https://www.trading212.com/trading-instruments/invest/HYMC.US" target="_blank" class="buy-btn-bullion"><span>Buy T212</span></a>
-                </div>
-            </div>
-            <div class="algo-box">
-                <div class="algo-title">LIVE SIGNAL (1 Day)</div>
-                <div class="tradingview-widget-container">
-                    <div class="tradingview-widget-container__widget"></div>
-                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
-                    { "interval": "1D", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "NASDAQ:HYMC", "showIntervalTabs": false, "displayMode": "single", "locale": "en", "colorTheme": "light" }
-                    </script>
-                </div>
-            </div>
-            <div class="chart-container" id="chart-hymc"></div>
-        </div>
-
-        <div class="card risk-paper">
-            <div class="card-header">
-                <div class="asset-info">
-                    <h2 class="asset-name">Spot Silver CFD</h2>
-                    <span class="ticker">T212: <strong>Silver</strong></span>
-                </div>
-                <div class="action-group">
-                    <div class="type-badge" style="background:var(--risk-paper)">PAPER BETS</div>
-                    <a href="https://www.trading212.com/trading-instruments/cfd/XAGUSD" target="_blank" class="buy-btn-bullion" onclick="return confirm('WARNING: COMEX Limit Up Risk. This trade may be force-closed for cash. Proceed?')">
-                        <span>Buy T212</span>
-                    </a>
-                </div>
-            </div>
-            <div style="padding:10px; background:#ffebee; border-radius:6px; color:#d50000; font-size:0.8rem; margin-bottom:10px; font-weight:600;">
-                ⚠️ WARNING: Risk of Cash Settlement if market freezes.
-            </div>
-            <div class="chart-container" id="chart-spot"></div>
-        </div>
-
-        <div class="card" style="grid-column: 1 / -1; border-top: 6px solid #333;">
-            <div class="card-header">
-                <div class="asset-info">
-                    <h2 class="asset-name">⚠️ Crisis Decoupling Monitor</h2>
-                    <span class="ticker">Panic Gauge: PSLV (Safe) ÷ SLV (Risky)</span>
-                </div>
-            </div>
-            <div class="monitor-alert" style="background:#f8f9fa; border-left:4px solid #333; color:#333; padding:20px;">
-                <strong>Tracking the "Trust Premium":</strong><br>
-                <div style="margin-top:15px; display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
-                    <div style="background:#e8f5e9; padding:10px; border-radius:6px; border:1px solid #c8e6c9;">
-                        <strong>📉 Line Flat/Down</strong><br>
-                        <span style="font-size:0.85rem; color:#2e7d32;">
-                        **Status: CALM.**<br>
-                        Paper price ($69) is still accepted.
-                        </span>
-                    </div>
-                    <div style="background:#ffebee; padding:10px; border-radius:6px; border:1px solid #ffcdd2;">
-                        <strong>🚀 Line Spiking UP</strong><br>
-                        <span style="font-size:0.85rem; color:#c62828;">
-                        **Status: ARBITRAGE PANIC!**<br>
-                        PSLV is trading higher than SLV. Panic buying of physical.
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <div class="chart-container" id="chart-ratio"></div>
-        </div>
-
-    </div>
-    <footer><p>Charts powered by TradingView • Not Financial Advice • <strong>Invest at your own risk.</strong></p></footer>
-</div>
-
-<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const modal = document.getElementById('helpModal');
-        const helpBtn = document.querySelector('.help-btn');
-        const closeBtn = document.querySelector('.close-btn');
-        function toggleHelp() {
-            if (modal.classList.contains('show')) { modal.classList.remove('show'); setTimeout(() => { modal.style.display = 'none'; }, 300); }
-            else { modal.style.display = 'flex'; setTimeout(() => { modal.classList.add('show'); }, 10); }
-        }
-        helpBtn.onclick = toggleHelp; closeBtn.onclick = toggleHelp;
-        window.onclick = function(event) { if (event.target == modal) toggleHelp(); }
-
-        function updateMarketLogic() {
-            const now = new Date();
-            const day = now.getUTCDay(); const hour = now.getUTCHours(); const min = now.getUTCMinutes();
-            const openHour = 14; const openMin = 30; const closeHour = 21; const closeMin = 0;
-            let isOpen = false;
-            if (day >= 1 && day <= 5) {
-                if (hour > openHour || (hour === openHour && min >= openMin)) {
-                    if (hour < closeHour || (hour === closeHour && min < closeMin)) isOpen = true;
-                }
-            }
-            const statusBadge = document.getElementById('marketStatus');
-            const statusText = document.getElementById('statusText');
-            const statusIcon = document.getElementById('statusIcon');
-            const countdownEl = document.getElementById('marketCountdown');
-            if (isOpen) {
-                statusBadge.className = "status-badge market-open"; statusText.innerText = "US Market Open"; statusIcon.innerText = "🟢";
-                const closeTime = new Date(now); closeTime.setUTCHours(closeHour, closeMin, 0, 0);
-                countdownEl.innerText = "Closes in " + formatDiff(closeTime - now);
-            } else {
-                statusBadge.className = "status-badge market-closed"; statusText.innerText = "Market Closed"; statusIcon.innerText = "🔴";
-                let nextOpen = new Date(now); nextOpen.setUTCHours(openHour, openMin, 0, 0);
-                if (now > nextOpen || day === 0 || day === 6) {
-                    if (day === 5 && now > nextOpen) nextOpen.setUTCDate(now.getUTCDate() + 3);
-                    else if (day === 6) nextOpen.setUTCDate(now.getUTCDate() + 2);
-                    else if (day === 0) nextOpen.setUTCDate(now.getUTCDate() + 1);
-                    else nextOpen.setUTCDate(now.getUTCDate() + 1);
-                }
-                countdownEl.innerText = "Opens in " + formatDiff(nextOpen - now);
-            }
-        }
-        function formatDiff(ms) {
-            if (ms < 0) return "00m 00s";
-            const h = Math.floor(ms / 3600000); const m = Math.floor((ms % 3600000) / 60000); const s = Math.floor((ms % 60000) / 1000);
-            return `${h}h ${m}m ${s}s`;
-        }
-        setInterval(updateMarketLogic, 1000); updateMarketLogic();
-
-        const commonConfig = { "autosize": true, "interval": "D", "timezone": "Etc/UTC", "theme": "light", "style": "1", "locale": "en", "enable_publishing": false, "allow_symbol_change": false, "hide_side_toolbar": true, "studies": [ "RSI@tv-basicstudies", "MASimple@tv-basicstudies" ], "studies_overrides": { "MASimple.length": 50 } };
-        
-        new TradingView.widget({ ...commonConfig, "symbol": "AMEX:PSLV", "container_id": "chart-pslv" });
-        new TradingView.widget({ ...commonConfig, "symbol": "NYSE:HL", "container_id": "chart-hl" }); // NEW Hecla Chart
-        new TradingView.widget({ ...commonConfig, "symbol": "NASDAQ:HYMC", "container_id": "chart-hymc" });
-        new TradingView.widget({ ...commonConfig, "symbol": "TVC:SILVER", "container_id": "chart-spot" });
-        new TradingView.widget({ ...commonConfig, "symbol": "AMEX:PSLV/AMEX:SLV", "container_id": "chart-ratio", "studies": [], "style": "2" });
-    });
-</script>
-</body>
-</html>
