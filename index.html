@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Silver Investment Tracker - Breakout Mode ($69+)</title>
+    <title>Silver Tracker - UK Crisis Edition</title>
     
     <link rel="icon" type="image/jpeg" href="https://raw.githubusercontent.com/usageuk/silver-trading/34f8a633c89b06c3b28e06deff322b6088cde333/image/silver%20bullion.webp">
 
@@ -16,6 +16,7 @@
             --risk-stock: #2962ff;  /* Companies */
             --risk-high: #ff9100;   /* Junior Miners */
             --risk-paper: #d50000;  /* Fake Paper */
+            --uk-blue: #00247d;     /* UK Theme */
             --alert-bg: #d50000;
         }
 
@@ -88,7 +89,7 @@
         .card:nth-child(3) { animation-delay: 0.3s; } .card:nth-child(4) { animation-delay: 0.4s; }
         
         .card.risk-safe { border-top-color: var(--risk-safe); }
-        .card.risk-stock { border-top-color: var(--risk-stock); }
+        .card.risk-stock { border-top-color: var(--uk-blue); }
         .card.risk-high { border-top-color: var(--risk-high); }
         .card.risk-paper { border-top-color: var(--risk-paper); }
 
@@ -153,58 +154,64 @@
 <div id="helpModal" class="modal">
     <div class="modal-content">
         <span class="close-btn" onclick="toggleHelp()">&times;</span>
-        <h2>Market Situation Report: Dec 23, 2025</h2>
-        <p><strong>STATUS: BREAKOUT CONFIRMED.</strong> Spot silver hit $69.68 today. China's export licensing scheme (Jan 1) is driving panic buying in London.</p>
+        <h2>UK Silver Reality Check</h2>
+        <p><strong>INTEL ALERT:</strong> Spot price reached $69.68. The options below are filtered for <strong>UK Availability</strong> and <strong>Physical Backing</strong>.</p>
         
         <table>
             <thead>
                 <tr>
-                    <th>Asset</th>
-                    <th>Detail</th>
-                    <th>Safety Rating</th>
+                    <th>Ticker</th>
+                    <th>Type</th>
+                    <th>Custodian/Location</th>
+                    <th>Safety Verdict</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td><strong>PSLV</strong></td>
-                    <td>Sprott Trust (Allocated)</td>
+                    <td>Sprott Trust</td>
+                    <td>Royal Canadian Mint (Allocated)</td>
                     <td style="color:var(--risk-safe); font-weight:bold;">✅ SAFEST</td>
                 </tr>
                 <tr>
-                    <td><strong>HYMC</strong></td>
-                    <td>Sprott Buying (30M shares)</td>
-                    <td style="color:var(--risk-high); font-weight:bold;">🚀 SQUEEZE</td>
+                    <td><strong>SSLN.L</strong></td>
+                    <td>iShares ETC</td>
+                    <td>JPMorgan London (Allocated)</td>
+                    <td style="color:#f57c00; font-weight:bold;">✅ STANDARD</td>
                 </tr>
                 <tr>
-                    <td><strong>WPM</strong></td>
-                    <td>Royalty / Streaming</td>
-                    <td style="color:var(--risk-stock); font-weight:bold;">✅ CORE</td>
+                    <td><strong>PHAG.L</strong></td>
+                    <td>WisdomTree</td>
+                    <td>HSBC London (Allocated)</td>
+                    <td style="color:#f57c00; font-weight:bold;">✅ STANDARD</td>
+                </tr>
+                <tr>
+                    <td><strong>FRES.L</strong></td>
+                    <td>UK Miner</td>
+                    <td>Fresnillo (Mexico Operations)</td>
+                    <td style="color:var(--uk-blue); font-weight:bold;">✅ STRATEGIC</td>
                 </tr>
                 <tr>
                     <td><strong>CFD</strong></td>
-                    <td>Paper / Cash Settle</td>
+                    <td>Paper Bet</td>
+                    <td>None (Cash Settle)</td>
                     <td style="color:var(--risk-paper); font-weight:bold;">❌ TOXIC</td>
                 </tr>
             </tbody>
         </table>
         
-        <h3>📰 Recent Intel</h3>
-        <ul>
-            <li><strong>Spot Price:</strong> Broke $69.00 resistance. Target $71.</li>
-            <li><strong>Hycroft (HYMC):</strong> Eric Sprott added 220k shares on Dec 17.</li>
-            <li><strong>China:</strong> Export controls officially confirmed for 2026.</li>
-        </ul>
+        <p style="font-size:0.85rem; color:#666;">*Note: PSLV is available via Hargreaves Lansdown / AJ Bell but trades in USD/CAD. SSLN.L trades in GBP.</p>
     </div>
 </div>
 
 <div class="container">
     <div class="crisis-banner">
-        🚨 MARKET ALERT: Silver Breaks $69.68. China Export Ban Confirmed (Jan 1).
+        🚨 MARKET ALERT: Silver $69+. Retail Shortages Confirmed.
     </div>
 
     <header>
-        <div class="help-btn" onclick="toggleHelp()" title="Read Fact Check">?</div>
-        <h1>Silver Investment Tracker</h1>
+        <div class="help-btn" onclick="toggleHelp()" title="UK Investment Guide">?</div>
+        <h1>Silver Tracker (UK Edition)</h1>
         
         <div class="status-bar">
             <div id="marketStatus" class="status-badge market-closed"><span id="statusIcon">🔴</span> <span id="statusText">Checking...</span></div>
@@ -221,7 +228,7 @@
                     <span class="ticker">Ticker: <strong>PSLV</strong></span>
                 </div>
                 <div class="action-group">
-                    <div class="type-badge" style="background:var(--risk-safe)">Fully Allocated</div>
+                    <div class="type-badge" style="background:var(--risk-safe)">#1 Safest</div>
                     <a href="https://www.trading212.com/trading-instruments/invest/PSLV.US" target="_blank" class="buy-btn-bullion"><span>Buy T212</span></a>
                 </div>
             </div>
@@ -240,12 +247,12 @@
         <div class="card risk-stock">
             <div class="card-header">
                 <div class="asset-info">
-                    <h2 class="asset-name">Wheaton Precious</h2>
-                    <span class="ticker">T212: <strong>WPM</strong></span>
+                    <h2 class="asset-name">iShares Physical</h2>
+                    <span class="ticker">LSE: <strong>SSLN.L</strong></span>
                 </div>
                 <div class="action-group">
-                    <div class="type-badge" style="background:var(--risk-stock)">Equity / Stock</div>
-                    <a href="https://www.trading212.com/trading-instruments/invest/WPM.US" target="_blank" class="buy-btn-bullion"><span>Buy T212</span></a>
+                    <div class="type-badge" style="background:var(--uk-blue)">UK Standard</div>
+                    <a href="https://www.trading212.com/trading-instruments/invest/SSLN.GB" target="_blank" class="buy-btn-bullion"><span>Buy T212</span></a>
                 </div>
             </div>
             <div class="algo-box">
@@ -253,77 +260,72 @@
                 <div class="tradingview-widget-container">
                     <div class="tradingview-widget-container__widget"></div>
                     <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
-                    { "interval": "1D", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "NYSE:WPM", "showIntervalTabs": false, "displayMode": "single", "locale": "en", "colorTheme": "light" }
+                    { "interval": "1D", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "LSE:SSLN", "showIntervalTabs": false, "displayMode": "single", "locale": "en", "colorTheme": "light" }
                     </script>
                 </div>
             </div>
-            <div class="chart-container" id="chart-wpm"></div>
+            <div class="chart-container" id="chart-ssln"></div>
         </div>
 
         <div class="card risk-high">
+            <div class="card-header">
+                <div class="asset-info">
+                    <h2 class="asset-name">Fresnillo PLC</h2>
+                    <span class="ticker">LSE: <strong>FRES.L</strong></span>
+                </div>
+                <div class="action-group">
+                    <div class="type-badge" style="background:var(--risk-high)">FTSE 100 Miner</div>
+                    <a href="https://www.trading212.com/trading-instruments/invest/FRES.GB" target="_blank" class="buy-btn-bullion"><span>Buy T212</span></a>
+                </div>
+            </div>
+            <div class="algo-box">
+                <div class="algo-title">LIVE SIGNAL (1 Day)</div>
+                <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
+                    { "interval": "1D", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "LSE:FRES", "showIntervalTabs": false, "displayMode": "single", "locale": "en", "colorTheme": "light" }
+                    </script>
+                </div>
+            </div>
+            <div class="chart-container" id="chart-fres"></div>
+        </div>
+
+        <div class="card risk-paper">
             <div class="card-header">
                 <div class="asset-info">
                     <h2 class="asset-name">Hycroft Mining</h2>
                     <span class="ticker">T212: <strong>HYMC</strong></span>
                 </div>
                 <div class="action-group">
-                    <div class="type-badge" style="background:var(--risk-high)">Whale Buying</div>
+                    <div class="type-badge" style="background:var(--risk-paper)">Sprott 10x Pick</div>
                     <a href="https://www.trading212.com/trading-instruments/invest/HYMC.US" target="_blank" class="buy-btn-bullion"><span>Buy T212</span></a>
-                </div>
-            </div>
-            <div class="algo-box">
-                <div class="algo-title">LIVE SIGNAL (1 Day)</div>
-                <div class="tradingview-widget-container">
-                    <div class="tradingview-widget-container__widget"></div>
-                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
-                    { "interval": "1D", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "NASDAQ:HYMC", "showIntervalTabs": false, "displayMode": "single", "locale": "en", "colorTheme": "light" }
-                    </script>
                 </div>
             </div>
             <div class="chart-container" id="chart-hymc"></div>
         </div>
 
-        <div class="card risk-paper">
-            <div class="card-header">
-                <div class="asset-info">
-                    <h2 class="asset-name">Spot Silver CFD</h2>
-                    <span class="ticker">T212: <strong>Silver</strong></span>
-                </div>
-                <div class="action-group">
-                    <div class="type-badge" style="background:var(--risk-paper)">PAPER BETS</div>
-                    <a href="https://www.trading212.com/trading-instruments/cfd/XAGUSD" target="_blank" class="buy-btn-bullion" onclick="return confirm('WARNING: Spot Silver is trading at $69. Extreme Volatility. Proceed?')">
-                        <span>Buy T212</span>
-                    </a>
-                </div>
-            </div>
-            <div style="padding:10px; background:#ffebee; border-radius:6px; color:#d50000; font-size:0.8rem; margin-bottom:10px; font-weight:600;">
-                ⚠️ WARNING: Risk of Cash Settlement if market freezes.
-            </div>
-            <div class="chart-container" id="chart-spot"></div>
-        </div>
-
         <div class="card" style="grid-column: 1 / -1; border-top: 6px solid #333;">
             <div class="card-header">
                 <div class="asset-info">
-                    <h2 class="asset-name">⚠️ Crisis Decoupling Monitor</h2>
-                    <span class="ticker">Panic Gauge: PSLV (Safe) ÷ SLV (Risky)</span>
+                    <h2 class="asset-name">⚠️ UK Premium Monitor</h2>
+                    <span class="ticker">Physical Trust (PSLV) vs UK Paper (SSLN)</span>
                 </div>
             </div>
             <div class="monitor-alert" style="background:#f8f9fa; border-left:4px solid #333; color:#333; padding:20px;">
-                <strong>Tracking the "Trust Premium":</strong><br>
+                <strong>Is the UK Market Decoupling?</strong><br>
                 <div style="margin-top:15px; display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
                     <div style="background:#e8f5e9; padding:10px; border-radius:6px; border:1px solid #c8e6c9;">
                         <strong>📉 Line Flat/Down</strong><br>
                         <span style="font-size:0.85rem; color:#2e7d32;">
                         **Status: CALM.**<br>
-                        Paper price ($69) is still accepted.
+                        London vaults (JPMorgan) are trusted.
                         </span>
                     </div>
                     <div style="background:#ffebee; padding:10px; border-radius:6px; border:1px solid #ffcdd2;">
                         <strong>🚀 Line Spiking UP</strong><br>
                         <span style="font-size:0.85rem; color:#c62828;">
-                        **Status: ARBITRAGE PANIC!**<br>
-                        PSLV is trading higher than SLV. Panic buying of physical.
+                        **Status: LONDON PANIC!**<br>
+                        Investors prefer Canadian Vaults (PSLV) over London.
                         </span>
                     </div>
                 </div>
@@ -338,9 +340,11 @@
 <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // --- MODAL LOGIC ---
         const modal = document.getElementById('helpModal');
         const helpBtn = document.querySelector('.help-btn');
         const closeBtn = document.querySelector('.close-btn');
+
         function toggleHelp() {
             if (modal.classList.contains('show')) { modal.classList.remove('show'); setTimeout(() => { modal.style.display = 'none'; }, 300); }
             else { modal.style.display = 'flex'; setTimeout(() => { modal.classList.add('show'); }, 10); }
@@ -348,10 +352,12 @@
         helpBtn.onclick = toggleHelp; closeBtn.onclick = toggleHelp;
         window.onclick = function(event) { if (event.target == modal) toggleHelp(); }
 
+        // --- MARKET TIMER LOGIC ---
         function updateMarketLogic() {
             const now = new Date();
             const day = now.getUTCDay(); const hour = now.getUTCHours(); const min = now.getUTCMinutes();
-            const openHour = 14; const openMin = 30; const closeHour = 21; const closeMin = 0;
+            const openHour = 8; const openMin = 0; // London Open 08:00
+            const closeHour = 16; const closeMin = 30; // London Close 16:30
             let isOpen = false;
             if (day >= 1 && day <= 5) {
                 if (hour > openHour || (hour === openHour && min >= openMin)) {
@@ -363,11 +369,11 @@
             const statusIcon = document.getElementById('statusIcon');
             const countdownEl = document.getElementById('marketCountdown');
             if (isOpen) {
-                statusBadge.className = "status-badge market-open"; statusText.innerText = "US Market Open"; statusIcon.innerText = "🟢";
+                statusBadge.className = "status-badge market-open"; statusText.innerText = "LSE Market Open"; statusIcon.innerText = "🟢";
                 const closeTime = new Date(now); closeTime.setUTCHours(closeHour, closeMin, 0, 0);
                 countdownEl.innerText = "Closes in " + formatDiff(closeTime - now);
             } else {
-                statusBadge.className = "status-badge market-closed"; statusText.innerText = "Market Closed"; statusIcon.innerText = "🔴";
+                statusBadge.className = "status-badge market-closed"; statusText.innerText = "LSE Market Closed"; statusIcon.innerText = "🔴";
                 let nextOpen = new Date(now); nextOpen.setUTCHours(openHour, openMin, 0, 0);
                 if (now > nextOpen || day === 0 || day === 6) {
                     if (day === 5 && now > nextOpen) nextOpen.setUTCDate(now.getUTCDate() + 3);
@@ -385,13 +391,22 @@
         }
         setInterval(updateMarketLogic, 1000); updateMarketLogic();
 
-        const commonConfig = { "autosize": true, "interval": "D", "timezone": "Etc/UTC", "theme": "light", "style": "1", "locale": "en", "enable_publishing": false, "allow_symbol_change": false, "hide_side_toolbar": true, "studies": [ "RSI@tv-basicstudies", "MASimple@tv-basicstudies" ], "studies_overrides": { "MASimple.length": 50 } };
+        // --- CHARTS (UK & US MIXED) ---
+        const commonConfig = { "autosize": true, "interval": "D", "timezone": "Europe/London", "theme": "light", "style": "1", "locale": "en", "enable_publishing": false, "allow_symbol_change": false, "hide_side_toolbar": true, "studies": [ "RSI@tv-basicstudies", "MASimple@tv-basicstudies" ], "studies_overrides": { "MASimple.length": 50 } };
         
         new TradingView.widget({ ...commonConfig, "symbol": "AMEX:PSLV", "container_id": "chart-pslv" });
-        new TradingView.widget({ ...commonConfig, "symbol": "NYSE:WPM", "container_id": "chart-wpm" });
+        new TradingView.widget({ ...commonConfig, "symbol": "LSE:SSLN", "container_id": "chart-ssln" }); // UK iShares
+        new TradingView.widget({ ...commonConfig, "symbol": "LSE:FRES", "container_id": "chart-fres" }); // UK Fresnillo
         new TradingView.widget({ ...commonConfig, "symbol": "NASDAQ:HYMC", "container_id": "chart-hymc" });
-        new TradingView.widget({ ...commonConfig, "symbol": "TVC:SILVER", "container_id": "chart-spot" });
-        new TradingView.widget({ ...commonConfig, "symbol": "AMEX:PSLV/AMEX:SLV", "container_id": "chart-ratio", "studies": [], "style": "2" });
+        
+        // RATIO: Comparing PSLV (Safe Trust) vs SSLN (Standard UK ETC)
+        // If this goes UP, it means PSLV is outperforming SSLN (flight to quality).
+        new TradingView.widget({ 
+            ...commonConfig, 
+            "symbol": "AMEX:PSLV/LSE:SSLN", 
+            "container_id": "chart-ratio", 
+            "studies": [], "style": "2" 
+        });
     });
 </script>
 </body>
