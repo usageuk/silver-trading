@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Silver Tracker - Sprott Squeeze Edition</title>
+    <title>Silver Investment Tracker - Breakout Mode ($69+)</title>
     
     <link rel="icon" type="image/jpeg" href="https://raw.githubusercontent.com/usageuk/silver-trading/34f8a633c89b06c3b28e06deff322b6088cde333/image/silver%20bullion.webp">
 
@@ -41,7 +41,7 @@
         .crisis-banner {
             background: var(--alert-bg); color: white; text-align: center; padding: 12px;
             border-radius: 8px; margin-bottom: 25px; font-weight: bold; font-size: 0.95rem;
-            box-shadow: 0 4px 15px rgba(213, 0, 0, 0.6); animation: pulse 1.5s infinite;
+            box-shadow: 0 4px 15px rgba(213, 0, 0, 0.6); animation: pulse 1.0s infinite;
             border: 2px solid #ff1744; text-transform: uppercase; letter-spacing: 0.5px;
         }
         @keyframes pulse { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.9; transform: scale(1.01); } 100% { opacity: 1; transform: scale(1); } }
@@ -153,46 +153,53 @@
 <div id="helpModal" class="modal">
     <div class="modal-content">
         <span class="close-btn" onclick="toggleHelp()">&times;</span>
-        <h2>Fact Check: "Sprott Squeeze" (Dec 23, 2025)</h2>
-        <p><strong>STATUS: VERIFIED.</strong> Eric Sprott is heavily buying Hycroft (HYMC). Samsung batteries (1kg silver/pack) are creating a new demand shock.</p>
+        <h2>Market Situation Report: Dec 23, 2025</h2>
+        <p><strong>STATUS: BREAKOUT CONFIRMED.</strong> Spot silver hit $69.68 today. China's export licensing scheme (Jan 1) is driving panic buying in London.</p>
         
         <table>
             <thead>
                 <tr>
-                    <th>Factor</th>
+                    <th>Asset</th>
                     <th>Detail</th>
-                    <th>Impact</th>
+                    <th>Safety Rating</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td><strong>Samsung Battery</strong></td>
-                    <td>Uses 1kg Silver per 100kWh.</td>
-                    <td style="color:var(--risk-paper); font-weight:bold;">supply Black Hole</td>
-                </tr>
-                <tr>
-                    <td><strong>China Ban</strong></td>
-                    <td>Exports Halt Jan 1st.</td>
-                    <td style="color:#f57c00; font-weight:bold;">Shortage</td>
-                </tr>
-                <tr>
-                    <td><strong>Hycroft (HYMC)</strong></td>
-                    <td>Eric Sprott owns ~33%.</td>
-                    <td style="color:var(--risk-stock); font-weight:bold;">Squeeze Play</td>
-                </tr>
-                <tr>
                     <td><strong>PSLV</strong></td>
-                    <td>Fully Allocated.</td>
-                    <td style="color:var(--risk-safe); font-weight:bold;">Safe Haven</td>
+                    <td>Sprott Trust (Allocated)</td>
+                    <td style="color:var(--risk-safe); font-weight:bold;">✅ SAFEST</td>
+                </tr>
+                <tr>
+                    <td><strong>HYMC</strong></td>
+                    <td>Sprott Buying (30M shares)</td>
+                    <td style="color:var(--risk-high); font-weight:bold;">🚀 SQUEEZE</td>
+                </tr>
+                <tr>
+                    <td><strong>WPM</strong></td>
+                    <td>Royalty / Streaming</td>
+                    <td style="color:var(--risk-stock); font-weight:bold;">✅ CORE</td>
+                </tr>
+                <tr>
+                    <td><strong>CFD</strong></td>
+                    <td>Paper / Cash Settle</td>
+                    <td style="color:var(--risk-paper); font-weight:bold;">❌ TOXIC</td>
                 </tr>
             </tbody>
         </table>
+        
+        <h3>📰 Recent Intel</h3>
+        <ul>
+            <li><strong>Spot Price:</strong> Broke $69.00 resistance. Target $71.</li>
+            <li><strong>Hycroft (HYMC):</strong> Eric Sprott added 220k shares on Dec 17.</li>
+            <li><strong>China:</strong> Export controls officially confirmed for 2026.</li>
+        </ul>
     </div>
 </div>
 
 <div class="container">
     <div class="crisis-banner">
-        ⏳ COUNTDOWN: China Export Ban Starts Jan 1st (9 Days). Retail Inventory Critical.
+        🚨 MARKET ALERT: Silver Breaks $69.68. China Export Ban Confirmed (Jan 1).
     </div>
 
     <header>
@@ -260,7 +267,7 @@
                     <span class="ticker">T212: <strong>HYMC</strong></span>
                 </div>
                 <div class="action-group">
-                    <div class="type-badge" style="background:var(--risk-high)">Sprott's #1 Pick</div>
+                    <div class="type-badge" style="background:var(--risk-high)">Whale Buying</div>
                     <a href="https://www.trading212.com/trading-instruments/invest/HYMC.US" target="_blank" class="buy-btn-bullion"><span>Buy T212</span></a>
                 </div>
             </div>
@@ -284,13 +291,13 @@
                 </div>
                 <div class="action-group">
                     <div class="type-badge" style="background:var(--risk-paper)">PAPER BETS</div>
-                    <a href="https://www.trading212.com/trading-instruments/cfd/XAGUSD" target="_blank" class="buy-btn-bullion" onclick="return confirm('WARNING: COMEX Limit Up Risk. This trade may be force-closed for cash. Proceed?')">
+                    <a href="https://www.trading212.com/trading-instruments/cfd/XAGUSD" target="_blank" class="buy-btn-bullion" onclick="return confirm('WARNING: Spot Silver is trading at $69. Extreme Volatility. Proceed?')">
                         <span>Buy T212</span>
                     </a>
                 </div>
             </div>
             <div style="padding:10px; background:#ffebee; border-radius:6px; color:#d50000; font-size:0.8rem; margin-bottom:10px; font-weight:600;">
-                ⚠️ WARNING: High Risk of Cash Settlement.
+                ⚠️ WARNING: Risk of Cash Settlement if market freezes.
             </div>
             <div class="chart-container" id="chart-spot"></div>
         </div>
@@ -303,22 +310,20 @@
                 </div>
             </div>
             <div class="monitor-alert" style="background:#f8f9fa; border-left:4px solid #333; color:#333; padding:20px;">
-                <strong>What is this telling me?</strong><br>
-                This chart tracks if "Smart Money" is fleeing standard ETFs (SLV) to buy the safer Trust (PSLV).
-                
+                <strong>Tracking the "Trust Premium":</strong><br>
                 <div style="margin-top:15px; display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
                     <div style="background:#e8f5e9; padding:10px; border-radius:6px; border:1px solid #c8e6c9;">
-                        <strong>📉 Line Going DOWN/FLAT</strong><br>
+                        <strong>📉 Line Flat/Down</strong><br>
                         <span style="font-size:0.85rem; color:#2e7d32;">
                         **Status: CALM.**<br>
-                        Investors trust the standard "Paper" market. SLV is trading normally.
+                        Paper price ($69) is still accepted.
                         </span>
                     </div>
                     <div style="background:#ffebee; padding:10px; border-radius:6px; border:1px solid #ffcdd2;">
                         <strong>🚀 Line Spiking UP</strong><br>
                         <span style="font-size:0.85rem; color:#c62828;">
                         **Status: ARBITRAGE PANIC!**<br>
-                        Investors are fleeing to PSLV. Trust in paper silver is breaking.
+                        PSLV is trading higher than SLV. Panic buying of physical.
                         </span>
                     </div>
                 </div>
@@ -333,22 +338,16 @@
 <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // --- MODAL LOGIC ---
         const modal = document.getElementById('helpModal');
         const helpBtn = document.querySelector('.help-btn');
         const closeBtn = document.querySelector('.close-btn');
-
         function toggleHelp() {
-            if (modal.classList.contains('show')) {
-                modal.classList.remove('show'); setTimeout(() => { modal.style.display = 'none'; }, 300);
-            } else {
-                modal.style.display = 'flex'; setTimeout(() => { modal.classList.add('show'); }, 10);
-            }
+            if (modal.classList.contains('show')) { modal.classList.remove('show'); setTimeout(() => { modal.style.display = 'none'; }, 300); }
+            else { modal.style.display = 'flex'; setTimeout(() => { modal.classList.add('show'); }, 10); }
         }
         helpBtn.onclick = toggleHelp; closeBtn.onclick = toggleHelp;
         window.onclick = function(event) { if (event.target == modal) toggleHelp(); }
 
-        // --- TIMER LOGIC ---
         function updateMarketLogic() {
             const now = new Date();
             const day = now.getUTCDay(); const hour = now.getUTCHours(); const min = now.getUTCMinutes();
@@ -386,20 +385,13 @@
         }
         setInterval(updateMarketLogic, 1000); updateMarketLogic();
 
-        // --- CHARTS ---
         const commonConfig = { "autosize": true, "interval": "D", "timezone": "Etc/UTC", "theme": "light", "style": "1", "locale": "en", "enable_publishing": false, "allow_symbol_change": false, "hide_side_toolbar": true, "studies": [ "RSI@tv-basicstudies", "MASimple@tv-basicstudies" ], "studies_overrides": { "MASimple.length": 50 } };
         
         new TradingView.widget({ ...commonConfig, "symbol": "AMEX:PSLV", "container_id": "chart-pslv" });
         new TradingView.widget({ ...commonConfig, "symbol": "NYSE:WPM", "container_id": "chart-wpm" });
         new TradingView.widget({ ...commonConfig, "symbol": "NASDAQ:HYMC", "container_id": "chart-hymc" });
         new TradingView.widget({ ...commonConfig, "symbol": "TVC:SILVER", "container_id": "chart-spot" });
-        
-        new TradingView.widget({ 
-            ...commonConfig, 
-            "symbol": "AMEX:PSLV/AMEX:SLV", 
-            "container_id": "chart-ratio", 
-            "studies": [], "style": "2" 
-        });
+        new TradingView.widget({ ...commonConfig, "symbol": "AMEX:PSLV/AMEX:SLV", "container_id": "chart-ratio", "studies": [], "style": "2" });
     });
 </script>
 </body>
