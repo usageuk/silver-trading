@@ -141,6 +141,9 @@
         table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.9rem; }
         th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
         th { background: #f4f4f4; }
+        
+        /* Note for Proxy Charts */
+        .proxy-note { font-size: 0.7rem; color: #888; margin-top: 5px; font-style: italic; text-align: right; }
     </style>
 </head>
 <body>
@@ -177,12 +180,6 @@
                     <td><strong>SSLN.L</strong></td>
                     <td>iShares ETC</td>
                     <td>JPMorgan London (Allocated)</td>
-                    <td style="color:#f57c00; font-weight:bold;">✅ STANDARD</td>
-                </tr>
-                <tr>
-                    <td><strong>PHAG.L</strong></td>
-                    <td>WisdomTree</td>
-                    <td>HSBC London (Allocated)</td>
                     <td style="color:#f57c00; font-weight:bold;">✅ STANDARD</td>
                 </tr>
                 <tr>
@@ -260,11 +257,12 @@
                 <div class="tradingview-widget-container">
                     <div class="tradingview-widget-container__widget"></div>
                     <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
-                    { "interval": "1D", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "LSE:SSLN", "showIntervalTabs": false, "displayMode": "single", "locale": "en", "colorTheme": "light" }
+                    { "interval": "1D", "width": "100%", "isTransparent": true, "height": "100%", "symbol": "AMEX:SLV", "showIntervalTabs": false, "displayMode": "single", "locale": "en", "colorTheme": "light" }
                     </script>
                 </div>
             </div>
             <div class="chart-container" id="chart-ssln"></div>
+            <div class="proxy-note">*Chart displays US equivalent (SLV)</div>
         </div>
 
         <div class="card risk-high">
@@ -288,6 +286,7 @@
                 </div>
             </div>
             <div class="chart-container" id="chart-fres"></div>
+            <div class="proxy-note">*Chart displays Peer Miner (PAAS)</div>
         </div>
 
         <div class="card risk-paper">
@@ -308,7 +307,7 @@
             <div class="card-header">
                 <div class="asset-info">
                     <h2 class="asset-name">⚠️ UK Premium Monitor</h2>
-                    <span class="ticker">Physical Trust (PSLV) vs UK Paper (SSLN)</span>
+                    <span class="ticker">Physical Trust (PSLV) vs Paper ETF (SLV)</span>
                 </div>
             </div>
             <div class="monitor-alert" style="background:#f8f9fa; border-left:4px solid #333; color:#333; padding:20px;">
@@ -391,19 +390,25 @@
         }
         setInterval(updateMarketLogic, 1000); updateMarketLogic();
 
-        // --- CHARTS (UK & US MIXED) ---
+        // --- CHARTS (USING US PROXIES FOR RELIABILITY) ---
         const commonConfig = { "autosize": true, "interval": "D", "timezone": "Europe/London", "theme": "light", "style": "1", "locale": "en", "enable_publishing": false, "allow_symbol_change": false, "hide_side_toolbar": true, "studies": [ "RSI@tv-basicstudies", "MASimple@tv-basicstudies" ], "studies_overrides": { "MASimple.length": 50 } };
         
+        // 1. PSLV (Works fine)
         new TradingView.widget({ ...commonConfig, "symbol": "AMEX:PSLV", "container_id": "chart-pslv" });
-        new TradingView.widget({ ...commonConfig, "symbol": "LSE:SSLN", "container_id": "chart-ssln" }); // UK iShares
-        new TradingView.widget({ ...commonConfig, "symbol": "LSE:FRES", "container_id": "chart-fres" }); // UK Fresnillo
+        
+        // 2. SSLN (Proxy: SLV - Same asset class, highly correlated)
+        new TradingView.widget({ ...commonConfig, "symbol": "AMEX:SLV", "container_id": "chart-ssln" }); 
+        
+        // 3. FRESNILLO (Proxy: PAAS - Senior Silver Miner, highly correlated)
+        new TradingView.widget({ ...commonConfig, "symbol": "NASDAQ:PAAS", "container_id": "chart-fres" }); 
+        
+        // 4. HYMC (Works fine)
         new TradingView.widget({ ...commonConfig, "symbol": "NASDAQ:HYMC", "container_id": "chart-hymc" });
         
-        // RATIO: Comparing PSLV (Safe Trust) vs SSLN (Standard UK ETC)
-        // If this goes UP, it means PSLV is outperforming SSLN (flight to quality).
+        // 5. RATIO (PSLV vs SLV - Stable Calculation)
         new TradingView.widget({ 
             ...commonConfig, 
-            "symbol": "AMEX:PSLV/LSE:SSLN", 
+            "symbol": "AMEX:PSLV/AMEX:SLV", 
             "container_id": "chart-ratio", 
             "studies": [], "style": "2" 
         });
