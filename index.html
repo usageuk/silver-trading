@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Silver Strategy - Breakout Mode</title>
+    <title>My Silver Strategy - Live Market</title>
     
     <link rel="icon" type="image/jpeg" href="https://raw.githubusercontent.com/usageuk/silver-trading/34f8a633c89b06c3b28e06deff322b6088cde333/image/silver%20bullion.webp">
 
@@ -39,14 +39,11 @@
 
         .container { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
 
-        /* ALERT BANNER */
-        .crisis-banner {
-            background: var(--alert-bg); color: white; text-align: center; padding: 12px;
-            border-radius: 8px; margin-bottom: 25px; font-weight: bold; font-size: 0.95rem;
-            box-shadow: 0 4px 15px rgba(213, 0, 0, 0.6); animation: pulse 1.0s infinite;
-            border: 2px solid #ff1744; text-transform: uppercase; letter-spacing: 0.5px;
+        /* LIVE TICKER BANNER (Replaces Static Alert) */
+        .ticker-banner {
+            margin-bottom: 25px; border-radius: 8px; overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2); border: 1px solid #ccc;
         }
-        @keyframes pulse { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.9; transform: scale(1.01); } 100% { opacity: 1; transform: scale(1); } }
 
         /* HEADER */
         header {
@@ -170,8 +167,8 @@
 <div id="helpModal" class="modal">
     <div class="modal-content">
         <span class="close-btn" onclick="toggleHelp()">&times;</span>
-        <h2>My Strategy Check (Dec 27 Update)</h2>
-        <p><strong>STATUS: CONFIRMED.</strong> Your portfolio is correctly positioned for the breakout. Spot Price: <strong>$69.68</strong>. China Ban: <strong>Jan 1</strong>.</p>
+        <h2>My Strategy Check</h2>
+        <p><strong>STATUS: LIVE MARKET.</strong> Check the ticker tape above for the exact spot price. Your portfolio is positioned for the squeeze.</p>
         
         <table>
             <thead>
@@ -208,8 +205,28 @@
 </div>
 
 <div class="container">
-    <div class="crisis-banner">
-        🚨 MARKET ALERT: Spot $69.68. China Ban < 5 Days. Portfolio Active.
+    
+    <div class="ticker-banner">
+        <div class="tradingview-widget-container">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+            {
+            "symbols": [
+                { "proName": "FX_IDC:XAGUSD", "title": "Silver Spot (USD)" },
+                { "proName": "FX_IDC:XAGGBP", "title": "Silver Spot (GBP)" },
+                { "proName": "AMEX:PSLV", "title": "PSLV Trust" },
+                { "proName": "NASDAQ:HYMC", "title": "Hycroft Mining" },
+                { "proName": "NYSE:AG", "title": "First Majestic" },
+                { "proName": "NYSE:WPM", "title": "Wheaton Precious" }
+            ],
+            "showSymbolLogo": true,
+            "colorTheme": "light",
+            "isTransparent": false,
+            "displayMode": "adaptive",
+            "locale": "en"
+            }
+            </script>
+        </div>
     </div>
 
     <header>
@@ -352,7 +369,7 @@
                         <strong>📉 Line Flat/Down</strong><br>
                         <span style="font-size:0.85rem; color:#2e7d32;">
                         **Status: CALM.**<br>
-                        Paper price ($69) is respected.
+                        Paper price is respected.
                         </span>
                     </div>
                     <div style="background:#ffebee; padding:10px; border-radius:6px; border:1px solid #ffcdd2;">
