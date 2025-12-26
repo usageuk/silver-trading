@@ -93,6 +93,7 @@
         .card.risk-stock { border-top-color: var(--uk-blue); }
         .card.risk-high { border-top-color: var(--risk-high); }
         .card.risk-paper { border-top-color: var(--risk-paper); }
+        .card.risk-alert { border-top-color: var(--alert-bg); }
 
         @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
 
@@ -101,7 +102,6 @@
         .ticker { color: #555; font-size: 0.9rem; font-weight: 600; display: block; margin-top: 4px; }
         .action-group { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
         
-        /* OWNED BADGE */
         .owned-badge {
             background-color: var(--owned-tag); color: white; padding: 2px 8px; border-radius: 10px;
             font-size: 0.65rem; font-weight: 700; text-transform: uppercase; margin-bottom: 4px;
@@ -131,6 +131,13 @@
             background: #fff; border-left: 4px solid #333; color: #333; padding: 15px; border-radius: 4px; margin-bottom: 15px; font-size: 0.9rem;
         }
 
+        /* TIMELINE STYLES */
+        .timeline-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee; }
+        .timeline-row:last-child { border-bottom: none; }
+        .date-box { font-weight: 800; color: #d50000; min-width: 80px; }
+        .event-desc { flex-grow: 1; font-size: 0.9rem; color: #333; }
+        .impact-tag { font-size: 0.7rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; background: #ffebee; color: #c62828; }
+
         /* MODAL */
         .modal {
             display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%;
@@ -149,7 +156,6 @@
         table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.9rem; }
         th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
         th { background: #f4f4f4; }
-        
         .proxy-note { font-size: 0.7rem; color: #888; margin-top: 5px; font-style: italic; text-align: right; }
     </style>
 </head>
@@ -306,6 +312,32 @@
             <div class="chart-container" id="chart-hymc"></div>
         </div>
 
+        <div class="card risk-alert" style="grid-column: 1 / -1;">
+            <div class="card-header">
+                <div class="asset-info">
+                    <h2 class="asset-name">⚠️ Critical Event Timeline</h2>
+                    <span class="ticker">Key Dates Driving the Squeeze</span>
+                </div>
+            </div>
+            <div style="padding: 0 10px;">
+                <div class="timeline-row">
+                    <div class="date-box">JAN 1</div>
+                    <div class="event-desc"><strong>China Export Ban</strong><br>New licensing system halts ~100M oz of supply.</div>
+                    <div class="impact-tag">SUPPLY SHOCK</div>
+                </div>
+                <div class="timeline-row">
+                    <div class="date-box">JAN 20</div>
+                    <div class="event-desc"><strong>CFTC Exemption Expires</strong><br>Swap dealers lose "No-Action" protection. Volatility expected.</div>
+                    <div class="impact-tag">REGULATORY</div>
+                </div>
+                <div class="timeline-row">
+                    <div class="date-box">FEB 20</div>
+                    <div class="event-desc"><strong>Futures Expiration</strong><br>Paper contracts expire. Risk of "Limit Up" / Cash Settlement.</div>
+                    <div class="impact-tag">SETTLEMENT RISK</div>
+                </div>
+            </div>
+        </div>
+
         <div class="card" style="grid-column: 1 / -1; border-top: 6px solid #333;">
             <div class="card-header">
                 <div class="asset-info">
@@ -402,7 +434,7 @@
         // 2. WPM (You own this)
         new TradingView.widget({ ...commonConfig, "symbol": "NYSE:WPM", "container_id": "chart-wpm" });
         
-        // 3. AG (You own this - Swapped back from Fresnillo)
+        // 3. AG (You own this)
         new TradingView.widget({ ...commonConfig, "symbol": "NYSE:AG", "container_id": "chart-ag" });
         
         // 4. HYMC (You own this)
