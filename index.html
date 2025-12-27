@@ -49,7 +49,7 @@
         .crisis-banner {
             background: var(--alert-bg); color: white; text-align: center; padding: 12px;
             border-radius: 8px; margin-bottom: 25px; font-weight: bold; font-size: 0.95rem;
-            box-shadow: 0 4px 15px rgba(213, 0, 0, 0.6); animation: pulse 1.0s infinite;
+            box-shadow: 0 4px 15px rgba(213, 0, 0, 0.6); animation: pulse 0.8s infinite;
             border: 2px solid #ff1744; text-transform: uppercase; letter-spacing: 0.5px;
         }
         @keyframes pulse { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.9; transform: scale(1.01); } 100% { opacity: 1; transform: scale(1); } }
@@ -177,7 +177,7 @@
     <div class="modal-content">
         <span class="close-btn" onclick="toggleHelp()">&times;</span>
         <h2>Strategy Check (Profit Update)</h2>
-        <p><strong>STATUS: SQUEEZE ACCELERATING.</strong> Silver is in breakout mode. Your CFD position is deep in profit.</p>
+        <p><strong>STATUS: SQUEEZE ACCELERATING.</strong> Silver closed at <strong>$79.25</strong>. Your CFD position is deep in profit.</p>
         
         <table>
             <thead>
@@ -191,17 +191,17 @@
                 <tr>
                     <td><strong>CFD (Paper)</strong></td>
                     <td>Speculation</td>
-                    <td style="color:#d50000; font-weight:bold;">⚠️ MOVE STOP TO $76.10</td>
+                    <td style="color:#d50000; font-weight:bold;">⚠️ TRAIL STOP TO $77.50</td>
                 </tr>
                 <tr>
                     <td><strong>SSLN.L</strong></td>
                     <td>Core Physical</td>
-                    <td style="color:var(--risk-safe); font-weight:bold;">✅ HOLDING</td>
+                    <td style="color:var(--risk-safe); font-weight:bold;">✅ NEVER SELL</td>
                 </tr>
                 <tr>
                     <td><strong>HYMC</strong></td>
                     <td>Sprott Squeeze</td>
-                    <td style="color:var(--risk-high); font-weight:bold;">🚀 TARGET $30+</td>
+                    <td style="color:var(--risk-high); font-weight:bold;">🚀 MANIA PHASE ($30+)</td>
                 </tr>
                 <tr>
                     <td><strong>WPM</strong></td>
@@ -212,7 +212,8 @@
         </table>
         
         <p style="background:#ffebee; padding:10px; border-radius:4px; font-size:0.9rem; margin-top:10px;">
-            <strong>🛑 CRITICAL:</strong> Ensure your CFD Stop Loss is ABOVE your entry price ($76.02) to lock in a risk-free trade. Recommended: $76.10 or higher.
+            <strong>🛑 SUNDAY WARNING:</strong> The video predicts a potential "Limit Up" gap but also a $5 flush. 
+            <br>Ensure your stop ($77.50) is set to lock in gains without getting stopped out by normal volatility.
         </p>
     </div>
 </div>
@@ -243,7 +244,7 @@
     </div>
 
     <div class="crisis-banner">
-        🚀 MARKET UPDATE: Squeeze Active. China Export Ban Imminent (Jan 1).
+        🚨 RED ALERT: US Navy Blockade Active. Price $79.25. EXPECT "LIMIT UP" SUNDAY NIGHT.
     </div>
 
     <header>
@@ -355,6 +356,11 @@
             </div>
             <div style="padding: 0 10px;">
                 <div class="timeline-row">
+                    <div class="date-box">SUNDAY</div>
+                    <div class="event-desc"><strong>Futures Reopen</strong><br>Watch for Gap Up > $80 due to "Limit Up" rules.</div>
+                    <div class="impact-tag">IMMEDIATE</div>
+                </div>
+                <div class="timeline-row">
                     <div class="date-box">JAN 1</div>
                     <div class="event-desc"><strong>China Export Ban</strong><br>New licensing system halts ~100M oz of supply.</div>
                     <div class="impact-tag">SUPPLY SHOCK</div>
@@ -363,11 +369,6 @@
                     <div class="date-box">JAN 20</div>
                     <div class="event-desc"><strong>CFTC Exemption Expires</strong><br>Swap dealers lose "No-Action" protection. Volatility expected.</div>
                     <div class="impact-tag">REGULATORY</div>
-                </div>
-                <div class="timeline-row">
-                    <div class="date-box">FEB 20</div>
-                    <div class="event-desc"><strong>Futures Expiration</strong><br>Paper contracts expire. Risk of "Limit Up" / Cash Settlement.</div>
-                    <div class="impact-tag">SETTLEMENT RISK</div>
                 </div>
             </div>
         </div>
@@ -380,6 +381,11 @@
                 </div>
             </div>
             <div class="monitor-alert" style="background:#f8f9fa; border-left:4px solid #333; color:#333; padding:20px;">
+                <div style="font-size: 0.85rem; margin-bottom: 12px; color: #d50000; padding-bottom: 10px; border-bottom: 1px solid #eee;">
+                    <strong>🔥 New Signal (Dec 27):</strong> "China Syndrome" Active. UBS SDIC Fund premium collapsed due to buy limits. 
+                    Watch for <strong>Shanghai Arbitrage</strong> widening on Monday.
+                </div>
+                
                 <strong>Is the Market Decoupling?</strong><br>
                 <div style="margin-top:15px; display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
                     <div style="background:#e8f5e9; padding:10px; border-radius:6px; border:1px solid #c8e6c9;">
@@ -420,36 +426,57 @@
         helpBtn.onclick = toggleHelp; closeBtn.onclick = toggleHelp;
         window.onclick = function(event) { if (event.target == modal) toggleHelp(); }
 
-        // --- MARKET TIMER LOGIC ---
+        // --- UPDATE 4: MARKET TIMER (SUNDAY FUTURES AWARE) ---
         function updateMarketLogic() {
             const now = new Date();
             const day = now.getUTCDay(); const hour = now.getUTCHours(); const min = now.getUTCMinutes();
-            const openHour = 14; const openMin = 30; // US Open 14:30 UTC
-            const closeHour = 21; const closeMin = 0; // US Close 21:00 UTC
+            
+            // US Stock Open (Weekdays 14:30 UTC)
+            const openHour = 14; const openMin = 30; 
+            const closeHour = 21; const closeMin = 0;
+            
+            // Futures Open (Sunday 23:00 UTC approx)
+            const futuresOpenHour = 23; 
+            const isSunday = (day === 0);
+
             let isOpen = false;
+            
+            // Simple check for Stock Market Hours (Mon-Fri)
             if (day >= 1 && day <= 5) {
                 if (hour > openHour || (hour === openHour && min >= openMin)) {
                     if (hour < closeHour || (hour === closeHour && min < closeMin)) isOpen = true;
                 }
             }
+
             const statusBadge = document.getElementById('marketStatus');
             const statusText = document.getElementById('statusText');
             const statusIcon = document.getElementById('statusIcon');
             const countdownEl = document.getElementById('marketCountdown');
+
             if (isOpen) {
                 statusBadge.className = "status-badge market-open"; statusText.innerText = "Market Open"; statusIcon.innerText = "🟢";
                 const closeTime = new Date(now); closeTime.setUTCHours(closeHour, closeMin, 0, 0);
                 countdownEl.innerText = "Closes in " + formatDiff(closeTime - now);
             } else {
                 statusBadge.className = "status-badge market-closed"; statusText.innerText = "Market Closed"; statusIcon.innerText = "🔴";
-                let nextOpen = new Date(now); nextOpen.setUTCHours(openHour, openMin, 0, 0);
-                if (now > nextOpen || day === 0 || day === 6) {
-                    if (day === 5 && now > nextOpen) nextOpen.setUTCDate(now.getUTCDate() + 3);
-                    else if (day === 6) nextOpen.setUTCDate(now.getUTCDate() + 2);
-                    else if (day === 0) nextOpen.setUTCDate(now.getUTCDate() + 1);
-                    else nextOpen.setUTCDate(now.getUTCDate() + 1);
+                
+                let nextOpen = new Date(now);
+                
+                // SUNDAY LOGIC: Count down to Futures Open (GlobeEx)
+                if (isSunday && hour < futuresOpenHour) {
+                    nextOpen.setUTCHours(futuresOpenHour, 0, 0, 0);
+                    statusText.innerText = "Waiting for Globex (Sunday Gap)";
+                    countdownEl.innerText = "Futures Open in " + formatDiff(nextOpen - now);
+                } else {
+                    // Standard Logic
+                    nextOpen.setUTCHours(openHour, openMin, 0, 0);
+                    if (now > nextOpen || day === 6 || (day === 0 && hour >= futuresOpenHour)) {
+                        if (day === 5) nextOpen.setUTCDate(now.getUTCDate() + 3);
+                        else if (day === 6) nextOpen.setUTCDate(now.getUTCDate() + 2);
+                        else nextOpen.setUTCDate(now.getUTCDate() + 1);
+                    }
+                    countdownEl.innerText = "Stock Mkt Opens in " + formatDiff(nextOpen - now);
                 }
-                countdownEl.innerText = "Opens in " + formatDiff(nextOpen - now);
             }
         }
         function formatDiff(ms) {
