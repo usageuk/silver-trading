@@ -5,274 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Silver Command Center - Day 1 Regime</title>
     <style>
-        :root {
-            --glass-bg: rgba(0, 0, 0, 0.85); /* Darker for War Room feel */
-            --glass-border: 1px solid rgba(255, 255, 255, 0.3);
-            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-            --risk-green: #30d158;
-            --risk-blue: #0a84ff;
-            --risk-gold: #ffd60a;
-            --risk-red: #ff453a;
-            --copper: #b87333;
-            --text-main: #f5f5f7;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            color: var(--text-main);
-            min-height: 100vh;
-            background: #000;
-        }
-
-        /* VIDEO BACKGROUND */
-        .video-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.4;
-            overflow: hidden;
-        }
-
-        .video-background video {
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            object-fit: cover;
-        }
-
-        .container { max-width: 1400px; margin: 0 auto; position: relative; z-index: 1; }
-
-        /* HEADER */
-        header {
-            text-align: center;
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: var(--glass-border);
-            box-shadow: var(--glass-shadow);
-            padding: 20px;
-            border-radius: 24px;
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .header-title h1 { margin: 0; font-size: 1.8rem; letter-spacing: 1px; }
-        .header-title span { font-size: 0.9rem; color: var(--risk-red); font-weight: 800; text-transform: uppercase; letter-spacing: 2px; }
-
-        .status-badge {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 8px 16px;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
-        /* GRID */
-        .grid-section {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 25px;
-        }
-
-        /* CARDS */
-        .card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: var(--glass-border);
-            border-radius: 24px;
-            padding: 24px;
-            box-shadow: var(--glass-shadow);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card-header {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;
-        }
-        .card-title { font-size: 0.9rem; font-weight: 700; color: #aaa; text-transform: uppercase; }
-
-        /* METRICS */
-        .metric-big { font-size: 2.2rem; font-weight: 800; letter-spacing: -1px; }
-        .metric-label { font-size: 0.7rem; font-weight: 600; color: #888; margin-top: 5px; text-transform: uppercase; }
-        
-        .color-green { color: var(--risk-green); }
-        .color-red { color: var(--risk-red); }
-        .color-gold { color: var(--risk-gold); }
-
-        /* INTEL LIST */
-        .intel-list { list-style: none; padding: 0; margin: 0; }
-        .intel-item {
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .intel-tag { font-weight: 700; font-size: 0.8rem; padding: 4px 8px; border-radius: 4px; background: rgba(255,255,255,0.1); }
-
-        /* ALERT */
-        .alert-box {
-            grid-column: 1 / -1;
-            background: rgba(255, 69, 58, 0.15);
-            border: 1px solid var(--risk-red);
-            border-radius: 20px;
-            padding: 20px;
-            text-align: center;
-            margin-top: 10px;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(255, 69, 58, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(255, 69, 58, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 69, 58, 0); }
-        }
-
-        .countdown { font-size: 3rem; font-weight: 800; color: var(--risk-red); font-family: monospace; letter-spacing: 5px; }
-        
-        /* TICKER BADGE */
-        .ticker-badge { 
-            background: #fff; color: #000; padding: 2px 6px; border-radius: 4px; font-size: 0.8rem; font-weight: 700; 
-        }
-
+        :root { --glass-bg: rgba(0, 0, 0, 0.85); --glass-border: 1px solid rgba(255, 255, 255, 0.3); --risk-green: #30d158; --risk-red: #ff453a; --risk-gold: #ffd60a; --copper: #b87333; --text-main: #f5f5f7; }
+        body { font-family: sans-serif; padding: 20px; color: var(--text-main); background: #000; }
+        .container { max-width: 1400px; margin: 0 auto; }
+        .card { background: var(--glass-bg); border: var(--glass-border); padding: 20px; margin-bottom: 20px; border-radius: 20px; }
+        .metric-big { font-size: 2.2rem; font-weight: 800; }
+        .intel-tag { background: rgba(255,255,255,0.1); padding: 4px 8px; border-radius: 4px; font-weight: 700; font-size: 0.8rem; }
+        .ticker-badge { background: #fff; color: #000; padding: 2px 6px; border-radius: 4px; font-weight: 700; font-size: 0.8rem; }
     </style>
 </head>
 <body>
-
-<div class="video-background">
-    <video autoplay muted loop playsinline>
-        <source src="https://raw.githubusercontent.com/usageuk/silver-trading/94c06252a843a63a2187c79d2cc4927fe26966c0/image/Silver_Bullion_Rotating_Video_Generation.mp4" type="video/mp4">
-    </video>
-</div>
-
 <div class="container">
+    <div style="text-align:center; margin-bottom:30px; border:1px solid #666; padding:20px; border-radius:20px;">
+        <h1>COMMAND CENTER</h1>
+        <span style="color:#ff453a; font-weight:800;">⚠️ DEFCON 1: REGIME CHANGE</span>
+        <div id="utc-clock" style="margin-top:10px; font-family:monospace;">JAN 1, 2026</div>
+    </div>
     
-    <header>
-        <div class="header-title">
-            <h1>Command Center</h1>
-            <span>⚠️ DEFCON 1: REGIME CHANGE</span>
+    <div class="card">
+        <h3 style="color:#aaa;">GLOBAL PRICE MATRIX</h3>
+        <div style="display:flex; justify-content:space-between; text-align:center;">
+            <div><div class="metric-big" style="color:#ff453a;">$72.00</div><div style="font-size:0.7rem;">PAPER (FAKE)</div></div>
+            <div><div class="metric-big" style="color:#30d158;">$125.00</div><div style="font-size:0.7rem;">PHYSICAL (REAL)</div></div>
         </div>
-        <div class="status-badge" id="utc-clock">JAN 1, 2026</div>
-    </header>
-
-    <div class="grid-section">
-
-        <div class="card">
-            <div class="card-header">
-                <span class="card-title">Global Price Matrix</span>
-                <span>🌏</span>
-            </div>
-            
-            <div style="display: flex; justify-content: space-between; text-align: center; margin-bottom: 20px;">
-                <div>
-                    <div class="metric-big color-red">$72.00</div>
-                    <div class="metric-label">PAPER (FAKE)</div>
-                </div>
-                <div>
-                    <div class="metric-big color-green">$125.00</div>
-                    <div class="metric-label">PHYSICAL (REAL)</div>
-                </div>
-            </div>
-
-            <div style="background: rgba(255, 204, 0, 0.15); padding: 15px; border-radius: 12px; text-align: center; border: 1px solid var(--risk-gold);">
-                <div style="font-size: 0.8rem; color: var(--risk-gold); font-weight: 700; margin-bottom: 5px;">ARBITRAGE VACUUM</div>
-                <div style="font-size: 2.8rem; font-weight: 800; color: var(--text-main);">$53.00</div>
-                <div style="font-size: 0.7rem; opacity: 0.7;">WEST TO EAST DRAIN ACCELERATING</div>
-            </div>
+        <div style="background:rgba(255,204,0,0.2); padding:10px; margin-top:15px; text-align:center; border:1px solid #ffd60a; border-radius:10px;">
+            <div style="font-weight:800; font-size:2rem; color:#fff;">$53.00 VACUUM</div>
         </div>
+    </div>
 
-        <div class="card">
-            <div class="card-header">
-                <span class="card-title">Asset Deployment</span>
-                <span>🚀</span>
-            </div>
-            
-            <div class="intel-item">
-                <div>
-                    <span class="ticker-badge" style="background: var(--copper);">FCX</span>
-                    <span style="font-size: 0.9rem; font-weight:700; margin-left: 5px;">Freeport</span>
-                </div>
-                <span class="intel-tag color-green">FILLED @ $51.02</span>
-            </div>
-            <div class="intel-item">
-                <div>
-                    <span class="ticker-badge" style="background: var(--copper);">SCCO</span>
-                    <span style="font-size: 0.9rem; font-weight:700; margin-left: 5px;">Southern</span>
-                </div>
-                <span class="intel-tag color-green">FILLED @ $143.50</span>
-            </div>
-             <div class="intel-item">
-                 <div>
-                    <span class="ticker-badge" style="background: #ffd700;">FNV</span>
-                    <span style="font-size: 0.9rem; font-weight:700; margin-left: 5px;">Franco-Nevada</span>
-                </div>
-                <span class="intel-tag color-green">FILLED @ $207.98</span>
-            </div>
-            <div class="intel-item">
-                 <div>
-                    <span class="ticker-badge" style="background: #c0c0c0;">AG</span>
-                    <span style="font-size: 0.9rem; font-weight:700; margin-left: 5px;">First Majestic</span>
-                </div>
-                <span class="intel-tag color-blue">HOLDING</span>
-            </div>
-        </div>
+    <div class="card">
+        <h3 style="color:#aaa;">DEPLOYED ASSETS</h3>
+        <div style="margin-bottom:10px;"><span class="ticker-badge">FCX</span> <span style="color:#30d158; font-weight:bold; float:right;">FILLED @ $51.02</span></div>
+        <div style="margin-bottom:10px;"><span class="ticker-badge">SCCO</span> <span style="color:#30d158; font-weight:bold; float:right;">FILLED @ $143.50</span></div>
+        <div style="margin-bottom:10px;"><span class="ticker-badge">FNV</span> <span style="color:#30d158; font-weight:bold; float:right;">FILLED @ $207.98</span></div>
+        <div style="margin-bottom:10px;"><span class="ticker-badge">AG</span> <span style="color:#0a84ff; font-weight:bold; float:right;">HOLDING</span></div>
+    </div>
 
-        <div class="card">
-            <div class="card-header">
-                <span class="card-title">Strategic Intel</span>
-                <span>📡</span>
-            </div>
-            <ul class="intel-list">
-                <li class="intel-item">
-                    <span>Export Ban (80-Ton Rule)</span>
-                    <span class="intel-tag color-red">ACTIVE LAW</span>
-                </li>
-                <li class="intel-item">
-                    <span>CME Margin Hike</span>
-                    <span class="intel-tag color-gold">CONFIRMED</span>
-                </li>
-                <li class="intel-item">
-                    <span>Macro Target (2026)</span>
-                    <span class="intel-tag color-green">$200.00 / oz</span>
-                </li>
-                 <li class="intel-item">
-                    <span>Nationalization Risk</span>
-                    <span class="intel-tag color-red">HIGH</span>
-                </li>
-            </ul>
-        </div>
-
-        <div class="alert-box">
-            <div style="color: var(--risk-red); font-weight: 800; font-size: 0.9rem; margin-bottom: 5px;">MARKET REGIME CHANGE</div>
-            <div class="countdown">ACTIVE</div>
-            <div style="font-size: 0.7rem; margin-top: 5px; color: #fff; opacity: 0.8;">CHINA EXPORT BAN IN EFFECT • WESTERN VAULTS EMPTY</div>
-        </div>
-
+    <div class="card">
+        <h3 style="color:#aaa;">STRATEGIC INTEL</h3>
+        <div style="margin-bottom:10px; display:flex; justify-content:space-between;"><span>China Export Ban</span> <span class="intel-tag" style="color:#ff453a;">ACTIVE LAW</span></div>
+        <div style="margin-bottom:10px; display:flex; justify-content:space-between;"><span>CME Margin Hike</span> <span class="intel-tag" style="color:#ffd60a;">CONFIRMED</span></div>
+        <div style="margin-bottom:10px; display:flex; justify-content:space-between;"><span>Miner Nationalization Risk</span> <span class="intel-tag" style="color:#ff453a;">HIGH</span></div>
     </div>
 </div>
-
-<script>
-    function updateClock() {
-        const now = new Date();
-        document.getElementById('utc-clock').textContent = now.toUTCString().replace('GMT', 'UTC');
-    }
-    setInterval(updateClock, 1000);
-    updateClock();
-</script>
-
 </body>
 </html>
