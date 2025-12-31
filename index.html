@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Silver Command Center - Global Glass</title>
+    <title>Silver Command Center - Backwardation Alert</title>
     <style>
         :root {
             --glass-bg: rgba(255, 255, 255, 0.85);
@@ -187,7 +187,7 @@
     <header>
         <div class="header-title">
             <h1>Silver Command Center</h1>
-            <span>⚠️ DEFCON 1: MARKET DISCONNECT</span>
+            <span>⚠️ DEFCON 1: BACKWARDATION CONFIRMED</span>
         </div>
         <div class="status-badge" id="utc-clock">Loading Clock...</div>
     </header>
@@ -208,14 +208,15 @@
 
             <div class="arb-container">
                 <div class="arb-item">
-                    <span class="arb-label">US PAPER (FAKE)</span>
-                    <span class="arb-val color-red">$72.17</span>
+                    <span class="arb-label">US PAPER (RECOVERING)</span>
+                    <span class="arb-val color-blue">$76.60</span>
                 </div>
                 <div class="arb-item">
-                    <span class="arb-label">ARBITRAGE GAP</span>
-                    <span class="arb-val color-gold">+$22.88</span>
+                    <span class="arb-label">BACKWARDATION</span>
+                    <span class="arb-val color-red">+$0.40</span>
                 </div>
             </div>
+            <div style="text-align: center; font-size: 0.7rem; color: var(--risk-red); margin-top: 5px;">SPOT PRICE HIGHER THAN FUTURES = SHORTAGE</div>
         </div>
 
         <div class="card">
@@ -225,20 +226,20 @@
             </div>
             <ul class="intel-list">
                 <li class="intel-item">
-                    <span class="intel-tag">BAILOUT</span>
-                    <span>Fed injects <strong>$34 Billion</strong> into Repo Market to save short sellers.</span>
+                    <span class="intel-tag">LONDON</span>
+                    <span>Market in <strong>Backwardation</strong>. Vaults empty.</span>
                 </li>
                 <li class="intel-item">
-                    <span class="intel-tag">TRUMP</span>
-                    <span>Unconfirmed: US Export Ban starts <strong>Jan 1</strong>.</span>
+                    <span class="intel-tag">RETAIL</span>
+                    <span>Coin shops "Sold Out". Lines out the door. Premiums Spiking.</span>
                 </li>
                 <li class="intel-item">
-                    <span class="intel-tag">TECH</span>
-                    <span>Samsung "Solid State" Battery requires <strong>1kg Silver/Car</strong>.</span>
+                    <span class="intel-tag">WAR</span>
+                    <span>US strikes Venezuela docks. Oil output cut 25%.</span>
                 </li>
                 <li class="intel-item">
-                    <span class="intel-tag">INDIA</span>
-                    <span>Recycling at 0%. Public holding with "Diamond Hands".</span>
+                    <span class="intel-tag">RED SEA</span>
+                    <span>Saudi/UAE alliance fracture. Shipping routes collapsing.</span>
                 </li>
             </ul>
         </div>
@@ -252,7 +253,7 @@
             <div style="display: flex; justify-content: space-between; margin-bottom: 10px; align-items: center;">
                 <div>
                     <span style="font-weight: 700; font-size: 1.1rem;">SSLN (Physical)</span>
-                    <span style="display:block; font-size: 0.8rem; color:#666;">Tracked to Global Price</span>
+                    <span style="display:block; font-size: 0.8rem; color:#666;">Valued at Real Price</span>
                 </div>
                 <span class="status-badge" style="background: var(--risk-green); color: #fff;">HOLD</span>
             </div>
@@ -260,7 +261,7 @@
             <div style="display: flex; justify-content: space-between; margin-bottom: 10px; align-items: center;">
                 <div>
                     <span style="font-weight: 700; font-size: 1.1rem;">Miners (AG/FRES)</span>
-                    <span style="display:block; font-size: 0.8rem; color:#666;">Supply Constraint Play</span>
+                    <span style="display:block; font-size: 0.8rem; color:#666;">Production Constraint</span>
                 </div>
                 <span class="status-badge" style="background: var(--risk-green); color: #fff;">HOLD</span>
             </div>
@@ -268,7 +269,7 @@
             <div style="display: flex; justify-content: space-between; margin-bottom: 10px; align-items: center; opacity: 0.5;">
                 <div>
                     <span style="font-weight: 700; font-size: 1.1rem;">CFD (Leverage)</span>
-                    <span style="display:block; font-size: 0.8rem; color:#666;">Margin Trap</span>
+                    <span style="display:block; font-size: 0.8rem; color:#666;">Margin Trap Avoided</span>
                 </div>
                 <span class="status-badge" style="background: var(--risk-red); color: #fff;">CLOSED</span>
             </div>
@@ -282,7 +283,7 @@
                     "width": "100%",
                     "height": "100%",
                     "locale": "en",
-                    "dateRange": "12M",
+                    "dateRange": "1M",
                     "colorTheme": "light",
                     "isTransparent": true,
                     "autosize": true,
@@ -312,8 +313,8 @@
     updateClock();
 
     // 2. COUNTDOWN TIMER (Targeting Jan 1st Context)
-    // Simulating imminent activation (e.g., 4 hours left)
-    let totalSeconds = 4 * 60 * 60; 
+    // Simulating imminent activation (e.g., 3 hours left)
+    let totalSeconds = 3 * 60 * 60; 
 
     function updateTimer() {
         if (totalSeconds > 0) {
