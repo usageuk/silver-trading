@@ -3,27 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Silver Investment Tracker - Auto Strategy</title>
+    <title>Silver Command Center - Global Disconnect</title>
     <style>
         :root {
-            --glass-bg: rgba(255, 255, 255, 0.90);
-            --glass-border: 1px solid rgba(255, 255, 255, 0.6);
-            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
-            --risk-low: #34c759;
-            --risk-med: #007aff;
-            --risk-high: #ff9500;
-            --risk-bad: #ff3b30;
+            --glass-bg: rgba(10, 15, 30, 0.85);
+            --glass-border: 1px solid rgba(100, 200, 255, 0.2);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            --risk-low: #00ff41;  /* Matrix Green */
+            --risk-med: #00bfff;  /* Cyan */
+            --risk-high: #ffd700; /* Gold */
+            --risk-crit: #ff3b30; /* Red */
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 20px;
-            color: #1a1a1a;
+            color: #e0e0e0;
+            background-color: #000;
             min-height: 100vh;
         }
 
-        /* VIDEO BACKGROUND CONTAINER */
+        /* BACKGROUND VIDEO (Abstract Network/Matrix) */
         .video-background {
             position: fixed;
             top: 0;
@@ -31,393 +32,244 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            overflow: hidden;
+            opacity: 0.4;
         }
-
         .video-background video {
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
             object-fit: cover;
         }
 
-        .container { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
+        .container { max-width: 1400px; margin: 0 auto; position: relative; z-index: 1; }
 
         /* HEADER */
         header {
             text-align: center;
             background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: var(--glass-border);
-            box-shadow: var(--glass-shadow);
-            padding: 20px;
-            border-radius: 16px;
-            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--risk-crit);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 25px;
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            gap: 15px;
         }
 
-        h1 { 
-            margin: 0; 
-            font-size: 2rem;
-            color: #2c3e50;
-            text-shadow: 0 1px 1px rgba(255,255,255,0.8);
+        .header-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--risk-crit);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255, 59, 48, 0.6);
+            animation: pulse 2s infinite;
         }
 
-        .status-bar {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            font-size: 0.9rem;
-            flex-wrap: wrap;
-            justify-content: center;
+        .clock-badge {
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            color: var(--risk-med);
+            border: 1px solid var(--risk-med);
+            padding: 5px 10px;
+            border-radius: 5px;
         }
 
-        .status-badge {
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            border: 1px solid rgba(0,0,0,0.1);
-        }
-        .market-open { background-color: #e8f5e9; color: #2e7d32; }
-        .market-closed { background-color: #ffebee; color: #c62828; }
-
-        .time-badge {
-            background-color: #f5f5f7;
-            color: #555;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-variant-numeric: tabular-nums;
-        }
-
-        /* GRID */
+        /* GRID LAYOUT */
         .grid-section {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
         }
+        
+        @media (max-width: 900px) { .grid-section { grid-template-columns: 1fr; } }
 
         /* CARDS */
         .card {
             background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
             border: var(--glass-border);
-            border-radius: 16px;
+            border-radius: 12px;
             padding: 20px;
-            box-shadow: var(--glass-shadow);
-            border-top: 6px solid #ccc;
             display: flex;
             flex-direction: column;
-            animation: slideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-            opacity: 0;
-            transform: translateY(20px);
+            justify-content: space-between;
         }
 
-        .card:nth-child(1) { animation-delay: 0.1s; }
-        .card:nth-child(2) { animation-delay: 0.2s; }
-        .card:nth-child(3) { animation-delay: 0.3s; }
-        .card:nth-child(4) { animation-delay: 0.4s; }
+        .card-header {
+            font-size: 0.9rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 5px;
+        }
 
-        @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
-
-        .card.risk-low { border-top-color: var(--risk-low); }
-        .card.risk-med { border-top-color: var(--risk-med); }
-        .card.risk-high { border-top-color: var(--risk-high); }
-        .card.risk-bad { border-top-color: var(--risk-bad); }
-
-        .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
-        .asset-name { font-size: 1.3rem; font-weight: 800; margin: 0; color: #2c3e50; }
-        .ticker { color: #555; font-size: 0.9rem; font-weight: 600; margin-top: 4px; display: block;}
+        /* PRICE DISPLAY */
+        .price-display {
+            text-align: center;
+            margin: 15px 0;
+        }
+        .price-val { font-size: 2.5rem; font-weight: bold; }
+        .price-sub { font-size: 0.8rem; opacity: 0.8; }
         
-        .action-group { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
-        .badge { padding: 4px 8px; border-radius: 6px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; background: rgba(255,255,255,0.8); }
+        .c-us { color: var(--risk-crit); } /* Broken US Price */
+        .c-cn { color: var(--risk-med); }  /* China Price */
+        .c-db { color: var(--risk-low); }  /* Dubai Price */
 
-        /* BUTTON IMAGE */
-        .buy-btn-bullion {
-            display: block;
-            width: 90px;
-            height: 36px;
-            background-image: url('https://raw.githubusercontent.com/usageuk/silver-trading/7418b5e4f1db4ae13bc7d17571f7689231786bad/image/silver_bar_vertical.jpeg');
-            background-size: cover;
-            background-position: center;
-            border-radius: 6px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-            transition: transform 0.2s, filter 0.2s;
-            border: 1px solid #999;
+        /* INTEL LOG */
+        .intel-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            max-height: 250px;
+            overflow-y: auto;
         }
-        .buy-btn-bullion:hover {
-            transform: translateY(-2px) scale(1.05);
-            filter: brightness(1.1);
+        .intel-item {
+            border-bottom: 1px solid #333;
+            padding: 8px 0;
+            font-size: 0.85rem;
         }
-
-        /* AUTO STRATEGY BOX */
-        .algo-box {
-            background: rgba(255,255,255,0.5);
-            border-radius: 8px; 
-            margin-bottom: 15px;
-            border: 1px solid rgba(0,0,0,0.1);
-            overflow: hidden;
-            height: 300px;
-            position: relative;
-        }
-        .algo-title {
-            position: absolute;
-            top: 5px; left: 10px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: #555;
-            z-index: 5;
-            background: rgba(255,255,255,0.8);
-            padding: 2px 6px;
-            border-radius: 4px;
+        .intel-tag {
+            font-weight: bold;
+            color: #fff;
+            background: #333;
+            padding: 1px 4px;
+            border-radius: 3px;
+            font-size: 0.7rem;
+            margin-right: 5px;
         }
 
-        .chart-container {
-            height: 320px; 
-            border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;
-            background: #fff;
-        }
+        /* ASSET TABLE */
+        table { width: 100%; border-collapse: collapse; }
+        td { padding: 8px 0; border-bottom: 1px solid #333; }
+        .status-hold { color: var(--risk-low); font-weight: bold; }
+        .status-closed { color: var(--risk-crit); font-weight: bold; }
 
-        footer { 
-            text-align: center; margin-top: 40px; 
-            color: #fff; 
-            font-size: 0.85rem; 
-            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
-            font-weight: 500;
+        /* COUNTDOWN ALERT */
+        .alert-box {
+            grid-column: span 3;
+            background: rgba(255, 59, 48, 0.15);
+            border: 1px solid var(--risk-crit);
+            text-align: center;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 10px;
         }
+        .alert-title { color: var(--risk-crit); font-weight: bold; letter-spacing: 1px; margin-bottom: 10px; }
+        .countdown { font-size: 3rem; font-family: 'Courier New', monospace; font-weight: bold; color: #fff; text-shadow: 0 0 10px var(--risk-crit); }
+
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
+
     </style>
 </head>
 <body>
 
 <div class="video-background">
     <video autoplay muted loop playsinline>
-        <source src="https://raw.githubusercontent.com/usageuk/silver-trading/94c06252a843a63a2187c79d2cc4927fe26966c0/image/Silver_Bullion_Rotating_Video_Generation.mp4" type="video/mp4">
+        <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-blue-circuit-board-98-large.mp4" type="video/mp4">
     </video>
 </div>
 
 <div class="container">
     <header>
-        <h1>Silver Investment Tracker</h1>
-        
-        <div class="status-bar">
-            <div id="marketStatus" class="status-badge market-closed">
-                <span id="statusIcon">🔴</span> <span id="statusText">Checking Market...</span>
-            </div>
-            <div class="time-badge" id="lastUpdate">Loading Time...</div>
-        </div>
+        <div class="header-title">⚠️ SYSTEM FAILURE: GLOBAL DISCONNECT</div>
+        <div class="clock-badge" id="utc-clock">LOADING...</div>
     </header>
 
     <div class="grid-section">
 
-        <div class="card risk-low">
-            <div class="card-header">
-                <div class="asset-info">
-                    <h2 class="asset-name">iShares Physical</h2>
-                    <span class="ticker">T212: <strong>SSLN</strong></span>
-                </div>
-                <div class="action-group">
-                    <span class="badge" style="color:var(--risk-low)">#1 Safer</span>
-                    <a href="https://www.trading212.com/trading-instruments/invest/SSLN.GB" target="_blank" class="buy-btn-bullion" title="Trade SSLN"></a>
-                </div>
+        <div class="card" style="border-color: var(--risk-crit);">
+            <div class="card-header">🇺🇸 US PAPER SPOT (FAKE)</div>
+            <div class="price-display">
+                <div class="price-val c-us" id="price-us">$72.17</div>
+                <div class="price-sub">COMEX "FLASH CRASH" LOW</div>
             </div>
-            
-            <div class="algo-box">
-                <div class="algo-title">LIVE SIGNAL (1 Day)</div>
-                <div class="tradingview-widget-container">
-                    <div class="tradingview-widget-container__widget"></div>
-                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
-                    {
-                    "interval": "1D",
-                    "width": "100%",
-                    "isTransparent": true,
-                    "height": "100%",
-                    "symbol": "AMEX:SLV",
-                    "showIntervalTabs": false,
-                    "displayMode": "single",
-                    "locale": "en",
-                    "colorTheme": "light"
-                    }
-                    </script>
-                </div>
+            <div class="tradingview-widget-container" style="height: 100px;">
+                <div class="tradingview-widget-container__widget"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+                {
+                "symbol": "TVC:SILVER",
+                "width": "100%",
+                "height": "100%",
+                "locale": "en",
+                "dateRange": "12M",
+                "colorTheme": "dark",
+                "isTransparent": true,
+                "autosize": true,
+                "largeChartUrl": ""
+                }
+                </script>
             </div>
-
-            <div class="chart-container" id="chart-ssln"></div>
         </div>
 
-        <div class="card risk-med">
-            <div class="card-header">
-                <div class="asset-info">
-                    <h2 class="asset-name">Wheaton Precious</h2>
-                    <span class="ticker">T212: <strong>WPM</strong></span>
-                </div>
-                <div class="action-group">
-                    <span class="badge" style="color:var(--risk-med)">#2 Growth</span>
-                    <a href="https://www.trading212.com/trading-instruments/invest/WPM.US" target="_blank" class="buy-btn-bullion" title="Trade WPM"></a>
-                </div>
+        <div class="card" style="border-color: var(--risk-low);">
+            <div class="card-header">🌍 GLOBAL PHYSICAL REALITY</div>
+            <div class="price-display">
+                <div class="price-val c-db">$95.05</div>
+                <div class="price-sub" style="color: var(--risk-low);">DUBAI PHYSICAL PRICE</div>
             </div>
-
-            <div class="algo-box">
-                <div class="algo-title">LIVE SIGNAL (1 Day)</div>
-                <div class="tradingview-widget-container">
-                    <div class="tradingview-widget-container__widget"></div>
-                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
-                    {
-                    "interval": "1D",
-                    "width": "100%",
-                    "isTransparent": true,
-                    "height": "100%",
-                    "symbol": "NYSE:WPM",
-                    "showIntervalTabs": false,
-                    "displayMode": "single",
-                    "locale": "en",
-                    "colorTheme": "light"
-                    }
-                    </script>
-                </div>
+            <div style="text-align: center; margin-top: 10px;">
+                <div style="color: var(--risk-med); font-size: 1.5rem; font-weight:bold;">$87.00</div>
+                <div style="font-size: 0.7rem; color: #888;">SHANGHAI PRICE</div>
             </div>
-
-            <div class="chart-container" id="chart-wpm"></div>
         </div>
 
-        <div class="card risk-high">
-            <div class="card-header">
-                <div class="asset-info">
-                    <h2 class="asset-name">First Majestic</h2>
-                    <span class="ticker">T212: <strong>AG</strong></span>
-                </div>
-                <div class="action-group">
-                    <span class="badge" style="color:var(--risk-high)">#3 Aggressive</span>
-                    <a href="https://www.trading212.com/trading-instruments/invest/AG.US" target="_blank" class="buy-btn-bullion" title="Trade AG"></a>
-                </div>
-            </div>
-
-            <div class="algo-box">
-                <div class="algo-title">LIVE SIGNAL (1 Day)</div>
-                <div class="tradingview-widget-container">
-                    <div class="tradingview-widget-container__widget"></div>
-                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
-                    {
-                    "interval": "1D",
-                    "width": "100%",
-                    "isTransparent": true,
-                    "height": "100%",
-                    "symbol": "NYSE:AG",
-                    "showIntervalTabs": false,
-                    "displayMode": "single",
-                    "locale": "en",
-                    "colorTheme": "light"
-                    }
-                    </script>
-                </div>
-            </div>
-
-            <div class="chart-container" id="chart-ag"></div>
+        <div class="card">
+            <div class="card-header">📡 INTELLIGENCE LOG</div>
+            <ul class="intel-list">
+                <li class="intel-item"><span class="intel-tag" style="color:var(--risk-low)">DUBAI</span> Price hits $95. Physical Decoupling confirmed.</li>
+                <li class="intel-item"><span class="intel-tag" style="color:var(--risk-med)">TRUMP</span> Rumor: US Export Ban starting Jan 1st.</li>
+                <li class="intel-item"><span class="intel-tag" style="color:var(--risk-high)">TECH</span> Samsung Battery requires 1kg Silver/Car.</li>
+                <li class="intel-item"><span class="intel-tag" style="color:var(--risk-crit)">FED</span> $29B Injection into Repo Market (Silent Bailout).</li>
+                <li class="intel-item"><span class="intel-tag" style="color:var(--risk-low)">INDIA</span> "Diamond Fist" hoarding. No selling.</li>
+            </ul>
+            <table style="margin-top: 15px;">
+                <tr><td>Physical (SSLN)</td><td class="status-hold">HOLD</td></tr>
+                <tr><td>Miners (AG/FRES)</td><td class="status-hold">HOLD</td></tr>
+                <tr><td>Paper CFD</td><td class="status-closed">AVOID</td></tr>
+            </table>
         </div>
 
-        <div class="card risk-bad">
-            <div class="card-header">
-                <div class="asset-info">
-                    <h2 class="asset-name">Spot Silver CFD</h2>
-                    <span class="ticker">T212: <strong>Silver</strong></span>
-                </div>
-                <div class="action-group">
-                    <span class="badge" style="color:var(--risk-bad)">Day Trade Only</span>
-                    <a href="https://www.trading212.com/trading-instruments/cfd/XAGUSD" target="_blank" class="buy-btn-bullion" title="Trade CFD"></a>
-                </div>
-            </div>
-
-            <div class="algo-box">
-                <div class="algo-title">LIVE SIGNAL (15 Min)</div>
-                <div class="tradingview-widget-container">
-                    <div class="tradingview-widget-container__widget"></div>
-                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
-                    {
-                    "interval": "15m",
-                    "width": "100%",
-                    "isTransparent": true,
-                    "height": "100%",
-                    "symbol": "TVC:SILVER",
-                    "showIntervalTabs": false,
-                    "displayMode": "single",
-                    "locale": "en",
-                    "colorTheme": "light"
-                    }
-                    </script>
-                </div>
-            </div>
-
-            <div class="chart-container" id="chart-spot"></div>
+        <div class="alert-box">
+            <div class="alert-title">🚨 US/CHINA EXPORT BAN PROTOCOL (JAN 1)</div>
+            <div class="countdown" id="countdown">00:00:00</div>
+            <div style="font-size: 0.8rem; margin-top: 10px; color: #ccc;">TARGET: JANUARY 1, 2026 (GLOBAL IMPACT)</div>
         </div>
 
     </div>
-    
-    <footer>
-        <p>Charts powered by TradingView • Not Financial Advice • <strong>Invest at your own risk.</strong></p>
-    </footer>
 </div>
 
-<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
 <script>
-    // --- 1. MARKET STATUS & TIME LOGIC ---
-    function updateMarketStatus() {
+    // 1. CLOCK
+    function updateClock() {
         const now = new Date();
-        const timeString = now.toLocaleTimeString("en-GB", { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-        
-        // Display Timestamp
-        document.getElementById('lastUpdate').innerText = `Live: ${timeString}`;
+        document.getElementById('utc-clock').textContent = now.toUTCString().replace('GMT', 'UTC');
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
 
-        // Market Hours (Mon-Fri, 14:30 - 21:00 GMT approx for US Market)
-        const day = now.getUTCDay(); // 0=Sun, 6=Sat
-        const hour = now.getUTCHours();
-        const min = now.getUTCMinutes();
-        
-        const isOpenDay = (day >= 1 && day <= 5);
-        const isOpenTime = (hour > 14 || (hour === 14 && min >= 30)) && (hour < 21);
+    // 2. COUNTDOWN (Simulating time to Jan 1st midnight relative to context)
+    // For demo purposes, we count down 4 hours.
+    let totalSeconds = 4 * 60 * 60; 
 
-        const statusBadge = document.getElementById('marketStatus');
-        const statusText = document.getElementById('statusText');
-        const statusIcon = document.getElementById('statusIcon');
-
-        if (isOpenDay && isOpenTime) {
-            statusBadge.className = "status-badge market-open";
-            statusText.innerText = "US Market Open";
-            statusIcon.innerText = "🟢";
+    function updateTimer() {
+        if (totalSeconds > 0) {
+            totalSeconds--;
+            let h = Math.floor(totalSeconds / 3600);
+            let m = Math.floor((totalSeconds % 3600) / 60);
+            let s = Math.floor(totalSeconds % 60);
+            h = h < 10 ? "0" + h : h;
+            m = m < 10 ? "0" + m : m;
+            s = s < 10 ? "0" + s : s;
+            document.getElementById('countdown').textContent = h + ":" + m + ":" + s;
         } else {
-            statusBadge.className = "status-badge market-closed";
-            statusText.innerText = "Market Closed";
-            statusIcon.innerText = "🔴";
+            document.getElementById('countdown').textContent = "ACTIVE";
+            document.querySelector('.alert-box').style.background = "rgba(255, 0, 0, 0.4)";
         }
     }
+    setInterval(updateTimer, 1000);
 
-    // Run immediately and then every second for the clock
-    updateMarketStatus();
-    setInterval(updateMarketStatus, 1000);
-
-    // --- 2. CHART CONFIGURATION ---
-    const commonConfig = {
-        "autosize": true, "interval": "D", "timezone": "Etc/UTC", "theme": "light", "style": "1", "locale": "en",
-        "enable_publishing": false, "allow_symbol_change": false, "hide_side_toolbar": true,
-        "studies": [ "RSI@tv-basicstudies", "MASimple@tv-basicstudies" ],
-        "studies_overrides": { "MASimple.length": 50 }
-    };
-
-    new TradingView.widget({ ...commonConfig, "symbol": "AMEX:SLV", "container_id": "chart-ssln" });
-    new TradingView.widget({ ...commonConfig, "symbol": "NYSE:WPM", "container_id": "chart-wpm" });
-    new TradingView.widget({ ...commonConfig, "symbol": "NYSE:AG", "container_id": "chart-ag" });
-    new TradingView.widget({ ...commonConfig, "symbol": "TVC:SILVER", "container_id": "chart-spot" });
 </script>
 
 </body>
