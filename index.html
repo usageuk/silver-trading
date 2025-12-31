@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Silver Command Center - The $100 Vacuum</title>
+    <title>Silver Command Center - Day 1 Regime</title>
     <style>
         :root {
-            --glass-bg: rgba(255, 255, 255, 0.90);
-            --glass-border: 1px solid rgba(255, 255, 255, 0.6);
-            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
-            --risk-green: #34c759;
-            --risk-blue: #007aff;
-            --risk-gold: #ffcc00;
-            --risk-red: #ff3b30;
+            --glass-bg: rgba(0, 0, 0, 0.85); /* Darker for War Room feel */
+            --glass-border: 1px solid rgba(255, 255, 255, 0.3);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            --risk-green: #30d158;
+            --risk-blue: #0a84ff;
+            --risk-gold: #ffd60a;
+            --risk-red: #ff453a;
             --copper: #b87333;
-            --text-main: #1d1d1f;
+            --text-main: #f5f5f7;
         }
 
         body {
@@ -23,6 +23,7 @@
             padding: 20px;
             color: var(--text-main);
             min-height: 100vh;
+            background: #000;
         }
 
         /* VIDEO BACKGROUND */
@@ -33,6 +34,7 @@
             width: 100%;
             height: 100%;
             z-index: -1;
+            opacity: 0.4;
             overflow: hidden;
         }
 
@@ -65,15 +67,16 @@
             align-items: center;
         }
 
-        .header-title h1 { margin: 0; font-size: 1.5rem; }
-        .header-title span { font-size: 0.8rem; color: var(--risk-red); font-weight: 800; text-transform: uppercase; }
+        .header-title h1 { margin: 0; font-size: 1.8rem; letter-spacing: 1px; }
+        .header-title span { font-size: 0.9rem; color: var(--risk-red); font-weight: 800; text-transform: uppercase; letter-spacing: 2px; }
 
         .status-badge {
-            background: rgba(0,0,0,0.05);
+            background: rgba(255, 255, 255, 0.1);
             padding: 8px 16px;
             border-radius: 50px;
             font-size: 0.85rem;
             font-weight: 600;
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
         /* GRID */
@@ -93,15 +96,13 @@
             box-shadow: var(--glass-shadow);
             display: flex;
             flex-direction: column;
-            transition: transform 0.3s ease;
         }
-        .card:hover { transform: translateY(-5px); }
 
         .card-header {
             display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 15px; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 10px;
+            margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;
         }
-        .card-title { font-size: 0.9rem; font-weight: 700; color: #666; text-transform: uppercase; }
+        .card-title { font-size: 0.9rem; font-weight: 700; color: #aaa; text-transform: uppercase; }
 
         /* METRICS */
         .metric-big { font-size: 2.2rem; font-weight: 800; letter-spacing: -1px; }
@@ -114,30 +115,38 @@
         /* INTEL LIST */
         .intel-list { list-style: none; padding: 0; margin: 0; }
         .intel-item {
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
             font-size: 0.9rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
-        .intel-tag { font-weight: 700; font-size: 0.8rem; }
+        .intel-tag { font-weight: 700; font-size: 0.8rem; padding: 4px 8px; border-radius: 4px; background: rgba(255,255,255,0.1); }
 
         /* ALERT */
         .alert-box {
             grid-column: 1 / -1;
-            background: rgba(255, 59, 48, 0.1);
+            background: rgba(255, 69, 58, 0.15);
             border: 1px solid var(--risk-red);
             border-radius: 20px;
             padding: 20px;
             text-align: center;
             margin-top: 10px;
+            animation: pulse 2s infinite;
         }
-        .countdown { font-size: 3rem; font-weight: 800; color: var(--risk-red); font-family: monospace; }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 69, 58, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 69, 58, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 69, 58, 0); }
+        }
+
+        .countdown { font-size: 3rem; font-weight: 800; color: var(--risk-red); font-family: monospace; letter-spacing: 5px; }
         
         /* TICKER BADGE */
         .ticker-badge { 
-            background: #000; color: #fff; padding: 2px 6px; border-radius: 4px; font-size: 0.8rem; font-weight: 700; 
+            background: #fff; color: #000; padding: 2px 6px; border-radius: 4px; font-size: 0.8rem; font-weight: 700; 
         }
 
     </style>
@@ -154,10 +163,10 @@
     
     <header>
         <div class="header-title">
-            <h1>Silver Command Center</h1>
-            <span>⚠️ DEFCON 1: ARBITRAGE BLOWOUT</span>
+            <h1>Command Center</h1>
+            <span>⚠️ DEFCON 1: REGIME CHANGE</span>
         </div>
-        <div class="status-badge" id="utc-clock">Loading Clock...</div>
+        <div class="status-badge" id="utc-clock">JAN 1, 2026</div>
     </header>
 
     <div class="grid-section">
@@ -170,81 +179,87 @@
             
             <div style="display: flex; justify-content: space-between; text-align: center; margin-bottom: 20px;">
                 <div>
-                    <div class="metric-big color-red">$74.00</div>
-                    <div class="metric-label">US PAPER (MIRAGE)</div>
+                    <div class="metric-big color-red">$72.00</div>
+                    <div class="metric-label">PAPER (FAKE)</div>
                 </div>
                 <div>
-                    <div class="metric-big color-green">$100.00</div>
-                    <div class="metric-label">SHANGHAI REAL</div>
+                    <div class="metric-big color-green">$125.00</div>
+                    <div class="metric-label">PHYSICAL (REAL)</div>
                 </div>
             </div>
 
-            <div style="background: rgba(255, 204, 0, 0.2); padding: 15px; border-radius: 12px; text-align: center; border: 1px solid var(--risk-gold);">
-                <div style="font-size: 0.8rem; color: #666; font-weight: 700; margin-bottom: 5px;">THE ARBITRAGE GAP</div>
-                <div style="font-size: 2.5rem; font-weight: 800; color: var(--risk-red);">$25.00</div>
-                <div style="font-size: 0.7rem; opacity: 0.7;">West to East Vault Drain Active</div>
+            <div style="background: rgba(255, 204, 0, 0.15); padding: 15px; border-radius: 12px; text-align: center; border: 1px solid var(--risk-gold);">
+                <div style="font-size: 0.8rem; color: var(--risk-gold); font-weight: 700; margin-bottom: 5px;">ARBITRAGE VACUUM</div>
+                <div style="font-size: 2.8rem; font-weight: 800; color: var(--text-main);">$53.00</div>
+                <div style="font-size: 0.7rem; opacity: 0.7;">WEST TO EAST DRAIN ACCELERATING</div>
             </div>
         </div>
 
         <div class="card">
             <div class="card-header">
-                <span class="card-title">Copper Protocol</span>
-                <span>🔌</span>
+                <span class="card-title">Asset Deployment</span>
+                <span>🚀</span>
             </div>
             
             <div class="intel-item">
-                <div>
-                    <span class="ticker-badge" style="background: var(--copper);">COPX</span>
-                    <span style="font-size: 0.9rem; font-weight:700; margin-left: 5px;">Global Miners ETF</span>
-                </div>
-                <span style="color: var(--risk-blue); font-weight: 800;">ORDER PENDING</span>
-            </div>
-             <div class="intel-item">
                 <div>
                     <span class="ticker-badge" style="background: var(--copper);">FCX</span>
                     <span style="font-size: 0.9rem; font-weight:700; margin-left: 5px;">Freeport</span>
                 </div>
-                <span style="color: var(--risk-green); font-weight: 800;">NIBBLING</span>
+                <span class="intel-tag color-green">FILLED @ $51.02</span>
             </div>
-            
             <div class="intel-item">
+                <div>
+                    <span class="ticker-badge" style="background: var(--copper);">SCCO</span>
+                    <span style="font-size: 0.9rem; font-weight:700; margin-left: 5px;">Southern</span>
+                </div>
+                <span class="intel-tag color-green">FILLED @ $143.50</span>
+            </div>
+             <div class="intel-item">
                  <div>
-                    <span class="ticker-badge" style="background: #000;">FNV</span>
+                    <span class="ticker-badge" style="background: #ffd700;">FNV</span>
                     <span style="font-size: 0.9rem; font-weight:700; margin-left: 5px;">Franco-Nevada</span>
                 </div>
-                <span style="color: var(--risk-green); font-weight: 800;">LOCKED</span>
+                <span class="intel-tag color-green">FILLED @ $207.98</span>
+            </div>
+            <div class="intel-item">
+                 <div>
+                    <span class="ticker-badge" style="background: #c0c0c0;">AG</span>
+                    <span style="font-size: 0.9rem; font-weight:700; margin-left: 5px;">First Majestic</span>
+                </div>
+                <span class="intel-tag color-blue">HOLDING</span>
             </div>
         </div>
 
         <div class="card">
             <div class="card-header">
-                <span class="card-title">Global Intel</span>
+                <span class="card-title">Strategic Intel</span>
                 <span>📡</span>
             </div>
             <ul class="intel-list">
                 <li class="intel-item">
-                    <span>Shanghai Price</span>
-                    <span class="intel-tag" style="color: var(--risk-green);">$100 USD (Confirmed)</span>
+                    <span>Export Ban (80-Ton Rule)</span>
+                    <span class="intel-tag color-red">ACTIVE LAW</span>
                 </li>
                 <li class="intel-item">
-                    <span>US Retail</span>
-                    <span class="intel-tag color-red">WIPED OUT</span>
+                    <span>CME Margin Hike</span>
+                    <span class="intel-tag color-gold">CONFIRMED</span>
                 </li>
                 <li class="intel-item">
-                    <span>Export Ban (Jan 1)</span>
-                    <span class="intel-tag color-gold">ACTIVE IN &lt; 1 HR</span>
+                    <span>Macro Target (2026)</span>
+                    <span class="intel-tag color-green">$200.00 / oz</span>
                 </li>
                  <li class="intel-item">
-                    <span>Next Catalyst</span>
-                    <span class="intel-tag color-blue">JAN 2 "GAP UP"</span>
+                    <span>Nationalization Risk</span>
+                    <span class="intel-tag color-red">HIGH</span>
                 </li>
             </ul>
         </div>
 
         <div class="alert-box">
-            <div style="color: var(--risk-red); font-weight: 800; font-size: 0.9rem; margin-bottom: 5px;">JAN 1 EXPORT BAN ACTIVATION</div>
-            <div class="countdown" id="countdown">00:00:00</div>
-            <div style="font-size: 0.7rem; margin-top: 5px; color: #666;">NEW MARKET REGIME BEGINS</div>
+            <div style="color: var(--risk-red); font-weight: 800; font-size: 0.9rem; margin-bottom: 5px;">MARKET REGIME CHANGE</div>
+            <div class="countdown">ACTIVE</div>
+            <div style="font-size: 0.7rem; margin-top: 5px; color: #fff; opacity: 0.8;">CHINA EXPORT BAN IN EFFECT • WESTERN VAULTS EMPTY</div>
         </div>
 
     </div>
@@ -257,27 +272,6 @@
     }
     setInterval(updateClock, 1000);
     updateClock();
-
-    // 2. COUNTDOWN TIMER (Simulating ~30 Mins to Midnight Shanghai)
-    let totalSeconds = 30 * 60; 
-
-    function updateTimer() {
-        if (totalSeconds > 0) {
-            totalSeconds--;
-            let h = Math.floor(totalSeconds / 3600);
-            let m = Math.floor((totalSeconds % 3600) / 60);
-            let s = Math.floor(totalSeconds % 60);
-
-            h = h < 10 ? "0" + h : h;
-            m = m < 10 ? "0" + m : m;
-            s = s < 10 ? "0" + s : s;
-
-            document.getElementById('countdown').textContent = h + ":" + m + ":" + s;
-        } else {
-            document.getElementById('countdown').textContent = "ACTIVE";
-        }
-    }
-    setInterval(updateTimer, 1000);
 </script>
 
 </body>
