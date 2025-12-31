@@ -3,28 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Silver Command Center - Global Disconnect</title>
+    <title>Silver Command Center - Global Glass</title>
     <style>
         :root {
-            --glass-bg: rgba(10, 15, 30, 0.85);
-            --glass-border: 1px solid rgba(100, 200, 255, 0.2);
-            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-            --risk-low: #00ff41;  /* Matrix Green */
-            --risk-med: #00bfff;  /* Cyan */
-            --risk-high: #ffd700; /* Gold */
-            --risk-crit: #ff3b30; /* Red */
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.6);
+            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+            --risk-green: #34c759;
+            --risk-blue: #007aff;
+            --risk-gold: #ffcc00;
+            --risk-red: #ff3b30;
+            --text-main: #1d1d1f;
+            --text-sub: #86868b;
         }
 
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 20px;
-            color: #e0e0e0;
-            background-color: #000;
+            color: var(--text-main);
             min-height: 100vh;
         }
 
-        /* BACKGROUND VIDEO (Abstract Network/Matrix) */
+        /* VIDEO BACKGROUND */
         .video-background {
             position: fixed;
             top: 0;
@@ -32,11 +33,18 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            opacity: 0.4;
+            overflow: hidden;
         }
+
         .video-background video {
-            width: 100%;
-            height: 100%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             object-fit: cover;
         }
 
@@ -46,120 +54,123 @@
         header {
             text-align: center;
             background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            border-bottom: 2px solid var(--risk-crit);
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 25px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: var(--glass-border);
+            box-shadow: var(--glass-shadow);
+            padding: 20px;
+            border-radius: 24px;
+            margin-bottom: 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .header-title {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--risk-crit);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 0 0 10px rgba(255, 59, 48, 0.6);
-            animation: pulse 2s infinite;
+        .header-title h1 { margin: 0; font-size: 1.5rem; letter-spacing: -0.5px; }
+        .header-title span { font-size: 0.8rem; color: var(--risk-red); font-weight: 800; text-transform: uppercase; }
+
+        .status-badge {
+            background: rgba(0,0,0,0.05);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid rgba(0,0,0,0.1);
         }
 
-        .clock-badge {
-            font-family: 'Courier New', monospace;
-            font-size: 1.1rem;
-            color: var(--risk-med);
-            border: 1px solid var(--risk-med);
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
-
-        /* GRID LAYOUT */
+        /* GRID */
         .grid-section {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
         }
-        
-        @media (max-width: 900px) { .grid-section { grid-template-columns: 1fr; } }
 
-        /* CARDS */
+        /* GLASS CARDS */
         .card {
             background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: var(--glass-border);
-            border-radius: 12px;
-            padding: 20px;
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: var(--glass-shadow);
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            transition: transform 0.3s ease;
         }
+
+        .card:hover { transform: translateY(-5px); }
 
         .card-header {
-            font-size: 0.9rem;
-            color: #888;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-            border-bottom: 1px solid #333;
-            padding-bottom: 5px;
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 15px; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 10px;
         }
-
-        /* PRICE DISPLAY */
-        .price-display {
-            text-align: center;
-            margin: 15px 0;
-        }
-        .price-val { font-size: 2.5rem; font-weight: bold; }
-        .price-sub { font-size: 0.8rem; opacity: 0.8; }
         
-        .c-us { color: var(--risk-crit); } /* Broken US Price */
-        .c-cn { color: var(--risk-med); }  /* China Price */
-        .c-db { color: var(--risk-low); }  /* Dubai Price */
+        .card-title { font-size: 0.9rem; font-weight: 700; color: var(--text-sub); text-transform: uppercase; letter-spacing: 1px; }
+        .card-icon { font-size: 1.2rem; }
 
-        /* INTEL LOG */
-        .intel-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            max-height: 250px;
-            overflow-y: auto;
+        /* METRICS */
+        .metric-big { font-size: 2.8rem; font-weight: 800; letter-spacing: -1px; line-height: 1; }
+        .metric-sub { font-size: 0.9rem; font-weight: 600; margin-top: 5px; }
+        
+        .color-green { color: var(--risk-green); }
+        .color-red { color: var(--risk-red); }
+        .color-gold { color: var(--risk-gold); }
+        .color-blue { color: var(--risk-blue); }
+
+        /* ARBITRAGE BOX */
+        .arb-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 16px;
+            padding: 15px;
         }
+        .arb-item { text-align: center; }
+        .arb-label { font-size: 0.7rem; font-weight: 700; color: var(--text-sub); display: block; }
+        .arb-val { font-size: 1.2rem; font-weight: 800; }
+
+        /* INTEL LIST */
+        .intel-list { list-style: none; padding: 0; margin: 0; }
         .intel-item {
-            border-bottom: 1px solid #333;
-            padding: 8px 0;
-            font-size: 0.85rem;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
         }
         .intel-tag {
-            font-weight: bold;
-            color: #fff;
-            background: #333;
-            padding: 1px 4px;
-            border-radius: 3px;
-            font-size: 0.7rem;
-            margin-right: 5px;
+            background: #000; color: #fff; padding: 2px 6px; border-radius: 4px;
+            font-size: 0.7rem; font-weight: 700; white-space: nowrap;
         }
-
-        /* ASSET TABLE */
-        table { width: 100%; border-collapse: collapse; }
-        td { padding: 8px 0; border-bottom: 1px solid #333; }
-        .status-hold { color: var(--risk-low); font-weight: bold; }
-        .status-closed { color: var(--risk-crit); font-weight: bold; }
 
         /* COUNTDOWN ALERT */
         .alert-box {
-            grid-column: span 3;
-            background: rgba(255, 59, 48, 0.15);
-            border: 1px solid var(--risk-crit);
-            text-align: center;
+            grid-column: 1 / -1;
+            background: rgba(255, 59, 48, 0.1);
+            border: 1px solid var(--risk-red);
+            border-radius: 20px;
             padding: 20px;
-            border-radius: 12px;
+            text-align: center;
             margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            backdrop-filter: blur(10px);
         }
-        .alert-title { color: var(--risk-crit); font-weight: bold; letter-spacing: 1px; margin-bottom: 10px; }
-        .countdown { font-size: 3rem; font-family: 'Courier New', monospace; font-weight: bold; color: #fff; text-shadow: 0 0 10px var(--risk-crit); }
+        .alert-title { color: var(--risk-red); font-weight: 800; font-size: 0.9rem; letter-spacing: 1px; margin-bottom: 5px; }
+        .countdown { font-size: 2.5rem; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -1px; }
 
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
+        /* CHART CONTAINER */
+        .chart-box {
+            height: 200px;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-top: 15px;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
 
     </style>
 </head>
@@ -167,74 +178,125 @@
 
 <div class="video-background">
     <video autoplay muted loop playsinline>
-        <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-blue-circuit-board-98-large.mp4" type="video/mp4">
+        <source src="https://raw.githubusercontent.com/usageuk/silver-trading/94c06252a843a63a2187c79d2cc4927fe26966c0/image/Silver_Bullion_Rotating_Video_Generation.mp4" type="video/mp4">
     </video>
 </div>
 
 <div class="container">
+    
     <header>
-        <div class="header-title">⚠️ SYSTEM FAILURE: GLOBAL DISCONNECT</div>
-        <div class="clock-badge" id="utc-clock">LOADING...</div>
+        <div class="header-title">
+            <h1>Silver Command Center</h1>
+            <span>⚠️ DEFCON 1: MARKET DISCONNECT</span>
+        </div>
+        <div class="status-badge" id="utc-clock">Loading Clock...</div>
     </header>
 
     <div class="grid-section">
 
-        <div class="card" style="border-color: var(--risk-crit);">
-            <div class="card-header">🇺🇸 US PAPER SPOT (FAKE)</div>
-            <div class="price-display">
-                <div class="price-val c-us" id="price-us">$72.17</div>
-                <div class="price-sub">COMEX "FLASH CRASH" LOW</div>
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">Global Reality Check</span>
+                <span class="card-icon">🌍</span>
             </div>
-            <div class="tradingview-widget-container" style="height: 100px;">
-                <div class="tradingview-widget-container__widget"></div>
-                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
-                {
-                "symbol": "TVC:SILVER",
-                "width": "100%",
-                "height": "100%",
-                "locale": "en",
-                "dateRange": "12M",
-                "colorTheme": "dark",
-                "isTransparent": true,
-                "autosize": true,
-                "largeChartUrl": ""
-                }
-                </script>
+            
+            <div style="text-align: center;">
+                <div class="metric-big color-green">$95.05</div>
+                <div class="metric-sub">DUBAI PHYSICAL PRICE</div>
+                <div style="font-size: 0.8rem; color: #666;">(AED 349.24 / oz)</div>
             </div>
-        </div>
 
-        <div class="card" style="border-color: var(--risk-low);">
-            <div class="card-header">🌍 GLOBAL PHYSICAL REALITY</div>
-            <div class="price-display">
-                <div class="price-val c-db">$95.05</div>
-                <div class="price-sub" style="color: var(--risk-low);">DUBAI PHYSICAL PRICE</div>
-            </div>
-            <div style="text-align: center; margin-top: 10px;">
-                <div style="color: var(--risk-med); font-size: 1.5rem; font-weight:bold;">$87.00</div>
-                <div style="font-size: 0.7rem; color: #888;">SHANGHAI PRICE</div>
+            <div class="arb-container">
+                <div class="arb-item">
+                    <span class="arb-label">US PAPER (FAKE)</span>
+                    <span class="arb-val color-red">$72.17</span>
+                </div>
+                <div class="arb-item">
+                    <span class="arb-label">ARBITRAGE GAP</span>
+                    <span class="arb-val color-gold">+$22.88</span>
+                </div>
             </div>
         </div>
 
         <div class="card">
-            <div class="card-header">📡 INTELLIGENCE LOG</div>
+            <div class="card-header">
+                <span class="card-title">System Intel Log</span>
+                <span class="card-icon">📡</span>
+            </div>
             <ul class="intel-list">
-                <li class="intel-item"><span class="intel-tag" style="color:var(--risk-low)">DUBAI</span> Price hits $95. Physical Decoupling confirmed.</li>
-                <li class="intel-item"><span class="intel-tag" style="color:var(--risk-med)">TRUMP</span> Rumor: US Export Ban starting Jan 1st.</li>
-                <li class="intel-item"><span class="intel-tag" style="color:var(--risk-high)">TECH</span> Samsung Battery requires 1kg Silver/Car.</li>
-                <li class="intel-item"><span class="intel-tag" style="color:var(--risk-crit)">FED</span> $29B Injection into Repo Market (Silent Bailout).</li>
-                <li class="intel-item"><span class="intel-tag" style="color:var(--risk-low)">INDIA</span> "Diamond Fist" hoarding. No selling.</li>
+                <li class="intel-item">
+                    <span class="intel-tag">BAILOUT</span>
+                    <span>Fed injects <strong>$34 Billion</strong> into Repo Market to save short sellers.</span>
+                </li>
+                <li class="intel-item">
+                    <span class="intel-tag">TRUMP</span>
+                    <span>Unconfirmed: US Export Ban starts <strong>Jan 1</strong>.</span>
+                </li>
+                <li class="intel-item">
+                    <span class="intel-tag">TECH</span>
+                    <span>Samsung "Solid State" Battery requires <strong>1kg Silver/Car</strong>.</span>
+                </li>
+                <li class="intel-item">
+                    <span class="intel-tag">INDIA</span>
+                    <span>Recycling at 0%. Public holding with "Diamond Hands".</span>
+                </li>
             </ul>
-            <table style="margin-top: 15px;">
-                <tr><td>Physical (SSLN)</td><td class="status-hold">HOLD</td></tr>
-                <tr><td>Miners (AG/FRES)</td><td class="status-hold">HOLD</td></tr>
-                <tr><td>Paper CFD</td><td class="status-closed">AVOID</td></tr>
-            </table>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">The Safe House</span>
+                <span class="card-icon">🛡️</span>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px; align-items: center;">
+                <div>
+                    <span style="font-weight: 700; font-size: 1.1rem;">SSLN (Physical)</span>
+                    <span style="display:block; font-size: 0.8rem; color:#666;">Tracked to Global Price</span>
+                </div>
+                <span class="status-badge" style="background: var(--risk-green); color: #fff;">HOLD</span>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px; align-items: center;">
+                <div>
+                    <span style="font-weight: 700; font-size: 1.1rem;">Miners (AG/FRES)</span>
+                    <span style="display:block; font-size: 0.8rem; color:#666;">Supply Constraint Play</span>
+                </div>
+                <span class="status-badge" style="background: var(--risk-green); color: #fff;">HOLD</span>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px; align-items: center; opacity: 0.5;">
+                <div>
+                    <span style="font-weight: 700; font-size: 1.1rem;">CFD (Leverage)</span>
+                    <span style="display:block; font-size: 0.8rem; color:#666;">Margin Trap</span>
+                </div>
+                <span class="status-badge" style="background: var(--risk-red); color: #fff;">CLOSED</span>
+            </div>
+
+            <div class="chart-box">
+                 <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+                    {
+                    "symbol": "AMEX:SLV",
+                    "width": "100%",
+                    "height": "100%",
+                    "locale": "en",
+                    "dateRange": "12M",
+                    "colorTheme": "light",
+                    "isTransparent": true,
+                    "autosize": true,
+                    "largeChartUrl": ""
+                    }
+                    </script>
+                </div>
+            </div>
         </div>
 
         <div class="alert-box">
-            <div class="alert-title">🚨 US/CHINA EXPORT BAN PROTOCOL (JAN 1)</div>
+            <div class="alert-title">🚨 CHINA / US EXPORT BAN ACTIVATION (JAN 1)</div>
             <div class="countdown" id="countdown">00:00:00</div>
-            <div style="font-size: 0.8rem; margin-top: 10px; color: #ccc;">TARGET: JANUARY 1, 2026 (GLOBAL IMPACT)</div>
+            <div style="font-size: 0.8rem; margin-top: 5px; opacity: 0.7;">Countdown to Global Supply Lock</div>
         </div>
 
     </div>
@@ -249,8 +311,8 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // 2. COUNTDOWN (Simulating time to Jan 1st midnight relative to context)
-    // For demo purposes, we count down 4 hours.
+    // 2. COUNTDOWN TIMER (Targeting Jan 1st Context)
+    // Simulating imminent activation (e.g., 4 hours left)
     let totalSeconds = 4 * 60 * 60; 
 
     function updateTimer() {
@@ -259,17 +321,18 @@
             let h = Math.floor(totalSeconds / 3600);
             let m = Math.floor((totalSeconds % 3600) / 60);
             let s = Math.floor(totalSeconds % 60);
+
             h = h < 10 ? "0" + h : h;
             m = m < 10 ? "0" + m : m;
             s = s < 10 ? "0" + s : s;
+
             document.getElementById('countdown').textContent = h + ":" + m + ":" + s;
         } else {
             document.getElementById('countdown').textContent = "ACTIVE";
-            document.querySelector('.alert-box').style.background = "rgba(255, 0, 0, 0.4)";
+            document.getElementById('countdown').style.color = "var(--risk-red)";
         }
     }
     setInterval(updateTimer, 1000);
-
 </script>
 
 </body>
