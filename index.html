@@ -196,4 +196,84 @@
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                     <div>
                         <span class="ticker-badge" style="background: var(--copper);">FCX</span>
-                        <span style="font-size
+                        <span style="font-size: 0.9rem; font-weight:700; margin-left: 5px;">Freeport</span>
+                    </div>
+                    <span style="color: var(--risk-green); font-weight: 800;">ADD</span>
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <div>
+                        <span class="ticker-badge" style="background: var(--copper);">SCCO</span>
+                        <span style="font-size: 0.9rem; font-weight:700; margin-left: 5px;">Southern</span>
+                    </div>
+                    <span style="color: var(--risk-green); font-weight: 800;">ADD</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">Global Intel</span>
+                <span>📡</span>
+            </div>
+            <ul class="intel-list">
+                <li class="intel-item">
+                    <span>China Holiday Drain</span>
+                    <span class="intel-tag" style="color: var(--copper);">ACTIVE</span>
+                </li>
+                <li class="intel-item">
+                    <span>India Retail</span>
+                    <span class="intel-tag color-red">FROZEN</span>
+                </li>
+                <li class="intel-item">
+                    <span>Export Ban (Jan 1)</span>
+                    <span class="intel-tag color-gold">IMMINENT</span>
+                </li>
+                 <li class="intel-item">
+                    <span>CFD Leverage</span>
+                    <span class="intel-tag color-red">PURGED</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="alert-box">
+            <div style="color: var(--risk-red); font-weight: 800; font-size: 0.9rem; margin-bottom: 5px;">JAN 1 EXPORT BAN ACTIVATION</div>
+            <div class="countdown" id="countdown">00:00:00</div>
+            <div style="font-size: 0.7rem; margin-top: 5px; color: #666;">NEW MARKET REGIME BEGINS</div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function updateClock() {
+        const now = new Date();
+        document.getElementById('utc-clock').textContent = now.toUTCString().replace('GMT', 'UTC');
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // 2. COUNTDOWN TIMER (Simulating 1.5 Hours to Midnight Shanghai)
+    let totalSeconds = 1.5 * 60 * 60; 
+
+    function updateTimer() {
+        if (totalSeconds > 0) {
+            totalSeconds--;
+            let h = Math.floor(totalSeconds / 3600);
+            let m = Math.floor((totalSeconds % 3600) / 60);
+            let s = Math.floor(totalSeconds % 60);
+
+            h = h < 10 ? "0" + h : h;
+            m = m < 10 ? "0" + m : m;
+            s = s < 10 ? "0" + s : s;
+
+            document.getElementById('countdown').textContent = h + ":" + m + ":" + s;
+        } else {
+            document.getElementById('countdown').textContent = "ACTIVE";
+        }
+    }
+    setInterval(updateTimer, 1000);
+</script>
+
+</body>
+</html>
