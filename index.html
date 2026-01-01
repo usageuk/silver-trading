@@ -3,145 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SILVER COMMAND // JAN 2026</title>
+    <title>SILVER COMMAND // DEFCON STATUS</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* TERMINAL AESTHETICS */
         @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
         
         body { 
-            background-color: #000; 
+            background-color: #050505; 
             color: #33ff00; 
             font-family: 'VT323', monospace; 
             overflow-x: hidden;
             text-transform: uppercase;
         }
 
-        /* CRT SCANLINE EFFECT */
+        /* CRT EFFECTS */
         .scanline {
-            width: 100%;
-            height: 100px;
-            z-index: 10;
+            width: 100%; height: 100px; z-index: 10;
             background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(51, 255, 0, 0.2) 50%, rgba(0,0,0,0) 100%);
-            opacity: 0.1;
-            position: absolute;
-            bottom: 100%;
-            animation: scanline 10s linear infinite;
-            pointer-events: none;
+            opacity: 0.1; position: absolute; bottom: 100%;
+            animation: scanline 10s linear infinite; pointer-events: none;
         }
-        @keyframes scanline {
-            0% { bottom: 100%; }
-            100% { bottom: -100%; }
+        @keyframes scanline { 0% { bottom: 100%; } 100% { bottom: -100%; } }
+
+        /* RADAR SWEEP */
+        .radar-box {
+            position: relative; overflow: hidden;
         }
-        
-        .crt-overlay {
-            background: repeating-linear-gradient(
-                0deg,
-                rgba(0, 0, 0, 0.15),
-                rgba(0, 0, 0, 0.15) 1px,
-                transparent 1px,
-                transparent 2px
-            );
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            z-index: 5;
-            pointer-events: none;
+        .radar-sweep {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: conic-gradient(from 0deg, transparent 0deg, rgba(51, 255, 0, 0.1) 60deg, transparent 61deg);
+            animation: radar 4s linear infinite; border-radius: 50%;
         }
+        @keyframes radar { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
         /* UTILITIES */
-        .neon-green { text-shadow: 0 0 5px #33ff00, 0 0 10px #33ff00; }
+        .neon-green { text-shadow: 0 0 5px #33ff00; }
         .neon-red { color: #ff3333; text-shadow: 0 0 5px #ff3333; }
-        .neon-blue { color: #33ccff; text-shadow: 0 0 5px #33ccff; }
-        .panel { border: 1px solid #33ff00; box-shadow: 0 0 5px #33ff00 inset; background: rgba(0, 20, 0, 0.9); }
+        .neon-orange { color: #ffaa00; text-shadow: 0 0 5px #ffaa00; }
+        .panel { border: 1px solid #33ff00; background: rgba(0, 20, 0, 0.95); position: relative; }
         .blink { animation: blink 1s infinite; }
         @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } }
     </style>
 </head>
-<body class="p-4">
-    <div class="crt-overlay"></div>
+<body class="p-4 text-sm md:text-base">
     <div class="scanline"></div>
 
-    <div class="flex justify-between items-end mb-6 border-b-2 border-[#33ff00] pb-2 relative z-20">
+    <div class="flex flex-col md:flex-row justify-between items-end mb-6 border-b-2 border-[#33ff00] pb-2">
         <div>
-            <h1 class="text-4xl font-bold neon-green">SILVER STRATEGY // COMMAND</h1>
-            <p class="text-xl">OP: SPROTT SQUEEZE | STATUS: <span class="neon-red blink">DEFCON 1</span></p>
+            <h1 class="text-4xl font-bold neon-green">WAR ROOM // COMMAND</h1>
+            <p class="text-xl">OP: SILVER SQUEEZE | MILITARY INTERVENTION: <span class="neon-red blink">ACTIVE</span></p>
         </div>
-        <div class="text-right">
+        <div class="text-right mt-2 md:mt-0">
             <p class="text-2xl">JAN 01 2026</p>
-            <p class="text-lg text-[#33ff00]">TARGET: JAN 02 OPEN</p>
+            <p class="text-lg text-orange-400">DEFCON: 3 (NAVAL ALERT)</p>
         </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 relative z-20">
-        <div class="panel p-4">
-            <h3 class="text-lg border-b border-[#33ff00] mb-2">COMEX PAPER (FAKE)</h3>
-            <div class="text-5xl font-bold neon-red">$72.00</div>
-            <p class="text-sm mt-2">RIGGED: BASEL 3 FLUSH</p>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+        <div class="panel p-4 col-span-1 border-orange-500">
+            <h3 class="text-orange-500 border-b border-orange-500 mb-2">PENTAGON DLA</h3>
+            <div class="flex items-center justify-between">
+                <span class="text-2xl font-bold text-white">BUYING</span>
+                <span class="blink text-red-500">● LIVE</span>
+            </div>
+            <p class="text-xs mt-2 text-gray-400">TARGET: STRATEGIC STOCKPILE</p>
+            <p class="text-xs text-gray-400">PRIORITY: TIER 1 (SILVER)</p>
         </div>
 
-        <div class="panel p-4 border-[#33ccff] shadow-[0_0_5px_#33ccff_inset]">
-            <h3 class="text-lg border-b border-[#33ccff] text-[#33ccff] mb-2">ARBITRAGE GAP</h3>
-            <div class="text-5xl font-bold neon-blue">$15.00</div>
-            <p class="text-sm mt-2 text-[#33ccff]">PREMIUM DISCONNECT ACTIVE</p>
+        <div class="panel p-4 col-span-1 flex flex-col items-center justify-center radar-box border-red-500">
+            <div class="absolute inset-0 opacity-20 bg-[url('https://upload.wikimedia.org/wikipedia/commons/b/b2/South_China_Sea_location_map.svg')] bg-cover bg-center"></div>
+            <div class="radar-sweep w-full h-full absolute inset-0"></div>
+            <h3 class="relative z-10 text-red-500 font-bold bg-black px-2">NAVAL ZONE</h3>
+            <p class="relative z-10 text-white mt-2 blink">7TH FLEET ACTIVE</p>
         </div>
 
-        <div class="panel p-4">
-            <h3 class="text-lg border-b border-[#33ff00] mb-2">SHANGHAI PHYSICAL (REAL)</h3>
-            <div class="text-5xl font-bold neon-green">$87.00</div>
-            <p class="text-sm mt-2">CHINA EXPORT BAN: <span class="bg-[#33ff00] text-black px-1">ACTIVE</span></p>
+        <div class="panel p-4 col-span-2 border-blue-400">
+            <h3 class="text-blue-400 border-b border-blue-400 mb-2">ARBITRAGE GAP (WAR PREMIUM)</h3>
+            <div class="grid grid-cols-2 gap-4 text-center">
+                <div>
+                    <p class="text-gray-400">PAPER (FAKE)</p>
+                    <p class="text-3xl font-bold text-red-500 line-through">$72.00</p>
+                </div>
+                <div>
+                    <p class="text-gray-400">PHYSICAL (REAL)</p>
+                    <p class="text-4xl font-bold text-green-400">$88.50</p>
+                </div>
+            </div>
+            <p class="text-center text-xs mt-2 text-blue-300">SPREAD: +$16.50 (WIDENING)</p>
         </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6 relative z-20">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         
         <div class="panel p-4 col-span-1">
-            <h3 class="text-lg border-b border-[#33ff00] mb-2">CRASH MECHANISM</h3>
-            <ul class="text-sm space-y-2">
-                <li>> CME MARGIN HIKE: <span class="text-red-500">+30%</span></li>
-                <li>> FORCED LIQUIDATION CONFIRMED</li>
-                <li>> BASEL 3 "NET STABLE FUNDING"</li>
-                <li>> RESULT: PAPER FLUSH</li>
+            <h3 class="border-b border-[#33ff00] mb-4">STRATEGIC ASSETS</h3>
+            <ul class="space-y-4">
+                <li class="flex justify-between items-center">
+                    <span>AG (FIRST MAJESTIC)</span>
+                    <span class="bg-green-900 text-green-100 px-2 py-1 text-xs">SAFE HAVEN</span>
+                </li>
+                <li class="flex justify-between items-center">
+                    <span>HYMC (SPROTT)</span>
+                    <span class="bg-blue-900 text-blue-100 px-2 py-1 text-xs">US DEPOSIT</span>
+                </li>
+                <li class="flex justify-between items-center opacity-50">
+                    <span>PAPER SILVER (CFD)</span>
+                    <span class="bg-red-900 text-red-100 px-2 py-1 text-xs">AVOID</span>
+                </li>
             </ul>
         </div>
 
-        <div class="panel p-4 col-span-2 overflow-hidden">
-            <h3 class="text-lg border-b border-[#33ff00] mb-2">INTEL LOG [LIVE FEED]</h3>
-            <div class="h-24 overflow-y-auto font-mono text-sm space-y-2" id="intel-feed">
-                <p><span class="text-[#33ccff]">11:00</span> :: INDIA "DIAMOND HANDS" CONFIRMED. ZERO RECYCLING.</p>
-                <p><span class="text-[#33ccff]">10:45</span> :: PETER SCHIFF: "THE PAPER PRICE IS A GIFT."</p>
-                <p><span class="text-[#33ccff]">09:30</span> :: LBMA LEASE RATES SPIKE TO 100% ANNUALIZED.</p>
-                <p><span class="text-[#33ccff]">08:00</span> :: CHINA OBSERVER: "NO SILVER LEAVING SHANGHAI."</p>
-            </div>
-        </div>
-
-        <div class="panel p-4 col-span-1 text-center flex flex-col justify-center">
-            <h3 class="text-sm mb-1">INSTITUTIONAL OPEN</h3>
-            <div class="text-4xl font-bold neon-red blink">T-MINUS 18H</div>
-            <p class="text-xs mt-1">PREPARE FOR GAP UP</p>
-        </div>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 relative z-20">
-        <div class="panel p-2">
-            <div class="bg-black h-32 flex items-center justify-center border border-gray-800">
-                <span class="text-gray-500">[ WIDGET: SSLN.L (CORE) ]</span>
-            </div>
-        </div>
-        <div class="panel p-2">
-            <div class="bg-black h-32 flex items-center justify-center border border-gray-800">
-                 <span class="text-gray-500">[ WIDGET: AG (FIRST MAJESTIC) ]</span>
-            </div>
-        </div>
-        <div class="panel p-2">
-            <div class="bg-black h-32 flex items-center justify-center border border-gray-800">
-                 <span class="text-gray-500">[ WIDGET: HYMC (SPROTT) ]</span>
+        <div class="panel p-4 col-span-2">
+            <h3 class="border-b border-[#33ff00] mb-2">CRYPTIC INTEL FEED</h3>
+            <div class="h-40 overflow-y-auto space-y-2 text-sm font-mono" id="feed">
+                <p>> <span class="text-orange-400">12:05</span> :: US NAVY INTERCEPTS "UNFLAGGED" CARGO NEAR TAIWAN STRAIT.</p>
+                <p>> <span class="text-orange-400">11:45</span> :: APPLE LOBBYISTS SEEN AT PENTAGON. PANIC BUYING?</p>
+                <p>> <span class="text-orange-400">10:30</span> :: CHINA EXPORT BAN: CUSTOMS SEIZING ALL SILVER OUTBOUND.</p>
+                <p>> <span class="text-orange-400">09:15</span> :: ALGO ALERT: "WAR BOT" ACTIVATED ON TICKER $AG.</p>
             </div>
         </div>
     </div>
 
-    <div class="mt-6 border-t border-[#33ff00] pt-2 text-center text-xs relative z-20">
-        SYSTEM: ONLINE // ENCRYPTION: ENABLED // PROTOCOL: "SAFE HOUSE"
+    <div class="mt-6 text-center text-xs text-gray-500">
+        SECURE CONNECTION // NODE: WAR ROOM // ENCRYPTION: MIL-STD-256
     </div>
-
 </body>
 </html>
+ 
