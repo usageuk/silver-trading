@@ -1,22 +1,88 @@
-<div class="panel p-4 mt-6 border-red-500 bg-red-950/20">
-    <h3 class="text-red-500 font-bold border-b border-red-600 mb-2 text-center">GLOBAL PRICE DISCONTINUITY</h3>
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-2 text-center">
-        <div class="p-2 border border-gray-700">
-            <p class="text-[10px] text-gray-500">COMEX (NY)</p>
-            <p class="text-lg font-bold text-red-400">$72.58</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SILVER WAR ROOM // JAN 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+        body { background-color: #050505; color: #33ff00; font-family: 'VT323', monospace; text-transform: uppercase; }
+        .crt::before { content: " "; display: block; position: absolute; top: 0; left: 0; bottom: 0; right: 0; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06)); z-index: 2; background-size: 100% 2px, 3px 100%; pointer-events: none; }
+        .panel { border: 1px solid #33ff00; box-shadow: 0 0 10px #33ff00 inset; background: rgba(0, 20, 0, 0.9); }
+        .neon-red { color: #ff3131; text-shadow: 0 0 5px #ff3131; }
+        .blink { animation: blink 1s infinite; }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } }
+        .marquee { white-space: nowrap; overflow: hidden; box-sizing: border-box; }
+        .marquee p { display: inline-block; padding-left: 100%; animation: marquee 15s linear infinite; }
+        @keyframes marquee { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
+    </style>
+</head>
+<body class="p-4 crt">
+    <div class="flex justify-between items-end border-b-2 border-[#33ff00] pb-2 mb-6">
+        <div>
+            <h1 class="text-4xl font-bold">SILVER COMMAND // DEFCON 1</h1>
+            <p class="text-xl">STATUS: <span class="neon-red blink">CHINA BAN ACTIVE</span></p>
         </div>
-        <div class="p-2 border border-blue-700 bg-blue-900/10">
-            <p class="text-[10px] text-gray-500">SGE (SHANGHAI)</p>
-            <p class="text-lg font-bold text-blue-400">$88.50</p>
-        </div>
-        <div class="p-2 border border-purple-700 bg-purple-900/10">
-            <p class="text-[10px] text-gray-500">MCX (INDIA)</p>
-            <p class="text-lg font-bold text-purple-400">$115.00</p>
-        </div>
-        <div class="p-2 border border-yellow-500 bg-yellow-900/20 blink">
-            <p class="text-[10px] text-gray-500">TOKYO (RETAIL)</p>
-            <p class="text-lg font-bold text-yellow-400">$130.00</p>
+        <div class="text-right">
+            <p class="text-2xl">01 JAN 2026</p>
+            <p class="text-sm">INSTITUTIONAL OPEN: T-MINUS 12H</p>
         </div>
     </div>
-    <p class="text-[10px] text-center text-red-400 mt-2">⚠ WARNING: GLOBAL SETTLEMENT SYSTEM IS BREAKING ⚠</p>
-</div>
+
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+        <div class="panel p-4 text-center">
+            <p class="text-xs text-gray-400">NY PAPER (COMEX)</p>
+            <p class="text-3xl font-bold text-red-500">$72.58</p>
+        </div>
+        <div class="panel p-4 text-center">
+            <p class="text-xs text-gray-400">SHANGHAI (SGE)</p>
+            <p class="text-3xl font-bold text-blue-400">$88.50</p>
+        </div>
+        <div class="panel p-4 text-center border-yellow-500">
+            <p class="text-xs text-yellow-500">TOKYO (RETAIL)</p>
+            <p class="text-3xl font-bold text-yellow-500">$130.00</p>
+        </div>
+        <div class="panel p-4 text-center border-purple-500">
+            <p class="text-xs text-purple-400">LBMA LEASE RATE</p>
+            <p class="text-3xl font-bold text-purple-400">35.0%</p>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="panel p-4 border-red-600">
+            <h3 class="text-red-500 border-b border-red-500 mb-2">OP: SOUTHERN SPEAR</h3>
+            <div class="space-y-2 text-sm">
+                <p>> SEIZURES: M/T CENTURIES, M/T SKIPPER</p>
+                <p>> ZONE: CARIBBEAN INTERDICTION ACTIVE</p>
+                <p>> ASSET: USS GERALD R. FORD RE-POSITIONED</p>
+                <p class="text-xs text-red-400 mt-2 italic">"NATIONAL SECURITY STOCKPILE BUY ORDER ACTIVE"</p>
+            </div>
+        </div>
+
+        <div class="panel p-4">
+            <h3 class="border-b border-[#33ff00] mb-2">SAFE HOUSE POSITIONS</h3>
+            <table class="w-full text-left text-sm">
+                <tr class="border-b border-gray-800"><td>SSLN.L</td><td>PHYSICAL</td><td class="text-green-500">HOLD</td></tr>
+                <tr class="border-b border-gray-800"><td>AG</td><td>MINER (NA)</td><td class="text-green-500">BUY</td></tr>
+                <tr class="border-b border-gray-800"><td>HYMC</td><td>SPROTT PLAY</td><td class="text-green-500">BUY</td></tr>
+                <tr class="border-b border-gray-800"><td>PAPER CFD</td><td>LEVERAGE</td><td class="text-red-500">AVOID</td></tr>
+            </table>
+        </div>
+
+        <div class="panel p-4 overflow-hidden">
+            <h3 class="border-b border-[#33ff00] mb-2">LIVE WIRE [ENCRYPTED]</h3>
+            <div class="text-xs space-y-1">
+                <p><span class="text-blue-400">[14:00]</span> BIZ TAK: INDIA MCX FLUSH COMPLETE.</p>
+                <p><span class="text-blue-400">[13:15]</span> KIYOSAKI: TARGET $200 CONFIRMED.</p>
+                <p><span class="text-blue-400">[12:45]</span> MUSK: SILVER IS INDUSTRIAL BACKBONE.</p>
+                <p><span class="text-red-500">[11:00]</span> RED SEA: SUPPLY AIR POCKET (T+14D).</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel mt-6 p-2 marquee">
+        <p class="text-yellow-400">⚠ WARNING: GLOBAL SETTLEMENT SYSTEM IS BREAKING // PREPARE FOR GAP UP JAN 2 // CHINA LICENSING REGIME IN EFFECT // NAVAL BLOCKADE EXPANDING ⚠</p>
+    </div>
+</body>
+</html>
