@@ -3,69 +3,185 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SILVER COMMAND // THE BLUEPRINT</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Silver Investment Tracker - War Room Evolved</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
-        body { background-color: #050505; color: #33ff00; font-family: 'VT323', monospace; text-transform: uppercase; line-height: 1.1; }
-        .crt::before { content: " "; display: block; position: absolute; top: 0; left: 0; bottom: 0; right: 0; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06)); z-index: 2; background-size: 100% 2px, 3px 100%; pointer-events: none; opacity: 0.3; }
-        .panel { border: 2px solid #33ff00; box-shadow: 0 0 10px #33ff00 inset; background: rgba(0, 20, 0, 0.95); position: relative; padding: 15px; }
-        .neon-red { color: #ff3131; text-shadow: 0 0 5px #ff3131; }
-        .blink { animation: blink 1s infinite; }
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } }
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.15); /* Transparency for glass effect */
+            --glass-border: 1px solid rgba(255, 255, 255, 0.3);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+            --risk-low: #34c759;
+            --risk-med: #007aff;
+            --risk-high: #ff9500;
+            --risk-bad: #ff3b30;
+            --terminal-green: #33ff00;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0; padding: 20px; color: #fff;
+            min-height: 100vh; background: #000; overflow-x: hidden;
+        }
+
+        /* VIDEO BACKGROUND */
+        .video-background {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            overflow: hidden; filter: brightness(0.4);
+        }
+        .video-background video {
+            min-width: 100%; min-height: 100%; object-fit: cover;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+        }
+
+        .container { max-width: 1400px; margin: 0 auto; position: relative; z-index: 1; }
+
+        /* HEADER GLASS */
+        header {
+            text-align: center; background: var(--glass-bg);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border: var(--glass-border); box-shadow: var(--glass-shadow);
+            padding: 30px; border-radius: 20px; margin-bottom: 30px;
+        }
+
+        h1 { margin: 0; font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; color: #fff; }
+
+        .status-bar { display: flex; gap: 20px; justify-content: center; margin-top: 15px; }
+        .status-badge { padding: 8px 16px; border-radius: 30px; font-weight: 800; border: 1px solid rgba(255,255,255,0.2); }
+        .market-closed { background: rgba(255, 59, 48, 0.3); color: #ff3b30; }
+        .market-open { background: rgba(52, 199, 89, 0.3); color: #34c759; }
+
+        /* GRID SECTION */
+        .grid-section { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+
+        /* GLASS CARDS */
+        .card {
+            background: var(--glass-bg); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border: var(--glass-border); border-radius: 20px; padding: 20px;
+            box-shadow: var(--glass-shadow); border-top: 5px solid #ccc;
+            transition: transform 0.3s ease;
+        }
+        .card:hover { transform: translateY(-5px); }
+        .card.risk-low { border-top-color: var(--risk-low); }
+        .card.risk-med { border-top-color: var(--risk-med); }
+        .card.risk-high { border-top-color: var(--risk-high); }
+        .card.risk-bad { border-top-color: var(--risk-bad); }
+
+        .card-header { display: flex; justify-content: space-between; margin-bottom: 15px; }
+        .asset-name { font-size: 1.4rem; font-weight: 900; margin: 0; }
+        .ticker { color: #aaa; font-size: 0.85rem; }
+
+        /* BUY BUTTON (BULLION) */
+        .buy-btn-bullion {
+            display: block; width: 100px; height: 40px;
+            background-image: url('https://raw.githubusercontent.com/usageuk/silver-trading/7418b5e4f1db4ae13bc7d17571f7689231786bad/image/silver_bar_vertical.jpeg');
+            background-size: cover; background-position: center; border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5); transition: 0.2s; border: 1px solid #666;
+        }
+        .buy-btn-bullion:hover { transform: scale(1.1); filter: brightness(1.2); }
+
+        /* ALGO BOX */
+        .algo-box {
+            background: rgba(0,0,0,0.4); border-radius: 12px; height: 280px; 
+            margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.1); overflow: hidden;
+        }
+
+        /* WAR ROOM FEED (CRT STYLE) */
+        .war-room-panel {
+            grid-column: 1 / -1; background: rgba(0, 20, 0, 0.7);
+            border: 2px solid var(--terminal-green); padding: 20px; border-radius: 15px;
+            font-family: 'Courier New', monospace; color: var(--terminal-green);
+        }
+        .feed-line { margin-bottom: 8px; font-size: 0.9rem; }
+        .blink { animation: blink-anim 1s infinite; }
+        @keyframes blink-anim { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        footer { text-align: center; margin-top: 50px; padding: 20px; font-size: 0.9rem; opacity: 0.7; }
     </style>
 </head>
-<body class="p-4 crt">
-    <header class="flex flex-col md:flex-row justify-between items-end border-b-2 border-[#33ff00] pb-2 mb-6">
-        <div>
-            <h1 class="text-5xl font-bold">SILVER COMMAND // BLUEPRINT</h1>
-            <p class="text-xl">PROTOCOL: <span class="neon-red blink">DUAL-USE EXPORT CONTROL</span></p>
-        </div>
-        <div class="text-right">
-            <p class="text-2xl">JAN 01 2026</p>
-            <p class="text-sm">SHANGHAI ARBITRAGE: <span class="text-red-500 font-bold">BROKEN</span></p>
+<body>
+
+<div class="video-background">
+    <video autoplay muted loop playsinline>
+        <source src="https://raw.githubusercontent.com/usageuk/silver-trading/94c06252a843a63a2187c79d2cc4927fe26966c0/image/Silver_Bullion_Rotating_Video_Generation.mp4" type="video/mp4">
+    </video>
+</div>
+
+<div class="container">
+    <header>
+        <h1>SILVER WAR ROOM COMMAND</h1>
+        <div class="status-bar">
+            <div id="marketStatus" class="status-badge market-closed">
+                <span id="statusIcon">🔴</span> <span id="statusText">MARKET CLOSED</span>
+            </div>
+            <div class="status-badge" style="background: rgba(255,255,255,0.1)">
+                JAN 01, 2026 // <span id="lastUpdate">00:00:00</span>
+            </div>
         </div>
     </header>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-        <div class="panel border-red-600">
-            <h3 class="text-red-500 border-b border-red-500 mb-2 font-bold">ARBITRAGE GAP</h3>
-            <p class="text-4xl font-bold">$6.00 / OZ</p>
-            <p class="text-xs text-gray-400 mt-1">SITUATION: PHYSICAL MOVEMENT RESTRICTED [00:07:06]</p>
+    <div class="grid-section">
+        <div class="war-room-panel">
+            <div class="feed-line">> [INTEL] CHINA EXPORT BAN EFFECTIVE IN T-MINUS 3 HOURS...</div>
+            <div class="feed-line">> [PRICE] SHANGHAI SPOT PREMIUM: +$10.50 OVER NY COMEX...</div>
+            <div class="feed-line">> [MILITARY] US NAVY INTERDICTION "OP SOUTHERN SPEAR" ACTIVE IN CARIBBEAN...</div>
+            <div class="feed-line">> [STRATEGY] <span class="blink" style="color:#fff; background: #ff3b30; padding: 0 5px;">BUY THE DIP - JAN 2nd INSTITUTIONAL OPEN EXPECTED GAP UP</span></div>
         </div>
-        <div class="panel border-yellow-500">
-            <h3 class="text-yellow-500 border-b border-yellow-500 mb-2 font-bold">REFINING CHOKE</h3>
-            <p class="text-4xl font-bold">40% GLOBAL</p>
-            <p class="text-xs text-gray-400 mt-1">CHINA CONTROLS TRADABLE SUPPLY [00:03:06]</p>
+
+        <div class="card risk-low">
+            <div class="card-header">
+                <div><h2 class="asset-name">iShares Physical</h2><span class="ticker">SSLN.L // UK ALLOCATED</span></div>
+                <a href="https://www.trading212.com/trading-instruments/invest/SSLN.GB" target="_blank" class="buy-btn-bullion"></a>
+            </div>
+            <div class="algo-box">
+                <div class="tradingview-widget-container" style="height:100%">
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
+                    { "interval": "1D", "width": "100%", "height": "100%", "symbol": "AMEX:SLV", "showIntervalTabs": false, "displayMode": "single", "locale": "en", "colorTheme": "dark" }
+                    </script>
+                </div>
+            </div>
         </div>
-        <div class="panel border-blue-500">
-            <h3 class="text-blue-500 border-b border-blue-400 mb-2 font-bold">COMEX INVENTORY</h3>
-            <p class="text-4xl font-bold">240M OZ</p>
-            <p class="text-xs text-gray-400 mt-1">~6 MONTHS INDUSTRIAL SUPPLY [00:08:17]</p>
+
+        <div class="card risk-high">
+            <div class="card-header">
+                <div><h2 class="asset-name">First Majestic</h2><span class="ticker">NYSE: AG // STRATEGIC MINER</span></div>
+                <a href="https://www.trading212.com/trading-instruments/invest/AG.US" target="_blank" class="buy-btn-bullion"></a>
+            </div>
+            <div class="algo-box">
+                <div class="tradingview-widget-container" style="height:100%">
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
+                    { "interval": "1D", "width": "100%", "height": "100%", "symbol": "NYSE:AG", "showIntervalTabs": false, "displayMode": "single", "locale": "en", "colorTheme": "dark" }
+                    </script>
+                </div>
+            </div>
+        </div>
+
+        <div class="card risk-med">
+            <div class="card-header">
+                <div><h2 class="asset-name">Hycroft Mining</h2><span class="ticker">NASDAQ: HYMC // SPROTT PLAY</span></div>
+                <a href="https://www.trading212.com/trading-instruments/invest/HYMC.US" target="_blank" class="buy-btn-bullion"></a>
+            </div>
+            <div class="algo-box">
+                <div class="tradingview-widget-container" style="height:100%">
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js" async>
+                    { "interval": "1D", "width": "100%", "height": "100%", "symbol": "NASDAQ:HYMC", "showIntervalTabs": false, "displayMode": "single", "locale": "en", "colorTheme": "dark" }
+                    </script>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="panel">
-            <h3 class="border-b border-[#33ff00] mb-2 font-bold">HISTORICAL CONTEXT: 1934 REVENGE</h3>
-            <p class="text-sm leading-tight text-gray-300">
-                In 1934, the US drained China's silver. Today, China has inverted the dynamic. By controlling refining and licensing, they gain leverage over Solar, EV, and Defense [00:10:55].
-            </p>
-            <div class="mt-4 border-t border-gray-800 pt-2 text-xs">
-                <p class="text-yellow-500 font-bold">INDUSTRIAL RISK:</p>
-                <p>> FORCE MAJEURE THREAT TO EUROPEAN SOLAR [00:05:25]</p>
-                <p>> DEFENSE ELECTRONICS RATIONING LIKELY [00:11:32]</p>
-            </div>
-        </div>
-        <div class="panel">
-            <h3 class="border-b border-[#33ff00] mb-2 font-bold">WAR ROOM FEED</h3>
-            <div class="text-xs space-y-1">
-                <p>> <span class="text-red-500">[22:00]</span> CASE-BY-CASE LICENSING NOW REQUIRED FOR ALL REFINED EXPORTS.</p>
-                <p>> <span class="text-blue-500">[21:45]</span> LBMA/COMEX SYSTEMIC STABILITY UNDER "PHYSICAL STRESS".</p>
-                <p>> <span class="text-yellow-500">[21:30]</span> TRADERS WARNED: EXCHANGES MAY PRIORITIZE SYSTEM OVER POSITIONS [00:09:22].</p>
-                <p>> <span class="text-green-500">[21:15]</span> TARGET $200 CONFIRMED AS "BIFURCATION" BEGINS.</p>
-            </div>
-        </div>
-    </div>
+    <footer>
+        <p>TERMINAL V5.1 // GEOPOLITICAL RISK: <span style="color:var(--risk-bad)">EXTREME</span> // NOT FINANCIAL ADVICE</p>
+    </footer>
+</div>
+
+<script>
+    function updateClock() {
+        const now = new Date();
+        document.getElementById('lastUpdate').innerText = now.toLocaleTimeString("en-GB");
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+</script>
+
 </body>
 </html>
